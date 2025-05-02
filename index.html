@@ -359,7 +359,7 @@
       .timeline-slider {
         position: relative;
         width: 70%;
-        padding: 0 20px;
+        padding: 0 8px;
         margin: 0 auto;
         display: flex;
         flex-direction: column;
@@ -436,6 +436,13 @@
         align-items: center;
         text-align: center;
         pointer-events: none;
+      }
+
+      .tick-container:first-of-type {
+        align-items: flex-start;
+      }
+      .tick-container:last-of-type {
+        align-items: flex-end;
       }
 
       /* Tick line that crosses the slider */
