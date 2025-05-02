@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Map with Info Panel</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/maplibre-gl@5.3.0/dist/maplibre-gl.css"
+    />
+    <script src="https://unpkg.com/maplibre-gl@5.3.0/dist/maplibre-gl.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
+        }
+      }
+    </script>
+
+    <style>
+  html,
+  body,
+  #map {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+  }
+
+  .marker {
+    display: block;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  #overlay {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 85%;
+    height: 70%;
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    overflow: hidden;
+    font-family: 'Inter', sans-serif;
+  }
+
+  #overlay-left {
+    width: 65%;
+    height: 100%;
+    background-color: #f9fafb;
+    padding: 1rem;
+    box-sizing: border-box;
+  }
+
+  #overlay-right {
+    width: 35%;
+    height: 100%;
+    padding: 1rem;
+    background-color: #ffffff;
+    overflow-y: auto;
+    border-left: 1px solid #e5e7eb;
+    box-sizing: border-box;
+  }
+
+  #overlay-right h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  #image-description {
+    font-size: 0.95rem;
+    color: #374151;
+    line-height: 1.5;
+  }
+
+  iframe {
+    width: 100%;
+    height: 80%;
+    max-height: 100%; 
+    border: none;
+    border-radius: 0.5rem;
+    object-fit: cover; 
+
+  }
+
+    #overlay-content {
+    height: 100%;
+  }
+
+  #overlay-content iframe {
+    height: 100%;
+    width: 100%;
+    border: none;
+    border-radius: 0.5rem;
+  }
+
+  .nav-button {
+    position: absolute;
+    background-color: #111827;
+    color: white;
+    border: none;
+    padding: 0.5rem 0.75rem;
+    cursor: pointer;
+    font-size: 1.25rem;
+    border-radius: 0.375rem;
+    z-index: 1010;
+    transition: background 0.2s;
+  }
+
+  .nav-button:hover {
+    background-color: #1f2937;
+  }
+
+  #closeBtn {
+    top: 10px;
+    right: 10px;
+  }
+
+  #prevBtn,
+  #nextBtn {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  #prevBtn {
+    left: 10px;
+  }
+
+  #nextBtn {
+    right: 10px;
+  }
+
+/* Overlay styles for the camp view */
+
+#camp-overlay {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 85%;
+  height: 70%;
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
+}
+
+#camp-overlay.show {
+  display: flex;
+  pointer-events: auto;
+}
+
+#camp-overlay-content {
+  display: flex;
+  height: 100%;
+}
+
+#camp-overlay-left {
+  width: 60%;
+  padding: 1rem;
+  background-color: #f9fafb;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Top bar for tabs in the camp overlay */
+.camp-top-bar {
+  width: 100%;
+  background-color: #e5e7eb; /* Light gray background */
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-around;
+  gap: 0.5rem;
+  border-bottom: 1px solid #d1d5db;
+  box-sizing: border-box;
+  align-items: center;
+}
+
+/* Buttons inside top bar */
+.camp-top-bar .tab {
+  background-color: #111827;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.camp-top-bar .tab:hover {
+  background-color: #1f2937;
+}
+
+/* Highlight active tab */
+.camp-top-bar .tab.active {
+  background-color: #374151;
+}
+
+
+
+#camp-image {
+  width: 100%;
+  height: 70%;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+#camp-overlay-right {
+  width: 40%;
+  padding: 1rem;
+  background-color: #ffffff;
+  border-left: 1px solid #e5e7eb;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+#camp-overlay-right h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+#camp-description {
+  font-size: 0.95rem;
+  color: #374151;
+  line-height: 1.5;
+}
+
+#camp-iframe {
+  width: 100%;
+  height: 300px;
+  border: none;
+  border-radius: 0.5rem;
+  object-fit: cover;
+}
+
+#camp-closeBtn {
+  top: 10px;
+  right: 10px;
+  position: absolute;
+  margin-top: 1rem;
+  background-color: #e5e7eb;
+  color: #374151;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#camp-closeBtn:hover {
+  background-color: #d1d5db;
+}
+
+/* Overlay styles for the convent view */
+
+  #convent-overlay {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 85%;
+  height: 70%;
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
+}
+
+#convent-overlay.show {
+  display: flex;
+  pointer-events: auto;
+}
+
+#convent-overlay-content {
+  display: flex;
+  height: 100%;
+}
+
+#convent-overlay-left {
+  width: 50%;
+  padding: 1rem;
+  background-color: #f9fafb;
+  box-sizing: border-box;
+}
+
+#convent-overlay-right {
+  width: 40%;
+  padding: 1rem;
+  background-color: #ffffff;
+  border-left: 1px solid #e5e7eb;
+  box-sizing: border-box;
+}
+
+#convent-overlay-right h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+#convent-description {
+  font-size: 0.95rem;
+  color: #374151;
+  line-height: 1.5;
+}
+
+#convent-iframe {
+  width: 100%;
+  height: 80%;
+  max-height: 100%;
+  border: none;
+  border-radius: 0.5rem;
+  object-fit: cover;
+}
+
+#convent-overlay-left {
+  width: 60%;
+  padding: 1rem;
+  background-color: #f9fafb;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#convent-image {
+  width: 100%;
+  height: 110%;
+  object-fit: cover;  /* Maintain aspect ratio while cropping */
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+#convent-media-container video {
+  pointer-events: auto;
+}
+
+
+/* Top bar for tabs */
+.convent-top-bar {
+  width: 100%;
+  background-color: #e5e7eb; /* Light gray background */
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-around;
+  gap: 0.5rem;
+  border-bottom: 1px solid #d1d5db; /* Subtle bottom border */
+  box-sizing: border-box;
+  align-items: center;
+}
+
+/* Buttons inside top bar */
+.convent-top-bar .tab {
+  background-color: #111827;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.convent-top-bar .tab:hover {
+  background-color: #1f2937;
+}
+
+/* Highlight active tab */
+.convent-top-bar .tab.active {
+  background-color: #374151;
+}
+
+
+.button-group {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.button-group button {
+  background-color: #111827;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.button-group button:hover {
+  background-color: #1f2937;
+}
+
+
+#convent-closeBtn {
+  top: 10px;
+  right: 10px;
+  position: absolute;
+  margin-top: 1rem;
+  background-color: #e5e7eb;
+  color: #374151;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#convent-closeBtn:hover {
+  background-color: #d1d5db;
+}
+
+/* Container bar */
+.slider-background-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 20%;
+  background-color: rgba(255, 255, 255, 0.85);
+  padding: 20px 0;
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+/* Main slider wrapper */
+.timeline-slider {
+  position: relative;
+  width: 70%;
+  padding: 0 20px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Range slider */
+.timeline-slider input[type="range"] {
+  position: absolute;
+  margin: 0 12px;
+  padding: 0;
+  top: 40px; 
+  width: 100%;
+  z-index: 1;
+  height: 6px;
+  background: linear-gradient(to right, #797777 0%, #797777 100%);
+  border-radius: 3px;
+  appearance: none;
+  outline: none;
+  cursor: pointer;
+}
+
+/* Hover effect */
+.timeline-slider input[type="range"]:hover {
+  background: #b2abab;
+}
+
+/* WebKit thumb */
+.timeline-slider input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  margin-left: 0;
+  margin-right: 0;
+  background: #333;
+  cursor: pointer;
+  position: relative;
+  z-index: 3;
+  transition: background 0.3s ease;
+  
+}
+.timeline-slider input[type="range"]::-webkit-slider-thumb:hover {
+  background: #555;
+}
+
+/* Firefox thumb */
+.timeline-slider input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #333;
+  cursor: pointer;
+  position: relative;
+  z-index: 3;
+  transition: background 0.3s ease;
+}
+.timeline-slider input[type="range"]::-moz-range-thumb:hover {
+  background: #555;
+}
+
+/* Tick container */
+.timeline-ticks {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+  pointer-events: none; 
+}
+.tick-container {
+  flex: 0.1; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  pointer-events: none;
+}
+
+/* Tick line that crosses the slider */
+.tick-line {
+  width: 2px;
+  height: 40px; 
+  background-color: black;
+  margin: 5px 0;
+}
+
+/* Labels */
+.tick-label {
+  font-size: 14px;
+
+}
+.tick-label.top {
+  margin-bottom: 0px;
+  font-weight: italic;
+}
+.tick-label.bottom {
+  margin-top: 0px;
+  font-weight: bold;
+}
+
+    </style>
+  </head>
+
+  <body class="relative">
+    <div id="map"></div>
+
+    <div class="slider-background-bar">
+      <div class="timeline-slider">
+        
+        <div class="timeline-ticks">
+          <div class="tick-container">
+            <div class="tick-label top">1286</div>
+            <div class="tick-line"></div>
+            <div class="tick-label bottom">Convent</div>
+          </div>
+          <div class="tick-container">
+            <div class="tick-label top">1936</div>
+            <div class="tick-line"></div>
+            <div class="tick-label bottom">Concentration Camp</div>
+          </div>
+          <div class="tick-container">
+            <div class="tick-label top">Present day</div>
+            <div class="tick-line"></div>
+            <div class="tick-label bottom">Civic Park</div>
+          </div>
+        </div>
+    
+        <input type="range" min="0" max="2" step="0.01" value="2" id="timelineRange" class="range-slider" />
+    
+      </div>
+    </div>
+    
+    <!-- Adding the overlay for the present day -->
+    <div id="overlay">
+      <button class="nav-button" id="closeBtn">✖</button>
+      <button class="nav-button" id="prevBtn">←</button>
+      <button class="nav-button" id="nextBtn">→</button>
+      <div id="overlay-left">
+        <div id="overlay-content"></div>
+      </div>
+      <div id="overlay-right">
+        <h3>360° view of the chosen site</h3>
+        <p class="whitespace-pre-wrap" id="image-description"></p>
+      </div>
+    </div>
+
+     <!--Adding the camp layer-->
+    <div id="camp-overlay" class="overlay">
+      <div id="camp-overlay-left">
+        <div class="camp-top-bar">
+          <button class="tab active" data-tab="overview">Concentration Camp</button>
+          <button class="tab" data-tab="prisoners">The Prisoners</button>
+          <button class="tab" data-tab="life">Life in the Camp</button>
+          <button class="tab" data-tab="labour">Forced Labour</button>
+        </div>
+
+        <div id="camp-media-container">
+          <img id="camp-image" src="./images/Stclaracamp_ex.png" alt="Camp Image" />
+          <!-- Optional iframe if needed -->
+          <!-- <iframe id="camp-iframe" title="Camp Viewer" style="width: 100%; height: 300px; border: none;"></iframe> -->
+        </div>
+      </div>
+
+      <div id="camp-overlay-right">
+        <h3>Santa Clara Camp History</h3>
+        <p id="camp-description">This is the concentration camp from 1936...</p>
+      </div>
+
+      <button class="nav-button" id="camp-closeBtn">✖</button>
+    </div>
+
+    
+    <!--Adding the convent layer-->
+    <div id="convent-overlay" class="overlay">
+      <div id="convent-overlay-left">
+        <div class="convent-top-bar">
+
+
+          <button class="tab active" data-tab="history">History</button>
+          <button class="tab" data-tab="videos">Videos</button>
+          <button class="tab" data-tab="daily-life">Daily Life</button>
+        </div>
+      
+       <!-- <h2 id="convent-overlay-headline">Convent View</h2> -->
+       <div id="convent-media-container">
+        <img id="convent-image" alt="Convent Image" src="./images/Stclara_1910.png"/>
+      </div>  
+     <!-- <iframe id="convent-iframe" title="Polycam viewer" style="width: 100%; height: 300px; border: none;"></iframe> -->
+      </div>
+      
+      <!-- Add camp layer-->
+      <div id="convent-overlay-right">
+        <h3>Santa Clara Convent History</h3>
+        <p id="convent-description">This is the convent from 1286...</p>
+      </div>
+    
+      <button class="nav-button" id="convent-closeBtn">✖</button>
+    </div>
+    
+    <!--- Add the custom JavaScript here -->
+    <script type="module">
+
+
+      // Create containers for the markers
+      const presentDayMarkers = [];
+      const conventMarkers = [];
+      const campMarkers = [];
+
+
+      /* Bulding markers */
+      import { geojson } from "./soria-geo.js";
+      import { loadCustomLayer } from "./3D-model-layer.js";
+      import { conventGeojson } from "./soria-convent.js";
+      import { campGeojson } from './soria-camp.js';
+
+
+      // Load the GeoJSON data for the convent
+      const marker = conventGeojson.features[0];
+      const imageElement = document.getElementById('convent-image');
+      imageElement.src = marker.properties.link;
+
+      // Initialize the map
+      const map = new maplibregl.Map({
+        container: "map",
+        style:
+          "https://api.maptiler.com/maps/satellite/style.json?key=TdTwD7oIRpXkUvhlz3qX",
+        center: [-2.4661792987112507, 41.76136750285904],
+        zoom: 18,
+        pitch: 0
+      }
+      );
+
+      // Add navigation controls
+      let currentIndex = null;
+
+      // Add zoom and rotation controls to the map.
+      function showOverlay(index) {
+        const feature = geojson.features[index];
+        const link = feature.properties.link;
+        const description = feature.properties.description;
+
+        // Set the iframe source to the link of the selected feature
+        document.getElementById("overlay").style.display = "flex";
+        document.getElementById("overlay-content").innerHTML = `
+          <iframe
+            src="${link}/embed"
+            title="Polycam capture viewer">
+          </iframe>
+        `;
+        document.getElementById("image-description").textContent = description;
+        currentIndex = index;
+      }
+
+      // This event listener is for the close button
+      document.getElementById("closeBtn").addEventListener("click", () => {
+        document.getElementById("overlay").style.display = "none";
+        document.getElementById("overlay-content").innerHTML = "";
+        document.getElementById("image-description").textContent = "";
+        currentIndex = null;
+      });
+
+      document.getElementById("prevBtn").addEventListener("click", () => {
+        if (currentIndex === null) return;
+        const prevIndex = geojson.features[currentIndex]?.properties?.prev;
+        if (prevIndex != null && geojson.features[prevIndex]) {
+          showOverlay(prevIndex);
+        }
+      });
+
+      document.getElementById("nextBtn").addEventListener("click", () => {
+        if (currentIndex === null) return;
+        const nextIndex = geojson.features[currentIndex]?.properties?.next;
+        if (nextIndex != null && geojson.features[nextIndex]) {
+          showOverlay(nextIndex);
+        }
+      });
+
+      function setMarkersVisibility(markers, visible) {
+        markers.forEach(marker => {
+          const el = marker.getElement();
+          el.style.display = visible ? "block" : "none";
+        });
+      }
+
+      // Add the convent map to the page
+      map.on("load", () => {
+      map.addSource("conventPlanImage", {
+        type: "image",
+        url: "./images/Convent_image.png",
+        coordinates: [
+          [-2.468178, 41.762657],                     // top-left
+          [-2.4641416118235915, 41.76240767386252],   // top-right
+          [-2.4643543374292496, 41.760334321527054],  // bottom-right
+          [-2.468326, 41.760577]                      // bottom-left
+        ],
+      });
+
+      // Add the camp map to the page
+      map.addSource("camp-map", {
+        type: "image",
+        url: "./images/Stclaracamp_ex.png",
+        coordinates: [
+          [-2.467869, 41.762418],                     // top-left
+          [-2.464613, 41.762312],                     // top-right
+          [-2.464697, 41.760851],                     // bottom-right
+          [-2.467967, 41.761014]                      // bottom-left
+        ],
+      });
+
+      // Find the first symbol layer to place the raster below it
+      const layers = map.getStyle().layers;
+      const firstSymbolId = layers.find(l => l.type === 'symbol')?.id;
+
+      map.addLayer({
+        id: "image-layer",
+        type: "raster",
+        source: "conventPlanImage",
+        paint: {
+          "raster-fade-duration": 0,
+          "raster-opacity": 0, // starts hidden, controlled via slider
+        },
+      }, firstSymbolId); // places the raster below markers/labels
+
+        // Add the 3D model layer
+        loadCustomLayer((customLayer) => {
+          map.addLayer(customLayer);
+        });
+
+      // Add the camp layer
+      map.addLayer({
+        id: "camp-map-layer",
+        type: "raster",
+        source: "camp-map",
+        paint: {
+          "raster-fade-duration": 0,
+          "raster-opacity": 0, // start hidden, reveal using slider
+        },
+      }, firstSymbolId);
+
+
+         // Add markers to the map
+      geojson.features.forEach((marker, index) => {
+        const el = document.createElement("div");
+        el.className = "marker";
+        el.style.backgroundImage =
+          "url('https://cdn-icons-png.flaticon.com/128/7976/7976202.png')";
+        //el.style.backgroundImage = `url('${marker.properties.iconUrl}')`;
+        el.style.backgroundSize = "cover";
+        el.style.width = `${marker.properties.iconSize[0]}px`;
+        el.style.height = `${marker.properties.iconSize[1]}px`;
+
+        el.addEventListener("click", () => showOverlay(index));
+
+        // Add the marker to the present day map
+        const mapMarker = new maplibregl.Marker({ element: el })
+          .setLngLat(marker.geometry.coordinates)
+          .addTo(map);
+
+        presentDayMarkers.push(mapMarker);
+      });
+
+      setMarkersVisibility(presentDayMarkers, false);
+
+    // Add camp markers
+    campGeojson.features.forEach((marker) => {
+      const el = document.createElement("div");
+      el.className = "marker";
+      el.style.backgroundImage = "url('https://cdn-icons-png.flaticon.com/128/7976/7976202.png')";
+      el.style.backgroundSize = "cover";
+      el.style.width = `${marker.properties.iconSize[0]}px`;
+      el.style.height = `${marker.properties.iconSize[1]}px`;
+
+      el.addEventListener("click", () => {
+        // Define your custom camp overlay logic here
+        const overlay = document.getElementById("camp-overlay");
+        overlay.classList.add("show");
+
+        document.getElementById("camp-iframe").src = `${marker.properties.link}/embed`;
+        document.getElementById("camp-overlay-headline").textContent = marker.properties.name;
+        document.getElementById("camp-description").textContent = marker.properties.description;
+
+        const imageElement = document.getElementById('camp-image');
+        imageElement.src = marker.properties.link;
+      });
+
+      const mapMarker = new maplibregl.Marker({ element: el })
+        .setLngLat(marker.geometry.coordinates)
+        .addTo(map);
+
+      campMarkers.push(mapMarker);
+    });
+
+    setMarkersVisibility(campMarkers, false);
+
+    // Close button for the camp overlay
+    document.getElementById("camp-closeBtn").addEventListener("click", () => {
+      const overlay = document.getElementById("camp-overlay");
+      overlay.classList.remove("show");
+
+      document.getElementById("camp-iframe").src = "";
+      document.getElementById("camp-overlay-headline").textContent = "";
+      document.getElementById("camp-description").textContent = "";
+    });
+
+    // Tab switching for the camp overlay
+    const campTabs = document.querySelectorAll("#camp-overlay .tab");
+    const campDescription = document.getElementById("camp-description");
+    const campMediaContainer = document.getElementById("camp-media-container");
+  
+
+    const campTabContents = {
+      overview: {
+        text: "This is the concentration camp from 1936. It was established to imprison political detainees under harsh conditions. The camp layout was simple but effective in control and surveillance.",
+        media: "image",
+        src: "./images/Stclaracamp_ex.png"
+      },
+      prisoners: {
+        text: "The prisoners held at Santa Clara came from various backgrounds, often intellectuals, political opponents, or members of the resistance. Their treatment varied, but harsh conditions and isolation were common.",
+        media: "image",
+        src: "./images/prisoners.jpg"
+      },
+      life: {
+        text: "Daily life in the camp included forced labor, strict routines, and poor living conditions. Inmates followed a tight schedule under constant watch.",
+        media: "image",
+        src: "./images/Stclaracamp_life.png"
+      },
+      labour: {
+        text: "Forced labour was a key element of the camp's control system. Prisoners were made to work on local infrastructure, agriculture, and even private projects under duress.",
+        media: "video", // Change to "image" if you prefer
+        src: "./video/StClaraCampLabour.mp4"
+      }
+    };
+
+    campTabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        // Remove 'active' class from all tabs
+        campTabs.forEach(t => t.classList.remove("active"));
+        tab.classList.add("active");
+
+        // Get the selected tab's content
+        const selectedTab = tab.getAttribute("data-tab");
+        const content = campTabContents[selectedTab];
+
+        // Update description text
+        campDescription.textContent = content.text;
+
+        // Swap between image and video
+        if (content.media === "video") {
+          campMediaContainer.innerHTML = `
+            <video controls style="width: 800px; height: 450px; border-radius: 0.5rem;">
+              <source src="${content.src}" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          `;
+        } else {
+          campMediaContainer.innerHTML = `
+            <img id="camp-image" src="${content.src}" alt="Camp Image" style="width: 100%; border-radius: 0.5rem; margin-bottom: 1rem;" />
+          `;
+        }
+      });
+    });
+
+
+
+   // Add convent markers with a separate overlay design
+   conventGeojson.features.forEach((marker) => {
+      const el = document.createElement("div");
+      el.className = "marker";
+      el.style.backgroundImage = "url('https://cdn-icons-png.flaticon.com/128/7976/7976202.png')";
+      el.style.backgroundSize = "cover";
+      el.style.width = `${marker.properties.iconSize[0]}px`;
+      el.style.height = `${marker.properties.iconSize[1]}px`;
+
+      el.addEventListener("click", () => {
+        const overlay = document.getElementById("convent-overlay");
+        overlay.classList.add("show");
+
+      // Set image, description, and iframe (Polycam viewer)
+      document.getElementById("convent-iframe").src = `${marker.properties.link}/embed`;
+      document.getElementById("convent-overlay-headline").textContent = marker.properties.name;
+      document.getElementById("convent-description").textContent = marker.properties.description;
+
+      // Set the image in the pop-up
+      const imageElement = document.getElementById('convent-image');
+      imageElement.src = marker.properties.link; // Set the source of the image dynamically
+      
+    });
+
+      const mapMarker = new maplibregl.Marker({ element: el })
+        .setLngLat(marker.geometry.coordinates)
+        .addTo(map);
+
+      conventMarkers.push(mapMarker);
+    });
+
+    setMarkersVisibility(conventMarkers, false);
+
+
+    // Close button for the convent overlay
+    document.getElementById("convent-closeBtn").addEventListener("click", () => {
+      const overlay = document.getElementById("convent-overlay");
+      overlay.classList.remove("show");
+
+      document.getElementById("convent-iframe").src = "";
+      document.getElementById("convent-overlay-headline").textContent = "";
+      document.getElementById("convent-description").textContent = "";
+    });
+
+   // Handle convent tab switching
+      const tabs = document.querySelectorAll(".tab");
+      const conventDescription = document.getElementById("convent-description");
+      const conventMediaContainer = document.getElementById("convent-media-container");
+
+      const tabContents = {
+        history: {
+          text: "The Santa Clara Convent in Soria was founded around 1286 and flourished for centuries, receiving royal privileges and noble protection. Though the original monastery no longer stands, the surviving structure, built between 1520 and 1537, reflects its historical significance. \n\nThe convent played a vital role in Soria’s religious and cultural life until 1833, when the nuns were forced to leave due to exclaustrations. Many of its sacred artifacts were moved to the Collegiate Church of San Pedro, and in 1881, the remains of the nuns were transferred to Santo Domingo, marking the end of Santa Clara’s monastic legacy.",
+          media: "image", // Show image
+          src: "./images/Stclara_1910.png" // Image source for convent
+        },
+        videos: {
+          text: "Here you could embed videos about the convent or describe their content.",
+          media: "video", // Show video
+          src: "./video/StClara_1.mp4" // Video file link
+        },
+        "daily-life": {
+          text: "Information about daily life inside the convent during medieval times.",
+          media: "image", // Show image
+          src: "./images/Stclara_1910.png" // Same image or different one
+        }
+      };
+
+      tabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+          // Remove 'active' class from all tabs
+          tabs.forEach(t => t.classList.remove("active"));
+          tab.classList.add("active");
+
+          // Get which tab is clicked
+          const selectedTab = tab.getAttribute("data-tab");
+          const content = tabContents[selectedTab];
+
+          // Update description text
+          conventDescription.textContent = content.text;
+
+          // Swap between image and video
+          if (content.media === "video") {
+            conventMediaContainer.innerHTML = `
+              <video controls style="width: 800px; height: 450px; border-radius: 0.5rem;">
+                <source src="${content.src}" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            `;
+
+
+          } else {
+            conventMediaContainer.innerHTML = `
+              <img id="convent-image" src="${content.src}" alt="Convent Image" style="width: 100%; border-radius: 0.5rem; margin-bottom: 1rem;"/>
+            `;
+          }
+        });
+      });
+
+        // Timeline slider functionality
+        const timelineRange = document.getElementById("timelineRange");
+        const timelineSteps = document.querySelectorAll(".timeline-steps .step");
+
+        timelineRange.addEventListener("input", (e) => {
+          const value = e.target.value;
+          updateTimeline(value);
+        });
+
+
+        // Initialize the timeline
+        function updateTimeline(value) {
+          const valueNum = parseFloat(value);
+
+          // Set opacity of the historic overlay
+          let imageOpacity = 0;
+          let modelOpacity = 0;
+
+          if (valueNum <= 1) {
+            // From convent (0) to concentration camp (1)
+            imageOpacity = 1 - valueNum;  // 1 → 0
+            modelOpacity = valueNum;      // 0 → 1
+          } else {
+            // From concentration camp (1) to today (2)
+            imageOpacity = 0;
+            modelOpacity = 2 - valueNum;  // 1 → 0
+          }
+
+          // Update map layer opacity
+          map.setPaintProperty("image-layer", "raster-opacity", imageOpacity);
+          map.setPaintProperty("camp-map-layer", "raster-opacity", modelOpacity);
+
+
+          // Control marker visibility cleanly
+          if (valueNum < 0.5) {
+            // Show convent markers only
+            setMarkersVisibility(conventMarkers, true);
+            setMarkersVisibility(campMarkers, false);
+            setMarkersVisibility(presentDayMarkers, false);
+          } else if (valueNum < 1.5) {
+            // Show camp markers only
+            setMarkersVisibility(conventMarkers, false);
+            setMarkersVisibility(campMarkers, true);
+            setMarkersVisibility(presentDayMarkers, false);
+          } else {
+            // Show present-day markers only
+            setMarkersVisibility(conventMarkers, false);
+            setMarkersVisibility(campMarkers, false);
+            setMarkersVisibility(presentDayMarkers, true);
+          }
+        }
+
+
+   updateTimeline(timelineRange.value);
+
+    }); 
+
+    </script>
+  </body>
+</html>
