@@ -4,9 +4,15 @@ import { OrbitControls } from "https://unpkg.com/three@0.169.0/examples/jsm/cont
 
 let scene, camera, renderer, controls, loader;
 
+const annotationPosition = new THREE.Vector3(1, 2, 3); // Change as needed
+
 export function initThreejs(containerID) {
   scene = new THREE.Scene();
   scene.background = new THREE.Color(0xdddddd);
+
+  const light = new THREE.PointLight(0xffffff, 6, 100); // color, intensity, distance
+  light.position.set(0, 0, 0); // Center of model (since model was moved to origin)
+  scene.add(light);
 
   camera = new THREE.PerspectiveCamera(
     75,
@@ -27,7 +33,7 @@ export function initThreejs(containerID) {
 
   const loader = new GLTFLoader();
   loader.load(
-    "3D sketches/soria-test-360.glb",
+    "3D sketches/5_4_2025.glb",
     (gltf) => {
       scene.add(gltf.scene);
       camera.position.set(0, 0, 0.0000001); //slight offset is needed
@@ -83,6 +89,15 @@ function clearScene() {
 }
 
 function animate() {
+  const annotationElement = document.getElementById("annotation");
+  const vector = annotationPosition.clone().project(camera);
+
+  const x = (vector.x * 0.5 + 0.5) * window.innerWidth;
+  const y = (1 - (vector.y * 0.5 + 0.5)) * window.innerHeight;
+
+  annotationElement.style.left = `${x}px`;
+  annotationElement.style.top = `${y}px`;
+
   requestAnimationFrame(animate);
   controls.update();
   renderer.render(scene, camera);

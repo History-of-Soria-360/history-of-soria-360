@@ -45,6 +45,7 @@
 
       #overlay {
         display: none;
+        grid-template-columns: 70% 30%;
         position: fixed;
         top: 50%;
         left: 50%;
@@ -60,15 +61,16 @@
       }
 
       #overlay-left {
-        width: 65%;
+        width: 100%;
         height: 100%;
         background-color: #f9fafb;
         padding: 1rem;
         box-sizing: border-box;
+        overflow: hidden;
       }
 
       #overlay-right {
-        width: 35%;
+        width: 100%;
         height: 100%;
         padding: 1rem;
         background-color: #ffffff;
@@ -510,6 +512,18 @@
       <button class="nav-button" id="nextBtn">→</button>
       <div id="overlay-left">
         <div id="overlay-content"></div>
+        <div
+          id="annotation"
+          style="
+            position: absolute;
+            background: white;
+            padding: 5px;
+            border: 1px solid black;
+            cursor: pointer;
+          "
+        >
+          Click me!
+        </div>
       </div>
       <div id="overlay-right">
         <h3>360° view of the chosen site</h3>
@@ -604,7 +618,7 @@
         const description = feature.properties.description;
 
         // Set the iframe source to the link of the selected feature
-        document.getElementById("overlay").style.display = "flex";
+        document.getElementById("overlay").style.display = "grid";
         document.getElementById("overlay-content").innerHTML =
           "<div id='threejs-container'></div>";
 
