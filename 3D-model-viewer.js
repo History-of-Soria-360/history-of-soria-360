@@ -2,11 +2,66 @@ import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.m
 import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/loaders/GLTFLoader.js";
 import { OrbitControls } from "https://unpkg.com/three@0.169.0/examples/jsm/controls/OrbitControls.js";
 
-let scene, camera, renderer, controls, loader;
+let scene, camera, renderer, controls, loader, width, height;
 
-const annotationPosition = new THREE.Vector3(1, 2, 3); // Change as needed
+let models = ["building_BH.glb", "building_1-3.glb", "5_4_2025.glb"];
 
-export function initThreejs(containerID) {
+let annotations = [
+  {
+    title: "Title",
+    description: "Test",
+    camPos: {
+      x: 0,
+      y: 6.1232339957367664e-27,
+      z: 1e-10,
+    },
+    lookAt: {
+      x: -23.44926801746289,
+      y: 6.30744873607264,
+      z: 17.576055557733937,
+    },
+  },
+  {
+    title: "Title",
+    description: "Test",
+    camPos: {
+      x: 0,
+      y: 6.1232339957367664e-27,
+      z: 1e-10,
+    },
+    lookAt: {
+      x: 19.133309885056715,
+      y: 10.158381163797346,
+      z: 20.686712369312204,
+    },
+  },
+  {
+    title: "Title",
+    description: "Test",
+    camPos: {
+      x: 0,
+      y: 6.1232339957367664e-27,
+      z: 1e-10,
+    },
+    lookAt: {
+      x: 14.435786069563225,
+      y: 22.639917408161264,
+      z: -13.330463014955665,
+    },
+  },
+];
+
+/* const annotationPosition = new THREE.Vector3(
+  -23.44926801746289,
+  6.30744873607264,
+  17.576055557733937
+); // Change as needed */
+
+export function initThreejs(containerID, model) {
+  if (model == null) {
+    model = models[0];
+  }
+
   scene = new THREE.Scene();
   scene.background = new THREE.Color(0xdddddd);
 
@@ -29,20 +84,15 @@ export function initThreejs(containerID) {
   );
   document.getElementById(containerID)?.appendChild(renderer.domElement);
 
+  width = document.getElementById(containerID).getBoundingClientRect().width;
+  height = document.getElementById(containerID).getBoundingClientRect().height;
+
   controls = new OrbitControls(camera, renderer.domElement);
 
-  const loader = new GLTFLoader();
-  loader.load(
-    "3D sketches/5_4_2025.glb",
-    (gltf) => {
-      scene.add(gltf.scene);
-      camera.position.set(0, 0, 0.0000001); //slight offset is needed
-    },
-    undefined,
-    (error) => {
-      console.error("GLTF load error:", error);
-    }
-  );
+  loader = new GLTFLoader();
+  loadModel(model);
+
+  innitAnnotations(model);
 
   animate();
 
@@ -60,7 +110,45 @@ function onWindowResize() {
   );
 }
 
-function handleFile(event) {
+function innitAnnotations(model) {
+  for (const a of annotations) {
+    const annotation = document.createElement("div");
+    // Add a class (or multiple classes)
+    annotation.className = "annotation"; // You can use "annotation another-class" for multiple
+    // Optionally set other properties
+    annotation.textContent =
+      models[(models.indexOf(model) + 1) % models.length];
+    // Assign them their location for later use
+    annotation.setAttribute(
+      "data-pos",
+      JSON.stringify([a.lookAt.x, a.lookAt.y, a.lookAt.z])
+    );
+
+    annotation.onclick = () => {
+      loadModel(models[(models.indexOf(model) + 1) % models.length]);
+    };
+
+    document.getElementById("overlay-left")?.appendChild(annotation);
+  }
+}
+
+function loadModel(model) {
+  loader.load(
+    `3D sketches/${model}`,
+    (gltf) => {
+      clearScene();
+      scene.add(gltf.scene);
+      camera.position.set(0, 0, 0.0000001); //slight offset is needed
+      innitAnnotations(model);
+    },
+    undefined,
+    (error) => {
+      console.error("GLTF load error:", error);
+    }
+  );
+}
+
+/* function handleFile(event) {
   const file = event.target.files[0];
   if (file) {
     const url = URL.createObjectURL(file);
@@ -77,26 +165,38 @@ function handleFile(event) {
       }
     );
   }
-}
+} */
 
 function clearScene() {
   for (let i = scene.children.length - 1; i >= 0; i--) {
     let obj = scene.children[i];
     if (obj.type === "Group" || obj.type === "Mesh") {
       scene.remove(obj);
+      // delete all annotations
+      document.querySelectorAll(".annotation").forEach((el) => el.remove());
     }
   }
 }
 
 function animate() {
-  const annotationElement = document.getElementById("annotation");
-  const vector = annotationPosition.clone().project(camera);
+  const annots = document.getElementsByClassName("annotation");
 
-  const x = (vector.x * 0.5 + 0.5) * window.innerWidth;
-  const y = (1 - (vector.y * 0.5 + 0.5)) * window.innerHeight;
+  for (let i = 0; i < annots.length; i++) {
+    const pos = JSON.parse(annots.item(i).dataset.pos);
+    const vector = new THREE.Vector3(...pos).project(camera);
 
-  annotationElement.style.left = `${x}px`;
-  annotationElement.style.top = `${y}px`;
+    if (vector.z < 0 || vector.z > 1) {
+      annots.item(i).style.display = "none";
+    } else {
+      annots.item(i).style.display = "block";
+
+      const x = (vector.x * 0.5 + 0.5) * width;
+      const y = (1 - (vector.y * 0.5 + 0.5)) * height;
+
+      annots.item(i).style.left = `${x}px`;
+      annots.item(i).style.top = `${y}px`;
+    }
+  }
 
   requestAnimationFrame(animate);
   controls.update();
