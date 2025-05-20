@@ -1,202 +1,228 @@
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js";
 import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/loaders/GLTFLoader.js";
 import { OrbitControls } from "https://unpkg.com/three@0.169.0/examples/jsm/controls/OrbitControls.js";
+import { annotations } from "./annotations.js";
+
+let containerIDGlobal;
 
 let scene, camera, renderer, controls, loader, width, height;
-
 let models = ["building_BH.glb", "building_1-3.glb", "5_4_2025.glb"];
 
-let annotations = [
-  {
-    title: "Title",
-    description: "Test",
-    camPos: {
-      x: 0,
-      y: 6.1232339957367664e-27,
-      z: 1e-10,
-    },
-    lookAt: {
-      x: -23.44926801746289,
-      y: 6.30744873607264,
-      z: 17.576055557733937,
-    },
-  },
-  {
-    title: "Title",
-    description: "Test",
-    camPos: {
-      x: 0,
-      y: 6.1232339957367664e-27,
-      z: 1e-10,
-    },
-    lookAt: {
-      x: 19.133309885056715,
-      y: 10.158381163797346,
-      z: 20.686712369312204,
-    },
-  },
-  {
-    title: "Title",
-    description: "Test",
-    camPos: {
-      x: 0,
-      y: 6.1232339957367664e-27,
-      z: 1e-10,
-    },
-    lookAt: {
-      x: 14.435786069563225,
-      y: 22.639917408161264,
-      z: -13.330463014955665,
-    },
-  },
-];
-
-/* const annotationPosition = new THREE.Vector3(
-  -23.44926801746289,
-  6.30744873607264,
-  17.576055557733937
-); // Change as needed */
+/* ───────────────────────────────────────────────────────────── */
 
 export function initThreejs(containerID, model) {
-  if (model == null) {
-    model = models[0];
-  }
+  containerIDGlobal = containerID;
+  if (model == null) model = models[0];
 
+  /* ---------- scene & background ---------- */
   scene = new THREE.Scene();
   scene.background = new THREE.Color(0xdddddd);
 
-  const light = new THREE.PointLight(0xffffff, 6, 100); // color, intensity, distance
-  light.position.set(0, 0, 0); // Center of model (since model was moved to origin)
-  scene.add(light);
+  /* ---------- lighting (works for BOTH 3-D + 360) ---------- */
+  const ambient = new THREE.AmbientLight(0xffffff, 1);          // ← global soft light
+  scene.add(ambient);
 
+  const dir = new THREE.DirectionalLight(0xffffff, 2);          // ← main key light
+  dir.position.set(10, 10, 10);
+  scene.add(dir);
+
+  /* ---------- camera ---------- */
+  const container = document.getElementById(containerID);
   camera = new THREE.PerspectiveCamera(
     75,
-    document.getElementById(containerID).getBoundingClientRect().width /
-      document.getElementById(containerID).getBoundingClientRect().height,
+    container.clientWidth / container.clientHeight,
     0.1,
-    1000
+    2000
   );
 
+  /* ---------- renderer ---------- */
   renderer = new THREE.WebGLRenderer({ antialias: true });
-  renderer.setSize(
-    document.getElementById(containerID).getBoundingClientRect().width,
-    document.getElementById(containerID).getBoundingClientRect().height
-  );
-  document.getElementById(containerID)?.appendChild(renderer.domElement);
+  renderer.outputColorSpace = THREE.SRGBColorSpace;              // ← gamma-correct output
+  renderer.physicallyCorrectLights = true;
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  container.appendChild(renderer.domElement);
 
-  width = document.getElementById(containerID).getBoundingClientRect().width;
-  height = document.getElementById(containerID).getBoundingClientRect().height;
-
+  /* ---------- orbit controls ---------- */
   controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableRotate   = true;   // ✅ rotation restored for 360 images
+  controls.enablePan      = false;
+  controls.enableZoom     = false;
+  controls.enableDamping  = true;
+  controls.dampingFactor  = 0.1;
 
+  /* ---------- bookkeeping ---------- */
+  width  = container.clientWidth;
+  height = container.clientHeight;
   loader = new GLTFLoader();
+
   loadModel(model);
-
   innitAnnotations(model);
-
   animate();
 
   window.addEventListener("resize", onWindowResize, false);
 }
 
+/* ───────────────────────────────────────────────────────────── */
+
 function onWindowResize() {
-  camera.aspect =
-    document.getElementById(containerID).getBoundingClientRect().width /
-    document.getElementById(containerID).getBoundingClientRect().height;
+  const cont = document.getElementById(containerIDGlobal);
+  camera.aspect = cont.clientWidth / cont.clientHeight;
   camera.updateProjectionMatrix();
-  renderer.setSize(
-    document.getElementById(containerID).getBoundingClientRect().width,
-    document.getElementById(containerID).getBoundingClientRect().height
-  );
+  renderer.setSize(cont.clientWidth, cont.clientHeight);
 }
+
+/* ───────────────────────────────────────────────────────────── */
 
 function innitAnnotations(model) {
-  for (const a of annotations) {
-    const annotation = document.createElement("div");
-    // Add a class (or multiple classes)
-    annotation.className = "annotation"; // You can use "annotation another-class" for multiple
-    // Optionally set other properties
-    annotation.textContent =
-      models[(models.indexOf(model) + 1) % models.length];
-    // Assign them their location for later use
-    annotation.setAttribute(
-      "data-pos",
-      JSON.stringify([a.lookAt.x, a.lookAt.y, a.lookAt.z])
-    );
+  document.querySelectorAll(".annotation").forEach((el) => el.remove());
+  if (!annotations[model]) return;
 
-    annotation.onclick = () => {
-      loadModel(models[(models.indexOf(model) + 1) % models.length]);
+  for (const a of annotations[model]) {
+    const ann = document.createElement("div");
+    ann.className = "annotation";
+    ann.textContent = a.title;
+    ann.dataset.pos = JSON.stringify([a.lookAt.x, a.lookAt.y, a.lookAt.z]);
+
+    ann.onclick = () => {
+      camera.position.set(a.camPos.x, a.camPos.y, a.camPos.z);
+      controls.target.set(a.lookAt.x, a.lookAt.y, a.lookAt.z);
+      controls.update();
     };
-
-    document.getElementById("overlay-left")?.appendChild(annotation);
+    document.getElementById("threejs-container-wrapper")?.appendChild(ann);
   }
 }
+
+/* ───────────────────────────────────────────────────────────── */
 
 function loadModel(model) {
-  loader.load(
-    `3D sketches/${model}`,
-    (gltf) => {
-      clearScene();
-      scene.add(gltf.scene);
-      camera.position.set(0, 0, 0.0000001); //slight offset is needed
-      innitAnnotations(model);
-    },
-    undefined,
-    (error) => {
-      console.error("GLTF load error:", error);
+  clearScene();
+
+  let path = model;
+
+  // Auto-detect model folder
+  if (!model.includes("/") && model.endsWith(".glb")) {
+    if (model.includes("Santaclara")) {
+      path = `3D_models/${model}`;
+    } else {
+      path = `3D sketches/${model}`;
     }
-  );
+  }
+
+  console.log("Loading model from path:", path);
+
+  const is360 = model.toLowerCase().endsWith("_360.glb");
+
+  loader.load(path, (gltf) => {
+  
+    console.log("Loading model from path:", path);
+    console.log(gltf.scene.children);
+    console.log("Loaded GLTF:", gltf);
+  
+    const mesh = gltf.scene.children[0];
+    if (mesh && mesh.isMesh) {
+      console.log("🧪 Mesh material:", mesh.material);
+      console.log("🖼️ Texture map:", mesh.material.map);
+      console.log("✨ Emissive map:", mesh.material.emissiveMap);
+  
+      if (!mesh.geometry.boundingBox) {
+        mesh.geometry.computeBoundingBox();
+      }
+      console.log("📏 Geometry bounding box:", mesh.geometry.boundingBox);
+    }
+  
+    if (is360) {
+      console.log("✅ Applying 360 config");
+  
+      scene.children = scene.children.filter(obj => !obj.isLight);
+      scene.background = new THREE.Color(0x000000);
+  
+      gltf.scene.traverse((child) => {
+        if (child.isMesh) {
+          const tex = child.material?.map || null;
+  
+          if (tex) {
+            tex.colorSpace = THREE.SRGBColorSpace;
+            tex.flipY = false;
+            tex.needsUpdate = true;
+          }
+  
+          child.material = new THREE.MeshBasicMaterial({
+            map: tex,
+            side: THREE.FrontSide,   // or THREE.FrontSide to test
+            toneMapped: false,
+            depthWrite: false,
+          });
+  
+          console.log("🧪 Texture exists?", tex);
+          console.log("🧪 Material type after change:", child.material.type);
+  
+          child.material.needsUpdate = true;
+        }
+      });
+  
+      gltf.scene.scale.set(100, 100, 100);
+      gltf.scene.position.set(0, 0, 0);
+  
+      camera.position.set(0, 0, 0.1);  // <-- offset to enable rotation
+      controls.target.set(0, 0, 0);
+      controls.enableZoom = false;
+      controls.enablePan = false;
+      controls.enableRotate = true;
+      controls.update();
+  
+      scene.add(gltf.scene);
+    } 
+      
+    else {
+      // Standard 3D model
+      scene.background = new THREE.Color(0xdddddd);
+      gltf.scene.scale.set(1, 1, 1);
+      const box = new THREE.Box3().setFromObject(gltf.scene);
+      const center = box.getCenter(new THREE.Vector3());
+      const sizeVec = box.getSize(new THREE.Vector3());
+      gltf.scene.position.sub(center);
+      const size = sizeVec.length();
+      camera.position.copy(center.clone().add(new THREE.Vector3(0, 0, size * 1.5)));
+      controls.target.copy(center);
+      controls.enableZoom = true;
+      controls.enablePan = true;
+      controls.enableRotate = true;
+      controls.update();
+
+      scene.add(gltf.scene);
+    }
+    
+    innitAnnotations(model);
+  }, undefined, (error) => {
+    console.error("GLTF load error:", error);
+  });
 }
 
-/* function handleFile(event) {
-  const file = event.target.files[0];
-  if (file) {
-    const url = URL.createObjectURL(file);
-    loader.load(
-      url,
-      function (gltf) {
-        clearScene();
-        scene.add(gltf.scene);
-        URL.revokeObjectURL(url);
-      },
-      undefined,
-      function (error) {
-        console.error(error);
-      }
-    );
-  }
-} */
+/* ───────────────────────────────────────────────────────────── */
 
 function clearScene() {
   for (let i = scene.children.length - 1; i >= 0; i--) {
-    let obj = scene.children[i];
-    if (obj.type === "Group" || obj.type === "Mesh") {
-      scene.remove(obj);
-      // delete all annotations
-      document.querySelectorAll(".annotation").forEach((el) => el.remove());
-    }
+    const obj = scene.children[i];
+    if (obj.type === "Group" || obj.type === "Mesh") scene.remove(obj);
   }
+  document.querySelectorAll(".annotation").forEach((el) => el.remove());
 }
 
+/* ───────────────────────────────────────────────────────────── */
+
 function animate() {
-  const annots = document.getElementsByClassName("annotation");
-
-  for (let i = 0; i < annots.length; i++) {
-    const pos = JSON.parse(annots.item(i).dataset.pos);
-    const vector = new THREE.Vector3(...pos).project(camera);
-
-    if (vector.z < 0 || vector.z > 1) {
-      annots.item(i).style.display = "none";
+  // update annotation screen positions
+  Array.from(document.getElementsByClassName("annotation")).forEach((el) => {
+    const pos = JSON.parse(el.dataset.pos);
+    const v   = new THREE.Vector3(...pos).project(camera);
+    if (v.z < 0 || v.z > 1) {
+      el.style.display = "none";
     } else {
-      annots.item(i).style.display = "block";
-
-      const x = (vector.x * 0.5 + 0.5) * width;
-      const y = (1 - (vector.y * 0.5 + 0.5)) * height;
-
-      annots.item(i).style.left = `${x}px`;
-      annots.item(i).style.top = `${y}px`;
+      el.style.display = "block";
+      el.style.left = `${(v.x * 0.5 + 0.5) * width}px`;
+      el.style.top  = `${(1 - (v.y * 0.5 + 0.5)) * height}px`;
     }
-  }
+  });
 
   requestAnimationFrame(animate);
   controls.update();

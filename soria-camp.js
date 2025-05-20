@@ -1,135 +1,85 @@
 export const campGeojson = {
   type: "FeatureCollection",
   features: [
-    {
-      type: "Feature",
-      properties: {
-        message: "Camp Entrance",
-        iconSize: [30, 30],
-        link: "./images/Stclaracamp_ex.png", // Image or video link
-        description: "This entrance led into the concentration camp established in 1936 during the Spanish Civil War...",
-        name: "Santa Clara Camp"
-      },
-      geometry: { type: "Point", coordinates: [-2.465624, 41.761797] },
-    },
       {
         //Number 0
         type: "Feature",
         properties: {
           message: "Building 1",
-          iconSize: [30, 30],
-          link: "https://poly.cam/capture/9e8076c7-7c13-49be-84d7-fe01120c9528",
+          model: "Santaclara_3D.glb",
+          iconSize: [40, 40],
+          icon: "./icons/icon_3d.png",
+          //link: "Santaclara_3D.glb",
           description:
             "This building is one of the three remaining structures in Santa Clara Park. \n\nIt is currently undergoing renovation, and its final purpose has yet to be confirmed. Proposed plans suggest it may be used as a space for a neighbourhood association—hosting community-focused activities—or by ASRD, potentially providing social, cultural, or administrative services to the public. During its time as a concentration camp, this building was used as an administrative office. \n\nClick here to view the 3D model of the building as it appeared during the camp period.",
         },
-        geometry: { type: "Point", coordinates: [-2.465174, 41.761754] },
+        geometry: { type: "Point", coordinates: [-2.465207, 41.761834] },
       },
       {
         //Number 1
         type: "Feature",
         properties: {
           message: "Building A",
-          iconSize: [30, 30],
-          link: "https://poly.cam/capture/4ceec818-8c65-4829-b118-7856b3c327f5",
+          model: "Santaclara_3D.glb",
+          iconSize: [40, 40],
+          icon: "./icons/icon_3d.png",
+          //link: "",
           description:
             "This building is one of the three remaining structures in Santa Clara Park. \n\nThe building is known today as Espacio Santa Clara, and is a municipal cultural center that hosts exhibitions, cultural events, and community activities. While the building has a long and varied history—including religious, military, and administrative use—it now serves as a dynamic public space dedicated to creativity, learning, and cultural exchange.This building was originally founded as a convent in 1224. Over the centuries, it served various roles—including a religious site, a burial place for noble families, and later a military barracks. During the war, it housed prisoners and later became the headquarters of the military government. \n\nClick here to view the 3D model of the building as it appeared during the camp period.",
         },
-        geometry: { type: "Point", coordinates: [-2.465624, 41.761797] },
+        geometry: { type: "Point", coordinates: [-2.465703, 41.761837] },
       },
       {
         //Number 2
         type: "Feature",
         properties: {
           message: "Building B",
-          iconSize: [30, 30],
-          link: "https://poly.cam/capture/10269bf0-247e-44ec-a36a-311429b9497b",
+          model: "Santaclara_3D.glb",
+          iconSize: [40, 40],
+          icon: "./icons/icon_3d.png",
+          //link: "",
           description:
             'This building is one of the three remaining structures in Santa Clara Park. \n\nThe building currently houses the Foundation of the Institute for Health Sciences Studies of Castile and León. As a non-profit organization, the Foundation promotes education, research, and outreach in areas such as public health, healthcare management, health law, and occupational health. The building hosts training programs, professional development for healthcare workers, and a variety of seminars and courses in collaboration with public and private institutions.During its time as a concentration camp, this building was referred to as the "small nave," indicating its role as one of the central structures within the complex. While there is no precise documentation of its function, period floor plans suggest that it housed rooms such as a doctor’s office, technicians’ quarters, and corporals’ rooms. \n\nClick here to view the 3D model of the building as it appeared during the camp period.',
         },
-        geometry: { type: "Point", coordinates: [-2.466027, 41.761672] },
+        geometry: { type: "Point", coordinates: [-2.466069, 41.761649] },
       },
       {
         //Number 4
         type: "Feature",
         properties: {
           message: "Building C",
-          iconSize: [30, 30],
-          link: "https://poly.cam/capture/68270e62-4ec8-4678-94ba-4051feacd70e",
+          model: "Santaclara_3D.glb",
+          iconSize: [40, 40],
+          icon: "./icons/icon_3d.png",
+          //link: "",
           description:
             "During its time as a concentration camp, this location was occupied by a building known as the central nave. According to the plan drawing, the building housed various rooms that served functions such as offices, storage, and a barber shop. \n\nClick here to view the 3D model of the building as it appeared during the camp period.",
         },
         geometry: { type: "Point", coordinates: [-2.465854, 41.761428] },
       },
       {
-        //Number 5
-        type: "Feature",
-        properties: {
-          message: "Building D",
-          iconSize: [30, 30],
-          link: "https://poly.cam/capture/74DC1BAD-E115-4E68-BEEB-345DCF01D21F",
-          description:
-            "During its time as a concentration camp, this location was occupied by a building known as the outer nave. According to the plan drawing, the rooms were used for various purposes, including a meeting room, offices, and jail cells. \n\nClick here to view the 3D model of the building as it appeared during the camp period.",
-        },
-        geometry: { type: "Point", coordinates: [-2.465482, 41.761379] },
-      },
-      {
-        //Number 6
-        type: "Feature",
-        properties: {
-          message: "Building E",
-          iconSize: [30, 30],
-          link: "https://poly.cam/capture/10269bf0-247e-44ec-a36a-311429b9497b",
-          description:
-            "During its time as a concentration camp, this location was occupied by a building used as an archive. \n\nClick here to view the 3D reconstruction of the building as it appeared during the camp period.",
-        },
-        geometry: { type: "Point", coordinates: [-2.465523, 41.761553] },
-      },
-      {
         //Number 7
         type: "Feature",
         properties: {
           message: "Building F",
-          iconSize: [30, 30],
-          link: "https://poly.cam/capture/68fdbc73-ff3c-41ce-8e23-692e3ab5d908",
+          model: "Santaclara_3D.glb",
+          iconSize: [40, 40],
+          icon: "./icons/icon_3d.png",
+          //link: "",
           description:
             "During its time as a concentration camp, this location was occupied by a building used as independent restrooms. \n\nClick here to view the 3D reconstruction of the building as it appeared during the camp period.",
         },
         geometry: { type: "Point", coordinates: [-2.465599, 41.761158] },
       },
       {
-        //Number 8
-        type: "Feature",
-        properties: {
-          message: "Building G",
-          iconSize: [30, 30],
-          //iconUrl: "https://cdn-icons-png.flaticon.com/128/9089/9089768.png",
-          link: "https://poly.cam/capture/3349b7c7-0244-4329-ab78-790bc4b2045e",
-          description:
-            "During its time as a concentration camp, this location was occupied by a building used for various support functions. According to the plan drawing, its rooms included a carpentry workshop, a space for managing assignments, and an area for storing provisions. \n\nClick here to view the 3D reconstruction of the building as it appeared during the camp period.",
-        },
-        geometry: { type: "Point", coordinates: [-2.465827, 41.761166] },
-      },
-      {
-        //Number 9
-        type: "Feature",
-        properties: {
-          message: "Building H",
-          iconSize: [30, 30],
-          //iconUrl: "https://cdn-icons-png.flaticon.com/128/9089/9089773.png",
-          link: "https://poly.cam/capture/e86524a9-54a5-4052-a413-2fc893d94715",
-          description:
-            "During its time as a concentration camp, this location was occupied by a building used as independent restrooms. \n\nClick here to view the 3D reconstruction of the building as it appeared during the camp period.",
-        },
-        geometry: { type: "Point", coordinates: [-2.466183, 41.761835] },
-      },
-      {
         //Number 10
         type: "Feature",
         properties: {
           message: "Building I",
-          iconSize: [30, 30],
-          //iconUrl: "https://cdn-icons-png.flaticon.com/128/9215/9215114.png",
-          link: "https://poly.cam/capture/e86524a9-54a5-4052-a413-2fc893d94715" /* same image as H */,
+          model: "Santaclara_3D.glb",
+          iconSize: [40, 40],
+          icon: "./icons/icon_3d.png",
+          //link: "" /* same image as H */,
           description:
             "During its time as a concentration camp, this location was occupied by a building referred to as Campana, possibly indicating the presence of a bell used for signaling within the camp. According to the plan drawing, the building was used for storing provisions and included space for the storekeeper. \n\nClick here to view the 3D reconstruction of the building as it appeared during the camp period.",
         },
@@ -139,36 +89,25 @@ export const campGeojson = {
         //Number 11
         type: "Feature",
         properties: {
-          message: "Building J",
-          iconSize: [30, 30],
-          //iconUrl: "https://cdn-icons-png.flaticon.com/128/9089/9089783.png",
-          link: "https://poly.cam/capture/da0a354d-f3d2-47f2-bd5b-31d2a8b953e7",
+          message: "Building J+K",
+          model: "Santaclara_3D.glb",
+          iconSize: [40, 40],
+          icon: "./icons/icon_3d.png",
+          //link: "",
           description:
             "During its time as a concentration camp, this location was occupied by a wooden barrack. Although there is little documentation regarding its specific use, it may have served as a space for holding prisoners. \n\nClick here to view the 3D reconstruction of the building as it appeared during the camp period.",
         },
-        geometry: { type: "Point", coordinates: [-2.466696, 41.761852] },
-      },
-      {
-        //Number 12
-        type: "Feature",
-        properties: {
-          message: "Building K",
-          iconSize: [30, 30],
-          //iconUrl: "https://cdn-icons-png.flaticon.com/128/9089/9089788.png",
-          link: "https://poly.cam/capture/a3eae35b-f3f6-45a0-9f7b-0335785da964",
-          description:
-            "During its time as a concentration camp, this location was occupied by a wooden barrack. Although there is little documentation regarding its specific use, it may have served as a space for holding prisoners. \n\nClick here to view the 3D reconstruction of the building as it appeared during the camp period.",
-        },
-        geometry: { type: "Point", coordinates: [-2.467103, 41.761876] },
+        geometry: { type: "Point", coordinates: [-2.466807, 41.761858] },
       },
       {
         //Number 13
         type: "Feature",
         properties: {
           message: "Building L",
-          iconSize: [30, 30],
-          //iconUrl: "https://cdn-icons-png.flaticon.com/128/9089/9089793.png",
-          link: "https://poly.cam/capture/bf9eb5fe-085f-4d0c-b939-8eb85358169d",
+          model: "Santaclara_3D.glb",
+          iconSize: [40, 40],
+          icon: "./icons/icon_3d.png",
+          //link: "",
           description:
             "During its time as a concentration camp, this location was occupied by a building referred to as the infirmary. According to the plan drawing, it included spaces for beds and a dedicated operating room, indicating that it served as a medical facility for treating prisoners. \n\nClick here to view the 3D reconstruction of the building as it appeared during the camp period.",
         },
@@ -179,54 +118,34 @@ export const campGeojson = {
         type: "Feature",
         properties: {
           message: "Building 2",
-          iconSize: [30, 30],
-          //iconUrl: "https://cdn-icons-png.flaticon.com/128/8068/8068070.png",
-          link: "https://poly.cam/capture/f46275e9-ae93-47c6-a281-e9971401fdc2",
+          model: "Santaclara_3D.glb",
+          iconSize: [40, 40],
+          icon: "./icons/icon_3d.png",
+          //link: "",
           description:
             "During its time as a concentration camp, this location was occupied by a building known as the Guard Corps. While documentation on its specific functions is limited, the name suggests that it likely served as quarters for personnel responsible for surveillance, controlling prisoner movement, and enforcing discipline within the camp. \n\nClick here to view the 3D reconstruction of the building as it appeared during the camp period.",
         },
         geometry: {
           type: "Point",
-          coordinates: [-2.464800448228161, 41.76169801961536],
+          coordinates: [-2.4649179557976293, 41.76170216235211],
         },
       },
-      {
-        //Number 15
-        type: "Feature",
-        properties: {
-          message: "Building 3",
-          iconSize: [30, 30],
-          //iconUrl: "https://cdn-icons-png.flaticon.com/128/8068/8068125.png",
-          link: "https://poly.cam/capture/3de259ef-e7ea-4d39-9612-0d4f9acdd69e",
-          description:
-            "During its time as a concentration camp, this location was occupied by a multifunctional building, serving various purposes including a guard station and a jail. According to the plan drawing, the rooms were also used for activities such as cooking, plumbing, and shoemaking, housing a kitchen, a plumbing workshop, and a cobbler’s workshop. \n\nClick here to view the 3D reconstruction of the building as it appeared during the camp period.",
-        },
-        geometry: { type: "Point", coordinates: [-2.465108, 41.761419] },
-      },
-      {
-        //Number 16
-        type: "Feature",
-        properties: {
-          message: "Building 4",
-          iconSize: [30, 30],
-          //iconUrl: "https://cdn-icons-png.flaticon.com/128/8068/8068178.png",
-          link: "https://poly.cam/capture/f3a9a038-6b25-40ea-b839-b3fb0048aaf4",
-          description:
-            "During its time as a concentration camp, this location was occupied by a building that functioned as a stable and featured an adjoining yard. \n\nClick here to view the 3D reconstruction of the building as it appeared during the camp period.",
-        },
-        geometry: { type: "Point", coordinates: [-2.465254, 41.761265] },
-      },
+
       /* Forced labour locations */
       {
         //Number 17
         type: "Feature",
         properties: {
           message: "Calle Caballeros",
-          iconSize: [30, 30],
+          name: "Forced Labour - Calle Caballeros",
+          model: "Calle_Cabelleros_360.glb",
+          icon: "./icons/icon_360.1.png",
+          iconSize: [45, 45],
           //iconUrl: "",
-          link: "https://poly.cam/capture/96cd5869-a2a3-4703-8d34-db3af53c378d",
+          //link: "https://poly.cam/capture/96cd5869-a2a3-4703-8d34-db3af53c378d",
+          caption: "360 view of Calle Caballeros today",
           description:
-            "Calle Caballeros. Between 1938 and 1940, prisoners from the Santa Clara concentration camp were forced to work on several public projects in Soria — Calle Caballeros among them. Historical records show that this street was one of the areas where Republican prisoners labored under military control, carrying out construction and maintenance as part of their punishment. This labor, considered by researchers to be a form of slavery, was documented weekly in the city’s municipal archives.",
+            "Calle Caballeros. Between 1938 and 1940, prisoners from the Santa Clara concentration camp were forced to work on several public projects in Soria — Calle Caballeros among them. <br><br>Historical records show that this street was one of the areas where Republican prisoners labored under military control, carrying out construction and maintenance as part of their punishment. <br><br>This labor, considered by researchers to be a form of slavery, was documented weekly in the city’s municipal archives.",
         },
         geometry: { type: "Point", coordinates: [-2.464947, 41.762092] },
       },
@@ -235,15 +154,102 @@ export const campGeojson = {
         type: "Feature",
         properties: {
           message: "Government building",
-          iconSize: [30, 30],
+          name: "Forced Labour - Oficina de Extranjería de Soria",
+          model: "government_building_360.glb",
+          icon: "./icons/icon_360.1.png",
+          iconSize: [45, 45],
           //iconUrl: "",
           link: "https://poly.cam/capture/407D0D5B-5115-48DC-A8D9-3A0AF544AB1B",
+          caption: "360 view of the Oficina de Extranjería de Soria today",
           description:
-            "Oficina de Extranjería de Soria. Located in an area of the city shaped by major urban projects during the Franco regime, the site of the current Oficina de Extranjería is within the historical zone where prisoners from the Santa Clara camp were deployed for forced labor. Although specific building records are limited, evidence indicates that this zone—like others nearby—was developed in part by political prisoners working under coercive conditions.",
+            "Located in an area of the city shaped by major urban projects during the Franco regime, the site of the current Oficina de Extranjería is within the historical zone where prisoners from the Santa Clara camp were deployed for forced labor. <br><br>Although specific building records are limited, evidence indicates that this zone, like others nearby, was developed in part by political prisoners working under coercive conditions.",
         },
         geometry: {
           type: "Point",
           coordinates: [-2.469567073668721, 41.76371481842461],
+        },
+      },
+      {
+        //Number 19
+        type: "Feature",
+        properties: {
+          message: "Forced Labour",
+          name: "Forced Labour",
+          icon: "./icons/icon_info.png",
+          iconSize: [40, 40],
+          //iconUrl: "",
+          link: "./images/forced_labour.png",
+          caption: "Two known locations of forced Labor During the Camp’s Operation",
+          description:
+            "From 1937 onward, Santa Clara became part of the Nationalist forced labor system. <br>Prisoners were compelled to build roads , repair public buildings, and maintain city infrastructure. Even before official labor battalions were formed, inmates unloaded bombs, cleaned shelters, and prepared land for sports fields. <br><br>They were paid just 1.50 pesetas per day—far less than civilian workers—highlighting the exploitation. Logs recorded over 11,000 prisoner workdays from 1938 to 1940. These tasks were carried out under harsh supervision and in extremely poor conditions.<br><br>On the map, two key locations associated with forced labor outside of Santa Clara are marked: Calle Caballeros and the Oficina de Extranjería de Soria.",
+        },
+        geometry: {
+          type: "Point",
+          coordinates: [-2.465393, 41.761792],
+        },
+      },
+      
+
+      //Living conditions
+
+      {
+        //Number 20
+        type: "Feature",
+        properties: {
+          message: "Doctors letter",
+          name: "Doctors letter",
+          icon: "./icons/icon_info.png",
+          iconSize: [40, 40],
+          link: "./images/doctors_letter.png", // Image link
+          caption: "A doctors report by Lt. Carmelo Vara García (1939) revealing severe malnutrition, overcrowding, and unsanitary conditions at Santa Clara concentration camp.",
+          description:
+            'A report by military doctor Lt. Carmelo Vara García reveals the extreme neglect at Santa Clara. On November 26, 1939, he observed an “excessive number of sick prisoners," largely suffering from deficiency diseases caused by malnutrition. Over three days, he inspected meals and found they consisted mostly of watery pasta soup with minimal ingredients: <br><br>Pasta: 90.99 g<br>Bacon: 8.69 g<br>Ham bone: 5.21 g<br><br>Dinner was usually boiled potatoes with a small amount of fatback and 20 kg of whiting—equating to one piece of fish or bacon for every 20–25 prisoners. These rations were "clearly insufficient for the minimum nutrition of a normal individual."<br><br>Living conditions were equally dire. Barracks meant for 100 men were packed with 240, locked in overnight without toilets, creating dangerously unhygienic conditions.The doctor appealed for intervention, calling his report both a professional obligation and a humanitarian act "aligned with the doctrines of our Caudillo and our Cause."',
+        },
+        geometry: {
+          type: "Point",
+          coordinates: [-2.467361, 41.761766],
+        },
+      },
+
+      //Types of prisoners
+
+      {
+        //Number 21
+        type: "Feature",
+        properties: {
+          message: "Types of prisoners",
+          name: "Types of Prisoners",
+          icon: "./icons/icon_info.png",
+          iconSize: [40, 40],
+          link: "./images/prisoners_wall.jpg", // Image link
+          caption: "Photo of prisoners in Santa Clara",
+          description:
+           'Santa Clara held a diverse group of prisoners, primarily individuals who had opposed the Nationalist regime. The majority were Republican soldiers, including deserters, forcibly enlisted men, and those who had evaded capture. <br><br>Upon arrival, they were classified based on their perceived affiliation or threat level. Many of these prisoners were detained without trial and subjected to arbitrary classification. <br><br>In addition to soldiers, the camp housed political detainees, such as union members, Communists, teachers, and civilians from Republican-held areas like Sigüenza, Madrid, and Guadalajara. Some foreign nationals, including individuals from Germany, Austria, and France, were also imprisoned.',
+        },
+        geometry: {
+          type: "Point",
+          coordinates: [-2.465919, 41.761310],
+        },
+      },
+
+      //Living conditions
+
+      {
+        //Number 22
+        type: "Feature",
+        properties: {
+          message: "Living conditions",
+          name: "Living Conditions",
+          icon: "./icons/icon_info.png",
+          iconSize: [40, 40],
+          link: "./images/prisoners.jpg", // Image link
+          caption: "Photo of prisoners in Santa Clara",
+          description:
+          "The living conditions at Santa Clara were extremely harsh, marked by overcrowding, unsanitary environments, and extreme deprivation. Barracks meant for only 100 prisoners were packed with over 300, leading to cramped and unhygienic living spaces. <br><br>Prisoners were forced to sleep on straw with no blankets, even during the harsh winter months. The lack of proper sanitation infrastructure exacerbated the spread of infectious diseases, such as typhus and tuberculosis, which ravaged the camp population. <br><br>Prisoners endured physical and psychological abuse, with little to no access to medical care. <br><br>The combination of poor nutrition, harsh punishment, and unsanitary conditions led to frequent illnesses and an alarmingly high death rate. Many prisoners died from malnutrition, disease, and cold, while others suffered extrajudicial executions during the camp's operation. The dire living conditions contributed to a profound sense of hopelessness and suffering among the inmates.",
+        },
+        geometry: {
+          type: "Point",
+          coordinates: [-2.467053, 41.761877],
         },
       },
           

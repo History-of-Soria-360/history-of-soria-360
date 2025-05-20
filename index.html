@@ -34,14 +34,20 @@
         width: 100%;
         height: 100%;
       }
-
       .marker {
         display: block;
         border: none;
-        border-radius: 50%;
+        border-radius: 0;
+        overflow: visible;
         cursor: pointer;
         padding: 0;
+        background-size: contain;
+        background-color: transparent;
+        background-repeat: no-repeat;
+        background-position: center;
+        box-sizing: border-box;
       }
+
 
       #overlay {
         display: none;
@@ -67,7 +73,6 @@
         padding: 1rem;
         box-sizing: border-box;
         overflow: hidden;
-        position: relative;
       }
 
       #overlay-right {
@@ -112,6 +117,15 @@
         border-radius: 0.5rem;
       }
 
+      #threejs-container-wrapper {
+        min-height: 400px;
+        background-color: #eee; /* optional for debugging */
+        width: 100%;
+        height: 300px;
+        position: relative;
+      }
+
+
       .nav-button {
         position: absolute;
         background-color: #111827;
@@ -147,6 +161,7 @@
       #nextBtn {
         right: 10px;
       }
+
 
       /* Overlay styles for the camp view */
 
@@ -186,13 +201,37 @@
         align-items: center;
       }
 
-      #camp-image {
+      img.camp-image {
         width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 0.5rem;
+        max-height: 90%;
+        object-fit: contain;
+        display: block;
+        margin: 0 auto;
+      }
+
+
+
+      #camp-media-container {
+        width: 100%;
+        height: 90%;
+        display: flex;
+        flex-direction: column; /* ← Add this */
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        flex-grow: 1;
         margin-bottom: 1rem;
       }
+
+      #camp-iframe {
+        width: 90%;
+        height: 90%;
+        max-height: 100%;
+        object-fit: cover;
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      }
+
 
       #camp-overlay-right {
         width: 40%;
@@ -213,6 +252,7 @@
         font-size: 0.95rem;
         color: #374151;
         line-height: 1.5;
+        margin-right: 15%;
       }
 
       #camp-iframe {
@@ -235,14 +275,6 @@
         border-radius: 0.375rem;
         cursor: pointer;
         transition: background 0.2s;
-      }
-
-      .annotation {
-        position: absolute;
-        background: white;
-        padding: 5px;
-        border: 1px solid black;
-        cursor: pointer;
       }
 
       #camp-closeBtn:hover {
@@ -302,7 +334,31 @@
         font-size: 0.95rem;
         color: #374151;
         line-height: 1.5;
+        margin-right: 10%;
+
       }
+
+      #convent-headline {
+        font-size: 36px;    /* Adjust the font size */
+        color: #1a202c;     /* Set the text color */
+        font-weight: bold;  /* Make the text bold */
+        margin-top: 20px;   /* Add some space above the headline */
+        text-align: center; /* Center-align the text */
+        line-height: 1.5;   /* Adjust line height for better readability */
+      }
+
+
+      #convent-subtitle {
+        font-size: 18px; /* Adjust the font size */
+        color: #333333;  /* Set the text color */
+        font-style: italic;  /* Make the text italic */
+        margin-top: 5px;  /* Add some space above the subtitle */
+        margin-bottom: 10px; /* Add some space below the subtitle */
+        text-align: center; /* Center the text */
+        font-weight: normal; /* Adjust the font weight (normal, bold, etc.) */
+        line-height: 1;  /* Adjust line height for better readability */
+      }
+
 
       #convent-iframe {
         width: 100%;
@@ -320,20 +376,53 @@
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
+        justify-content: center; /* Vertically center image+caption */
         align-items: center;
       }
 
+
       #convent-image {
         width: 100%;
-        height: 130%;
-        object-fit: cover; /* Maintain aspect ratio while cropping */
+        max-width: 600px;
+        height: auto;
+        object-fit: contain;
         border-radius: 0.5rem;
-        margin-bottom: 1rem;
+        margin-bottom: 0.5rem;
       }
 
-      #convent-media-container video {
-        pointer-events: auto;
+
+
+      #convent-media-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;  /* Center contents vertically */
+        flex: 1;                  /* Let it expand inside parent */
+        padding: 1rem;
+        width: 100%;
+        box-sizing: border-box;
       }
+
+
+      #convent-image,
+      #convent-media-container img {
+        width: 100%;
+        height: auto;
+        max-width: 600px;      /* Optional: keep it from being too wide */
+        object-fit: contain;   /* or cover if you want it cropped */
+        border-radius: 0.5rem;
+      }
+
+
+      .image-caption {
+        margin-top: 0.5rem;
+        font-size: 0.9em;
+        color: #555;
+        text-align: center;
+        font-style: italic;
+      }
+
+
 
       #convent-closeBtn {
         top: 10px;
@@ -351,6 +440,17 @@
 
       #convent-closeBtn:hover {
         background-color: #d1d5db;
+      }
+
+      .annotation {
+        position: absolute;
+        background: white;
+        padding: 5px;
+        border: 1px solid black;
+        cursor: pointer;
+        font-size: 0.85rem;
+        border-radius: 5px;
+        z-index: 1001;
       }
 
       /* Container bar */
@@ -486,7 +586,7 @@
       <div class="timeline-slider">
         <div class="timeline-ticks">
           <div class="tick-container">
-            <div class="tick-label top">1286</div>
+            <div class="tick-label top">1835</div>
             <div class="tick-line"></div>
             <div class="tick-label bottom">Convent</div>
           </div>
@@ -519,40 +619,50 @@
       <button class="nav-button" id="closeBtn">✖</button>
       <button class="nav-button" id="prevBtn">←</button>
       <button class="nav-button" id="nextBtn">→</button>
+    
       <div id="overlay-left">
         <div id="overlay-content"></div>
+        <!-- DO NOT add #threejs-container-wrapper here if you're creating it dynamically in JS -->
       </div>
+    
       <div id="overlay-right">
         <h3>360° view of the chosen site</h3>
         <p class="whitespace-pre-wrap" id="image-description"></p>
       </div>
     </div>
+    
 
     <!--Adding the camp layer-->
     <div id="camp-overlay" class="overlay">
       <button class="nav-button" id="prevBtn">←</button>
       <button class="nav-button" id="nextBtn">→</button>
-
+    
       <div id="camp-overlay-left">
         <div id="camp-media-container">
-          <!-- <img id="camp-image" src="./images/Stclaracamp_ex.png" alt="Camp Image" />-->
-
           <iframe
             id="camp-iframe"
             title="Camp Viewer"
-            style="width: 100%; height: 300px; border: none"
+            style="width: 100%; height: 300px; border: none; display: none"
           ></iframe>
+    
+          <img
+            id="camp-image"
+            src=""
+            alt="Camp Image"
+
+          />
+          <p id="camp-caption" class="image-caption"></p>
         </div>
       </div>
-
+    
       <div id="camp-overlay-right">
-        <h3>Santa Clara Camp History</h3>
+        <h3 id="camp-overlay-headline">Santa Clara Convent History</h3>
         <p id="camp-description">This is the concentration camp from 1936...</p>
       </div>
-
+    
       <button class="nav-button" id="camp-closeBtn">✖</button>
     </div>
-
+    
     <!--Adding the convent layer-->
     <div id="convent-overlay" class="overlay">
       <div id="convent-overlay-left">
@@ -563,14 +673,15 @@
             alt="Convent Image"
             src="./images/Stclara_1910.png"
           />
+          <p id="convent-caption" class="image-caption"></p>
         </div>
-        <!-- <iframe id="convent-iframe" title="Polycam viewer" style="width: 100%; height: 300px; border: none;"></iframe> -->
       </div>
 
-      <!-- Add camp layer-->
       <div id="convent-overlay-right">
-        <h3>Santa Clara Convent History</h3>
-        <p id="convent-description">This is the convent from 1286...</p>
+        <h3 id="convent-headline">Santa Clara Convent History</h3>
+        <p id="convent-subtitle"></p>
+        <p id="convent-description"></p>
+
       </div>
 
       <button class="nav-button" id="convent-closeBtn">✖</button>
@@ -590,6 +701,7 @@
       import { campGeojson } from "./soria-camp.js";
       import { initThreejs } from "./3D-model-viewer.js";
 
+
       // Load the GeoJSON data for the convent
       const marker = conventGeojson.features[0];
       const imageElement = document.getElementById("convent-image");
@@ -608,27 +720,40 @@
       // Add navigation controls
       let currentIndex = null;
 
-      // Add zoom and rotation controls to the map.
+      // Add navigation controls to the map
       function showOverlay(index) {
         const feature = geojson.features[index];
-        const link = feature.properties.link;
+        const modelKey = feature.properties.model;
         const description = feature.properties.description;
 
-        // Set the iframe source to the link of the selected feature
-        document.getElementById("overlay").style.display = "grid";
-        document.getElementById("overlay-content").innerHTML =
-          "<div id='threejs-container'></div>";
+        console.log("Model:", modelKey);
+        console.log("Description:", description);
 
-        initThreejs("threejs-container");
-        /* `
-          <iframe
-            src="${link}/embed"
-            title="Polycam capture viewer">
-          </iframe>
-        ` */
-        document.getElementById("image-description").textContent = description;
+        // Show overlay
+        document.getElementById("overlay").style.display = "grid";
+
+        // Set the LEFT panel content
+        document.getElementById("overlay-content").innerHTML =
+          `<div id="threejs-container-wrapper" style="position: relative; width: 100%; height: 100%;">
+            <div id="threejs-container" style="width: 100%; height: 100%;"></div>
+          </div>`;
+
+        // ✅ Now the element exists – safe to call init
+        initThreejs("threejs-container", modelKey);
+
+        // ✅ Set description in the RIGHT panel
+        const descBox = document.getElementById("image-description");
+          if (descBox) {
+            descBox.innerHTML = description;
+          } else {
+            console.warn("No #image-description element found.");
+          }
+
+
         currentIndex = index;
       }
+
+
 
       // This event listener is for the close button
       document.getElementById("closeBtn").addEventListener("click", () => {
@@ -677,12 +802,12 @@
         // Add the camp map to the page
         map.addSource("camp-map", {
           type: "image",
-          url: "./images/Stclaracamp_ex.png",
+          url: "./images/santaclara_camp.png",
           coordinates: [
-            [-2.467869, 41.762418], // top-left
-            [-2.464613, 41.762312], // top-right
-            [-2.464697, 41.760851], // bottom-right
-            [-2.467967, 41.761014], // bottom-left
+            [-2.467844, 41.762366], // top-left
+            [-2.4639595395427603, 41.762158436832834], // top-right
+            [-2.464092, 41.760682], // bottom-right
+            [-2.467963, 41.760846], // bottom-left
           ],
         });
 
@@ -722,54 +847,109 @@
           firstSymbolId
         );
 
-        // Add markers to the map
-        geojson.features.forEach((marker, index) => {
-          const el = document.createElement("div");
-          el.className = "marker";
-          el.style.backgroundImage =
-            "url('https://cdn-icons-png.flaticon.com/128/7976/7976202.png')";
-          //el.style.backgroundImage = `url('${marker.properties.iconUrl}')`;
-          el.style.backgroundSize = "cover";
-          el.style.width = `${marker.properties.iconSize[0]}px`;
-          el.style.height = `${marker.properties.iconSize[1]}px`;
+   // Add markers to the map
+      geojson.features.forEach((marker, index) => {
+        const el = document.createElement("div");
+        el.className = "marker";
+        const iconURL = marker.properties.icon || 'https://cdn-icons-png.flaticon.com/128/7976/7976202.png';
+        el.style.backgroundImage = `url('${iconURL}')`;
+        el.style.backgroundSize = "contain";
+        el.style.backgroundRepeat = "no-repeat";
+        el.style.backgroundPosition = "center";
+        el.style.width = `${marker.properties.iconSize[0]}px`;
+        el.style.height = `${marker.properties.iconSize[1]}px`;
 
-          el.addEventListener("click", () => showOverlay(index));
-
-          // Add the marker to the present day map
-          const mapMarker = new maplibregl.Marker({ element: el })
-            .setLngLat(marker.geometry.coordinates)
-            .addTo(map);
-
-          presentDayMarkers.push(mapMarker);
+        // ✅ Click event
+        el.addEventListener("click", () => {
+          showOverlay(index);
+          const modelKey = marker.properties.model;
         });
 
-        setMarkersVisibility(presentDayMarkers, false);
+        // ✅ Add marker to map (outside the click event)
+        const mapMarker = new maplibregl.Marker({ element: el })
+          .setLngLat(marker.geometry.coordinates)
+          .addTo(map);
+
+        presentDayMarkers.push(mapMarker);
+      });
+
+      setMarkersVisibility(presentDayMarkers, false);
+
 
         // Add camp markers
         campGeojson.features.forEach((marker) => {
           const el = document.createElement("div");
           el.className = "marker";
-          el.style.backgroundImage =
-            "url('https://cdn-icons-png.flaticon.com/128/7976/7976202.png')";
-          el.style.backgroundSize = "cover";
+          const iconURL = marker.properties.icon || 'https://cdn-icons-png.flaticon.com/128/7976/7976202.png';
+          el.style.backgroundImage = `url('${iconURL}')`;
+          el.style.backgroundSize = "contain";
+          el.style.backgroundRepeat = "no-repeat";
+          el.style.backgroundPosition = "center";
           el.style.width = `${marker.properties.iconSize[0]}px`;
           el.style.height = `${marker.properties.iconSize[1]}px`;
 
           el.addEventListener("click", () => {
-            // Define your custom camp overlay logic here
             const overlay = document.getElementById("camp-overlay");
             overlay.classList.add("show");
 
-            document.getElementById(
-              "camp-iframe"
-            ).src = `${marker.properties.link}/embed`;
-            document.getElementById("camp-overlay-headline").textContent =
-              marker.properties.name;
-            document.getElementById("camp-description").textContent =
-              marker.properties.description;
+            const modelKey = marker.properties.model;
+            const link = marker.properties.link;
+            const caption = marker.properties.caption;
+            const name = marker.properties.name;
+            const description = marker.properties.description;
 
-            const imageElement = document.getElementById("camp-image");
-            imageElement.src = marker.properties.link;
+            const mediaContainer = document.getElementById("camp-media-container");
+            mediaContainer.innerHTML = "";
+
+            if (modelKey && modelKey.endsWith(".glb")) {
+              mediaContainer.innerHTML = `
+                <div id="threejs-container-wrapper" style="position: relative; width: 100%; height: 300px;">
+                  <div id="threejs-container" style="width: 100%; height: 100%;"></div>
+                </div>
+              `;
+              setTimeout(() => {
+                initThreejs("threejs-container", modelKey);
+              }, 0);
+
+            } else if (link) {
+              if (link.endsWith(".mp4")) {
+                const video = document.createElement("video");
+                video.src = link;
+                video.controls = true;
+                video.style = "width: 100%; height: 300px; object-fit: cover;";
+                mediaContainer.appendChild(video);
+              } else {
+                const img = document.createElement("img");
+                img.src = link;
+                img.alt = "Camp Image";
+                img.classList.add("camp-image");
+                mediaContainer.appendChild(img);
+
+
+              }
+            }
+
+            if (caption) {
+              const captionElement = document.createElement("p");
+              captionElement.className = "image-caption";
+              captionElement.textContent = caption;
+              mediaContainer.appendChild(captionElement);
+            }
+
+            document.getElementById("camp-overlay-headline").textContent = name || "Camp Marker";
+            document.getElementById("camp-description").innerHTML = description || "";
+
+
+            // Optional: Zoom for special markers
+            if (marker.properties.name === "Forced Labour") {
+              map.flyTo({
+                center: marker.geometry.coordinates,
+                zoom: 16,
+                speed: 1.2,
+                curve: 1,
+                essential: true,
+              });
+            }
           });
 
           const mapMarker = new maplibregl.Marker({ element: el })
@@ -782,13 +962,11 @@
         setMarkersVisibility(campMarkers, false);
 
         // Close button for the camp overlay
-        document
-          .getElementById("camp-closeBtn")
-          .addEventListener("click", () => {
+        document.getElementById("camp-closeBtn").addEventListener("click", () => {
             const overlay = document.getElementById("camp-overlay");
             overlay.classList.remove("show");
 
-            document.getElementById("camp-iframe").src = "";
+            //document.getElementById("camp-iframe").src = "";
             document.getElementById("camp-overlay-headline").textContent = "";
             document.getElementById("camp-description").textContent = "";
           });
@@ -797,25 +975,62 @@
         conventGeojson.features.forEach((marker) => {
           const el = document.createElement("div");
           el.className = "marker";
-          el.style.backgroundImage =
-            "url('https://cdn-icons-png.flaticon.com/128/7976/7976202.png')";
-          el.style.backgroundSize = "cover";
+          const iconURL = marker.properties.icon || 'https://cdn-icons-png.flaticon.com/128/7976/7976202.png';
+          el.style.backgroundImage = `url('${iconURL}')`;
+          el.style.backgroundSize = "contain";
+          el.style.backgroundRepeat = "no-repeat";
+          el.style.backgroundPosition = "center";
           el.style.width = `${marker.properties.iconSize[0]}px`;
           el.style.height = `${marker.properties.iconSize[1]}px`;
 
           el.addEventListener("click", () => {
-            const overlay = document.getElementById("convent-overlay");
-            overlay.classList.add("show");
+          const overlay = document.getElementById("convent-overlay");
+          overlay.classList.add("show");
 
-            // Set image, description, and iframe (Polycam viewer)
-            // document.getElementById("convent-iframe").src = `${marker.properties.link}/embed`;
-            // document.getElementById("convent-overlay-headline").textContent = marker.properties.name;
-            // document.getElementById("convent-description").textContent = marker.properties.description;
+          const mediaContainer = document.getElementById("convent-media-container");
 
-            // Set the image in the pop-up
-            //const imageElement = document.getElementById('convent-image');
-            //imageElement.src = marker.properties.link; // Set the source of the image dynamically
-          });
+          // Clear previous content (image or video)
+          mediaContainer.innerHTML = "";
+
+          if (marker.properties.link.endsWith(".mp4")) {
+            const videoElement = document.createElement("video");
+            videoElement.src = marker.properties.link;
+            videoElement.controls = true;
+            mediaContainer.appendChild(videoElement);
+          } else {
+            const imageElement = document.createElement("img");
+            imageElement.src = marker.properties.link;
+            imageElement.alt = "Convent Image";
+            mediaContainer.appendChild(imageElement);
+          }
+
+          // Add caption
+          if (marker.properties.caption) {
+            const captionElement = document.createElement("p");
+            captionElement.className = "image-caption";
+            captionElement.textContent = marker.properties.caption;
+            mediaContainer.appendChild(captionElement);
+          }
+
+
+
+          // Update text content
+          document.getElementById("convent-description").innerHTML = marker.properties.description;
+          document.getElementById("convent-headline").innerText = marker.properties.name;
+
+
+          const subtitleElement = document.getElementById("convent-subtitle");
+            if (marker.properties.subtitle) {
+              subtitleElement.innerText = marker.properties.subtitle;
+            } else {
+              subtitleElement.innerText = ""; // Fallback message
+            }
+
+              const captionElement = document.getElementById("convent-caption");
+              captionElement.textContent = marker.properties.caption || "";
+        
+        });
+
 
           const mapMarker = new maplibregl.Marker({ element: el })
             .setLngLat(marker.geometry.coordinates)
