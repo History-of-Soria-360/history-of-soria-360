@@ -8,6 +8,8 @@ let containerIDGlobal;
 let scene, camera, renderer, controls, loader, width, height;
 let models = ["building_BH.glb", "building_1-3.glb", "5_4_2025.glb"];
 
+let targetIsSet = false;
+
 /* ───────────────────────────────────────────────────────────── */
 
 export function initThreejs(containerID, model, camPos = null, lookAt = null) {
@@ -49,6 +51,17 @@ export function initThreejs(containerID, model, camPos = null, lookAt = null) {
   controls.enableZoom = false;
   controls.enableDamping = true;
   controls.dampingFactor = 0.1;
+
+  controls.domElement.addEventListener("pointerdown", (event) => {
+    if (event.button === 0) {
+      if (targetIsSet) {
+        // camera.position.set(0, 0, 0.1);
+        controls.target.set(0, 0, 0);
+        controls.update();
+        targetIsSet = false;
+      }
+    }
+  });
 
   /* ---------- bookkeeping ---------- */
   width = container.clientWidth;
@@ -94,7 +107,9 @@ function innitAnnotations(model) {
     ann.dataset.pos = JSON.stringify([a.lookAt.x, a.lookAt.y, a.lookAt.z]);
 
     ann.onclick = () => {
-      //TODO: Update content of the overlay content pane
+      controls.target.set(a.lookAt.x, a.lookAt.y, a.lookAt.z);
+      controls.update();
+      targetIsSet = true;
     };
     document.getElementById("threejs-container-wrapper")?.appendChild(ann);
   }
