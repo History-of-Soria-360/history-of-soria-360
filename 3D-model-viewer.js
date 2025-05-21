@@ -13,6 +13,8 @@ let targetIsSet = false;
 /* ───────────────────────────────────────────────────────────── */
 
 export function initThreejs(containerID, model, camPos = null, lookAt = null) {
+  console.log("INITHREEJS");
+
   containerIDGlobal = containerID;
   if (model == null) model = models[0];
 
@@ -95,7 +97,6 @@ function setCamPosAndLookAt(camPos, lookAt) {
 }
 
 /* ───────────────────────────────────────────────────────────── */
-
 function innitAnnotations(model) {
   document.querySelectorAll(".annotation").forEach((el) => el.remove());
   if (!annotations[model]) return;
@@ -110,6 +111,12 @@ function innitAnnotations(model) {
       controls.target.set(a.lookAt.x, a.lookAt.y, a.lookAt.z);
       controls.update();
       targetIsSet = true;
+
+      // Update the description area on annotation click
+      const descBox = document.getElementById("image-description");
+      if (descBox) {
+        descBox.innerHTML = a.description || a.title || ""; // fallback to title if no description
+      }
     };
     document.getElementById("threejs-container-wrapper")?.appendChild(ann);
   }
@@ -117,7 +124,7 @@ function innitAnnotations(model) {
 
 /* ───────────────────────────────────────────────────────────── */
 
-function loadModel(model, camPos, lookAt) {
+export function loadModel(model, camPos, lookAt) {
   clearScene();
 
   let path = model;
@@ -203,7 +210,7 @@ function loadModel(model, camPos, lookAt) {
         const center = box.getCenter(new THREE.Vector3());
         const sizeVec = box.getSize(new THREE.Vector3());
         console.log(box, box, sizeVec, center);
-        // gltf.scene.position.sub(center);
+        gltf.scene.position.sub(center);
         /* const size = sizeVec.length();
         camera.position.copy(
           center.clone().add(new THREE.Vector3(0, 0, size * 1.5))

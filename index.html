@@ -276,6 +276,57 @@
         background-color: #d1d5db;
       }
 
+      .model-toggle {
+        display: inline-flex;
+        align-items: center;
+        cursor: pointer;
+        user-select: none;
+        font-size: 16px;
+        gap: 10px;
+        position: relative;
+      }
+
+      /* Hide the native checkbox */
+      .model-toggle input[type="checkbox"] {
+        opacity: 0;
+        width: 0;
+        height: 0;
+        position: absolute;
+      }
+
+      /* The slider track */
+      .model-toggle .slider {
+        position: relative;
+        width: 40px;
+        height: 20px;
+        background-color: #ccc;
+        border-radius: 20px;
+        transition: background-color 0.3s;
+      }
+
+      /* The circle knob */
+      .model-toggle .slider::before {
+        content: "";
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        left: 2px;
+        top: 2px;
+        background-color: white;
+        border-radius: 50%;
+        transition: transform 0.3s;
+      }
+
+      /* Checked state: track background */
+      .model-toggle input:checked + .slider {
+        background-color: #2196f3;
+      }
+
+      /* Checked state: move the knob */
+      .model-toggle input:checked + .slider::before {
+        transform: translateX(20px);
+      }
+
       /* Overlay styles for the convent view */
 
       #convent-overlay {
@@ -636,6 +687,13 @@
 
       <div id="camp-overlay-right">
         <h3 id="camp-overlay-headline">Santa Clara Convent History</h3>
+
+        <label class="model-toggle">
+          <input type="checkbox" id="modelToggle" />
+          <span class="slider"></span>
+          Show interior view
+        </label>
+
         <p id="camp-description">This is the concentration camp from 1936...</p>
       </div>
 
@@ -677,7 +735,7 @@
       import { loadCustomLayer } from "./3D-model-layer.js";
       import { conventGeojson } from "./soria-convent.js";
       import { campGeojson } from "./soria-camp.js";
-      import { initThreejs } from "./3D-model-viewer.js";
+      import { initThreejs, loadModel } from "./3D-model-viewer.js";
 
       // Load the GeoJSON data for the convent
       const marker = conventGeojson.features[0];
@@ -871,48 +929,65 @@
             overlay.classList.add("show");
 
             const modelKey = marker.properties.model;
+            const altmodel = marker.properties.altmodel;
             const link = marker.properties.link;
             const caption = marker.properties.caption;
             const name = marker.properties.name;
             const description = marker.properties.description;
             const camPos = marker.properties.camPos;
             const lookAt = marker.properties.lookAt;
+            const icon = marker.properties.icon;
 
             const mediaContainer = document.getElementById(
               "camp-media-container"
             );
             mediaContainer.innerHTML = "";
 
-            if (modelKey && modelKey.endsWith(".glb")) {
+            const toggleLabel = document.querySelector(
+              "#camp-overlay-right .model-toggle"
+            );
+            const toggle = document.getElementById("modelToggle");
+
+            // Show toggle ONLY if icon === "./icons/icon_3d.png"
+            if (icon === "./icons/icon_3d.png") {
+              toggleLabel.style.display = "inline-flex"; // or "block" depending on your CSS
+              toggle.checked = false;
+
+              let currentModel = modelKey;
+
               mediaContainer.innerHTML = `
                   <div id="threejs-container-wrapper" style="position: relative; width: 100%; height: 100%;">
                     <div id="threejs-container" style="width: 100%; height: 100%;"></div>
                   </div>
                 `;
-              setTimeout(() => {
-                initThreejs("threejs-container", modelKey, camPos, lookAt);
-              }, 0);
-            } else if (link) {
-              if (link.endsWith(".mp4")) {
-                const video = document.createElement("video");
-                video.src = link;
-                video.controls = true;
-                video.style = "width: 100%; height: 100%; object-fit: cover;";
-                mediaContainer.appendChild(video);
-              } else {
-                const img = document.createElement("img");
-                img.src = link;
-                img.alt = "Camp Image";
-                img.classList.add("camp-image");
-                mediaContainer.appendChild(img);
-              }
-            }
 
-            if (caption) {
-              const captionElement = document.createElement("p");
-              captionElement.className = "image-caption";
-              captionElement.textContent = caption;
-              mediaContainer.appendChild(captionElement);
+              // initThreejs(currentModel);
+              initThreejs("threejs-container", currentModel, camPos, lookAt);
+
+              toggle.onchange = () => {
+                currentModel = toggle.checked ? altmodel || modelKey : modelKey;
+                loadModel(currentModel, camPos, lookAt);
+              };
+            } else {
+              // Hide toggle for all other markers
+              toggleLabel.style.display = "none";
+
+              // Load image or video content as usual
+              if (link) {
+                if (link.endsWith(".mp4")) {
+                  const video = document.createElement("video");
+                  video.src = link;
+                  video.controls = true;
+                  video.style = "width: 100%; height: 100%; object-fit: cover;";
+                  mediaContainer.appendChild(video);
+                } else {
+                  const img = document.createElement("img");
+                  img.src = link;
+                  img.alt = "Camp Image";
+                  img.classList.add("camp-image");
+                  mediaContainer.appendChild(img);
+                }
+              }
             }
 
             document.getElementById("camp-overlay-headline").textContent =
@@ -920,7 +995,7 @@
             document.getElementById("camp-description").innerHTML =
               description || "";
 
-            // Optional: Zoom for special markers
+            // Optional zoom for special markers
             if (marker.properties.name === "Forced Labour") {
               map.flyTo({
                 center: marker.geometry.coordinates,
