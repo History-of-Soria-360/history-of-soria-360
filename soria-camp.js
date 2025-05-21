@@ -7,15 +7,16 @@ export const campGeojson = {
       properties: {
         message: "Building 1",
         model: "Santaclara_3D.glb",
+        altmodel: "Santaclara_dollshouse_3D.glb",
         camPos: {
-          x: 323.85284266181316,
-          y: 12.299927453338679,
-          z: -91.08581395308303,
+          x: 321.8389068281301,
+          y: 7.583789880155855,
+          z: -75.76810207254861
         },
         lookAt: {
-          x: 318.18219011476293,
-          y: 7.41553703792067,
-          z: -98.48236250645307,
+          x: 315.1998997414996,
+          y: 5.648705551402172,
+          z: -97.04973563395485
         },
         iconSize: [40, 40],
         icon: "./icons/icon_3d.png",
@@ -31,6 +32,17 @@ export const campGeojson = {
       properties: {
         message: "Building A",
         model: "Santaclara_3D.glb",
+        altmodel: "Santaclara_dollshouse_3D.glb",
+        camPos: {
+          x: 266.08132380016673,
+          y: 35.471572310134306,
+          z: 7.135085675583575
+        },
+        lookAt: {
+          x: 271.76040332453874,
+          y: 11.851929876774221,
+          z: -90.50928473223604
+        },
         iconSize: [40, 40],
         icon: "./icons/icon_3d.png",
         //link: "",
@@ -45,6 +57,17 @@ export const campGeojson = {
       properties: {
         message: "Building B",
         model: "Santaclara_3D.glb",
+        altmodel: "Santaclara_dollshouse_3D.glb",
+          camPos: {
+            x: 296.207762111585,
+            y: 11.63635634703803,
+            z: -71.25262748631563
+          },
+          lookAt: {
+            x: 254.0500216139452,
+            y: 6.278878643218111,
+            z: -75.40816723354658
+          },
         iconSize: [40, 40],
         icon: "./icons/icon_3d.png",
         //link: "",
@@ -59,6 +82,17 @@ export const campGeojson = {
       properties: {
         message: "Building C",
         model: "Santaclara_3D.glb",
+        altmodel: "Santaclara_dollshouse_3D.glb",
+          camPos: {
+            x: 255.34286718534247,
+            y: 10.712015354995536,
+            z: -25.82013659870656
+          },
+          lookAt: {
+            x: 259.16931765666544,
+            y: 4.118046546067042,
+            z: -50.81097043423535
+          },
         iconSize: [40, 40],
         icon: "./icons/icon_3d.png",
         //link: "",
@@ -73,6 +107,17 @@ export const campGeojson = {
       properties: {
         message: "Building F",
         model: "Santaclara_3D.glb",
+        altmodel: "Santaclara_dollshouse_3D.glb",
+        camPos: {
+          x: 273.1135496049853,
+          y: 13.114011257461812,
+          z: -62.489596155071126
+        },
+        lookAt: {
+          x: 284.52320077679803,
+          y: 4.471091112108261,
+          z: -26.236357590744095
+        },
         iconSize: [40, 40],
         icon: "./icons/icon_3d.png",
         //link: "",
@@ -87,6 +132,17 @@ export const campGeojson = {
       properties: {
         message: "Building I",
         model: "Santaclara_3D.glb",
+        altmodel: "Santaclara_dollshouse_3D.glb",
+        camPos: {
+          x: 214.39546272830992,
+          y: 8.54381476435565,
+          z: -50.40219918323752
+        },
+        lookAt: {
+          x: 213.52164362688902,
+          y: 3.5781473441394223,
+          z: -93.62458522446236
+        },
         iconSize: [40, 40],
         icon: "./icons/icon_3d.png",
         //link: "" /* same image as H */,
@@ -101,6 +157,17 @@ export const campGeojson = {
       properties: {
         message: "Building J+K",
         model: "Santaclara_3D.glb",
+        altmodel: "Santaclara_dollshouse_3D.glb",
+        camPos: {
+          x: 173.30940903299816,
+          y: 10.478980356320898,
+          z: -49.5125879408788
+        },
+        lookAt: {
+          x: 175.0907139717477,
+          y: 3.6121557768192507,
+          z: -93.92507966104074
+        },
         iconSize: [40, 40],
         icon: "./icons/icon_3d.png",
         //link: "",
@@ -115,6 +182,17 @@ export const campGeojson = {
       properties: {
         message: "Building L",
         model: "Santaclara_3D.glb",
+        altmodel: "Santaclara_dollshouse_3D.glb",
+        camPos: {
+          x: 179.03119526877398,
+          y: 26.759671990170382,
+          z: -83.64829619239487
+        },
+        lookAt: {
+          x: 136.74958866068303,
+          y: 3.9999999859347275,
+          z: -83.7018500928536
+        },
         iconSize: [40, 40],
         icon: "./icons/icon_3d.png",
         //link: "",
@@ -129,6 +207,17 @@ export const campGeojson = {
       properties: {
         message: "Building 2",
         model: "Santaclara_3D.glb",
+        altmodel: "Santaclara_dollshouse_3D.glb",
+        camPos: {
+          x: 330.23898032602375,
+          y: 10.248538804298098,
+          z: -112.16758573088813
+        },
+        lookAt: {
+          x: 338.5073695565951,
+          y: 4.2372589471989635,
+          z: -91.65446254700441
+        },
         iconSize: [40, 40],
         icon: "./icons/icon_3d.png",
         //link: "",

@@ -4,13 +4,13 @@ export const annotations = {
   "building_ABCD_360.glb": [
     {
       title: "Convent",
-      description: "Test",
+      description: "Hej hej",
       camPos: { x: 5.583892330483824, y: 0.5890452553099008, z: -3.28530324239118 },
       lookAt: { x: 22.561346234397732, y: 6.689045782374161, z: -18.54433999298741 }
     },
     {
       title: "Small Nave",
-      description: "Test",
+      description: "Ja ja",
       camPos: { x: 5.583892330483824, y: 0.5890452553099008, z: -3.28530324239118 },
       lookAt: { x: -15.067368278562546, y: 2.8244745559329703, z: -25.75080105233221 }
     },
