@@ -7,14 +7,13 @@ let containerIDGlobal;
 
 let scene, camera, renderer, controls, loader, width, height;
 let models = ["building_BH.glb", "building_1-3.glb", "5_4_2025.glb"];
+let loadedModels = {}; 
 
 let targetIsSet = false;
 
 /* ───────────────────────────────────────────────────────────── */
 
 export function initThreejs(containerID, model, camPos = null, lookAt = null) {
-  console.log("INITHREEJS");
-
   containerIDGlobal = containerID;
   if (model == null) model = models[0];
 
@@ -124,115 +123,83 @@ function innitAnnotations(model) {
 
 /* ───────────────────────────────────────────────────────────── */
 
-export function loadModel(model, camPos, lookAt) {
-  clearScene();
-
+export function loadModel(model, camPos, lookAt, hidden = false) {
   let path = model;
 
-  // Auto-detect model folder
   if (!model.includes("/") && model.endsWith(".glb")) {
-    if (model.includes("Santaclara")) {
-      path = `3D_models/${model}`;
-    } else {
-      path = `3D sketches/${model}`;
-    }
+    path = model.includes("Santaclara") ? `3D_models/${model}` : `3D sketches/${model}`;
   }
-
-  console.log("Loading model from path:", path);
-
-  const is360 = model.toLowerCase().endsWith("_360.glb");
 
   loader.load(
     path,
     (gltf) => {
-      console.log("Loading model from path:", path);
-      console.log(gltf.scene.children);
-      console.log("Loaded GLTF:", gltf);
+      const sceneObj = gltf.scene;
+      const is360 = model.toLowerCase().endsWith("_360.glb");
 
-      const mesh = gltf.scene.children[0];
-      if (mesh && mesh.isMesh) {
-        console.log("🧪 Mesh material:", mesh.material);
-        console.log("🖼️ Texture map:", mesh.material.map);
-        console.log("✨ Emissive map:", mesh.material.emissiveMap);
-
-        if (!mesh.geometry.boundingBox) {
-          mesh.geometry.computeBoundingBox();
-        }
-        console.log("📏 Geometry bounding box:", mesh.geometry.boundingBox);
-      }
-
+      // 🔧 Apply 360° config
       if (is360) {
-        console.log("✅ Applying 360 config");
-
-        scene.children = scene.children.filter((obj) => !obj.isLight);
         scene.background = new THREE.Color(0x000000);
+        sceneObj.scale.set(100, 100, 100);
+        sceneObj.position.set(0, 0, 0);
 
-        gltf.scene.traverse((child) => {
+        sceneObj.traverse((child) => {
           if (child.isMesh) {
-            const tex = child.material?.map || null;
-
+            const oldMat = child.material;
+            const tex = oldMat?.map;
             if (tex) {
               tex.colorSpace = THREE.SRGBColorSpace;
               tex.flipY = false;
               tex.needsUpdate = true;
+        
+              // Try BOTH sides in case the dome is inverted
+              child.material = new THREE.MeshBasicMaterial({
+                map: tex,
+                side: THREE.DoubleSide,
+                toneMapped: false,
+                depthWrite: false,
+              });
+              child.material.needsUpdate = true;
             }
-
-            child.material = new THREE.MeshBasicMaterial({
-              map: tex,
-              side: THREE.FrontSide, // or THREE.FrontSide to test
-              toneMapped: false,
-              depthWrite: false,
-            });
-
-            console.log("🧪 Texture exists?", tex);
-            console.log("🧪 Material type after change:", child.material.type);
-
-            child.material.needsUpdate = true;
           }
         });
+        
 
-        gltf.scene.scale.set(100, 100, 100);
-        gltf.scene.position.set(0, 0, 0);
-
-        camera.position.set(0, 0, 0.1); // <-- offset to enable rotation
+        camera.position.set(0, 0, 0.1);
         controls.target.set(0, 0, 0);
         controls.enableZoom = false;
         controls.enablePan = false;
         controls.enableRotate = true;
         controls.update();
-
-        scene.add(gltf.scene);
+        
       } else {
-        // Standard 3D model
+        // 🔧 Regular 3D model config
         scene.background = new THREE.Color(0xdddddd);
-        gltf.scene.scale.set(1, 1, 1);
-        const box = new THREE.Box3().setFromObject(gltf.scene);
+        sceneObj.scale.set(1, 1, 1);
+
+        const box = new THREE.Box3().setFromObject(sceneObj);
         const center = box.getCenter(new THREE.Vector3());
-        const sizeVec = box.getSize(new THREE.Vector3());
-        console.log(box, box, sizeVec, center);
-        gltf.scene.position.sub(center);
-        /* const size = sizeVec.length();
-        camera.position.copy(
-          center.clone().add(new THREE.Vector3(0, 0, size * 1.5))
-        ); */
+
         controls.target.copy(center);
         controls.enableZoom = true;
         controls.enablePan = true;
         controls.enableRotate = true;
         controls.update();
-
-        scene.add(gltf.scene);
       }
+
+      // 🔁 Add model
+      sceneObj.visible = !hidden;
+      scene.add(sceneObj);
+      loadedModels[model] = sceneObj;
 
       innitAnnotations(model);
       setCamPosAndLookAt(camPos, lookAt);
     },
     undefined,
-    (error) => {
-      console.error("GLTF load error:", error);
-    }
+    (err) => console.error("GLTF load error:", err)
   );
 }
+
+
 
 /* ───────────────────────────────────────────────────────────── */
 
@@ -245,6 +212,14 @@ function clearScene() {
 }
 
 /* ───────────────────────────────────────────────────────────── */
+export function toggleModelVisibility(modelName) {
+  for (const [name, obj] of Object.entries(loadedModels)) {
+    obj.visible = (name === modelName);
+  }
+
+  innitAnnotations(modelName);
+}
+
 
 function animate() {
   // update annotation screen positions

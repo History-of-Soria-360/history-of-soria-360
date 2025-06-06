@@ -6,23 +6,23 @@ export const campGeojson = {
       type: "Feature",
       properties: {
         message: "Building 1",
+        name: "Office Building",
         model: "Santaclara_3D.glb",
         altmodel: "Santaclara_dollshouse_3D.glb",
         camPos: {
-          x: 321.8389068281301,
-          y: 7.583789880155855,
-          z: -75.76810207254861
+          x: 78.99720841003548,
+          y: 2.0736083954307376,
+          z: -15.813774330004144
         },
         lookAt: {
-          x: 315.1998997414996,
-          y: 5.648705551402172,
-          z: -97.04973563395485
+          x: 72.83605069906073,
+          y: -2.8552488514575884,
+          z: -32.27879294132563
         },
         iconSize: [40, 40],
         icon: "./icons/icon_3d.png",
-        //link: "Santaclara_3D.glb",
         description:
-          "This building is one of the three remaining structures in Santa Clara Park. \n\nIt is currently undergoing renovation, and its final purpose has yet to be confirmed. Proposed plans suggest it may be used as a space for a neighbourhood association—hosting community-focused activities—or by ASRD, potentially providing social, cultural, or administrative services to the public. During its time as a concentration camp, this building was used as an administrative office. \n\nClick here to view the 3D model of the building as it appeared during the camp period.",
+          "This building likely served as the camp’s administration hub. Here, guards and officials managed prisoner records, registrations, and classifications.<br><br> Although not much is documented, this was where the day-to-day control and organization of the camp took place—deciding who arrived, where they were sent, and how the camp was run behind the scenes.",
       },
       geometry: { type: "Point", coordinates: [-2.465207, 41.761834] },
     },
@@ -33,21 +33,21 @@ export const campGeojson = {
         message: "Building A",
         model: "Santaclara_3D.glb",
         altmodel: "Santaclara_dollshouse_3D.glb",
+        name: "The Convent",
         camPos: {
-          x: 266.08132380016673,
-          y: 35.471572310134306,
-          z: 7.135085675583575
+          x: 26.393742204709476,
+          y: 10.618252177806056,
+          z: 3.371232478433759
         },
         lookAt: {
-          x: 271.76040332453874,
-          y: 11.851929876774221,
-          z: -90.50928473223604
+          x: 31.605445501087,
+          y: 0.078043434120465,
+          z: -25.83708629228389
         },
         iconSize: [40, 40],
         icon: "./icons/icon_3d.png",
-        //link: "",
         description:
-          "This building is one of the three remaining structures in Santa Clara Park. \n\nThe building is known today as Espacio Santa Clara, and is a municipal cultural center that hosts exhibitions, cultural events, and community activities. While the building has a long and varied history—including religious, military, and administrative use—it now serves as a dynamic public space dedicated to creativity, learning, and cultural exchange.This building was originally founded as a convent in 1224. Over the centuries, it served various roles—including a religious site, a burial place for noble families, and later a military barracks. During the war, it housed prisoners and later became the headquarters of the military government. \n\nClick here to view the 3D model of the building as it appeared during the camp period.",
+          "This building was the old convent church, turned into a space for both religious ceremonies and prisoner housing.<br><br> Early in the camp’s history, masses and other religious events were held here, used by the camp leaders to promote their ideology. <br><br>At the same time, many prisoners slept inside the convent, often in crowded and harsh conditions, with little warmth or comfort. This building stood at the center of life in the camp—where faith, control, and daily survival mixed together.",
       },
       geometry: { type: "Point", coordinates: [-2.465703, 41.761837] },
     },
@@ -56,210 +56,238 @@ export const campGeojson = {
       type: "Feature",
       properties: {
         message: "Building B",
+        name: "Small Nave",
         model: "Santaclara_3D.glb",
         altmodel: "Santaclara_dollshouse_3D.glb",
           camPos: {
-            x: 296.207762111585,
-            y: 11.63635634703803,
-            z: -71.25262748631563
+            x: 39.64651934744953,
+            y: 4.058429022600889,
+            z: -11.796921911571669
           },
           lookAt: {
-            x: 254.0500216139452,
-            y: 6.278878643218111,
-            z: -75.40816723354658
+            x: 12.308913423681938,
+            y: -3.401008614978755,
+            z: -12.031272496151251
           },
         iconSize: [40, 40],
         icon: "./icons/icon_3d.png",
-        //link: "",
         description:
-          'This building is one of the three remaining structures in Santa Clara Park. \n\nThe building currently houses the Foundation of the Institute for Health Sciences Studies of Castile and León. As a non-profit organization, the Foundation promotes education, research, and outreach in areas such as public health, healthcare management, health law, and occupational health. The building hosts training programs, professional development for healthcare workers, and a variety of seminars and courses in collaboration with public and private institutions.During its time as a concentration camp, this building was referred to as the "small nave," indicating its role as one of the central structures within the complex. While there is no precise documentation of its function, period floor plans suggest that it housed rooms such as a doctor’s office, technicians’ quarters, and corporals’ rooms. \n\nClick here to view the 3D model of the building as it appeared during the camp period.',
+          "This hall may have served various support functions within the camp — possibly as a storage space, workshop area, or for small-scale gatherings.<br><br> While its exact use remains unconfirmed, its size suggests it played a flexible, practical role in the daily operations of the camp. Quiet but essential, it likely supported the routines that kept the system running.",
       },
       geometry: { type: "Point", coordinates: [-2.466069, 41.761649] },
+    },
+    {
+      //Number 3
+      type: "Feature",
+      properties: {
+        message: "Building C",
+        name: "Central Nave",
+        model: "Santaclara_3D.glb",
+        altmodel: "Santaclara_dollshouse_3D.glb",
+          camPos: {
+            x: 20.812245527365878,
+            y: 2.27103030937271,
+            z: 33.13057158242155
+          },
+          lookAt: {
+            x: 18.705451795110346,
+            y: -5.807503654741168,
+            z: 14.094253335999536
+          },
+        iconSize: [40, 40],
+        icon: "./icons/icon_3d.png",
+        description:
+          "This building likely served as the main dormitory for male prisoners in the Santa Clara concentration camp. Historical photographs confirm its use, showing detainees assembled along its north wall. <br><br>Based on period plans, the structure also included rooms used as offices, storage areas, and a barber shop. These varied functions suggest it was a central hub for both administrative and daily activities within the camp.",
+      },
+      geometry: { type: "Point", coordinates: [-2.465854, 41.761428] },
     },
     {
       //Number 4
       type: "Feature",
       properties: {
-        message: "Building C",
+        message: "Building F",
+        name: "Restrooms",
         model: "Santaclara_3D.glb",
         altmodel: "Santaclara_dollshouse_3D.glb",
-          camPos: {
-            x: 255.34286718534247,
-            y: 10.712015354995536,
-            z: -25.82013659870656
-          },
-          lookAt: {
-            x: 259.16931765666544,
-            y: 4.118046546067042,
-            z: -50.81097043423535
-          },
+        camPos: {
+          x: 34.85908073897662,
+          y: 25.736983338367878,
+          z: -16.661556186284727
+        },
+        lookAt: {
+          x: 43.6073872912264,
+          y: -3.891509620067839,
+          z: 39.37399043401847
+        },
         iconSize: [40, 40],
         icon: "./icons/icon_3d.png",
-        //link: "",
         description:
-          "During its time as a concentration camp, this location was occupied by a building known as the central nave. According to the plan drawing, the building housed various rooms that served functions such as offices, storage, and a barber shop. \n\nClick here to view the 3D model of the building as it appeared during the camp period.",
+          "Hidden in a corner of the camp, this building served one of the most basic—and most neglected—needs: sanitation. <br><br>Though no official records describe it, the memories of former prisoners speak clearly. With no proper toilets, this area became a makeshift latrine, overwhelmed by the camp’s overcrowding and lack of hygiene. <br><br>It was a place of discomfort and disease, a daily reminder of the inhumane conditions prisoners were forced to endure.",
       },
-      geometry: { type: "Point", coordinates: [-2.465854, 41.761428] },
+      geometry: { type: "Point", coordinates: [-2.465599, 41.761158] },
+    },
+    {
+      //Number 5
+      type: "Feature",
+      properties: {
+        message: "Building I",
+        name: "Storage Building",
+        model: "Santaclara_3D.glb",
+        altmodel: "Santaclara_dollshouse_3D.glb",
+        camPos: {
+          x: -28.329778635000224,
+          y: -1.3256640401055533,
+          z: -12.322066616002306
+        },
+        lookAt: {
+          x: -26.71146854115179,
+          y: -5.50066459400135,
+          z: -26.897924688724117
+        },
+        iconSize: [40, 40],
+        icon: "./icons/icon_3d.png",
+        description:
+          "Behind its plain exterior, this building played a vital role in the daily survival of prisoners: it was where food supplies were stored and distributed. <br><br> Though never officially named, this space operated under the strict control of military provisioning. Every day, meager rations—often little more than bread and watery soup—were handed out here. For many detainees, it was the only nourishment they received. <br><br>Despite the organized system, hunger was constant, and this building became a symbol of both structure and scarcity within the camp.",
+      },
+      geometry: { type: "Point", coordinates: [-2.466385, 41.761833] },
+    },
+    {
+      //Number 6
+      type: "Feature",
+      properties: {
+        message: "Building J+K",
+        name: "The Barracks",
+        model: "Santaclara_3D.glb",
+        altmodel: "Santaclara_dollshouse_3D.glb",
+        camPos: {
+          x: -69.84003912281975,
+          y: 5.023717492993253,
+          z: 5.629691743237153
+        },
+        lookAt: {
+          x: -69.22005185864947,
+          y: -5.259975092114013,
+          z: -28.239347993014896
+        },
+        iconSize: [40, 40],
+        icon: "./icons/icon_3d.png",
+        description:
+          "Built in early 1939, these two long wooden barracks were added as the camp became overcrowded. Each measured 35 meters and was designed to hold around 250 men. <br><br>Inside, the space was cramped and cold, with little protection from the weather. There were no real beds—just straw on the floor.<br><br> These barracks marked a turning point in the camp’s history: a shift toward more organized, large-scale imprisonment, where growing numbers were packed in with little regard for their well-being.",
+      },
+      geometry: { type: "Point", coordinates: [-2.466807, 41.761858] },
     },
     {
       //Number 7
       type: "Feature",
       properties: {
-        message: "Building F",
-        model: "Santaclara_3D.glb",
-        altmodel: "Santaclara_dollshouse_3D.glb",
-        camPos: {
-          x: 273.1135496049853,
-          y: 13.114011257461812,
-          z: -62.489596155071126
-        },
-        lookAt: {
-          x: 284.52320077679803,
-          y: 4.471091112108261,
-          z: -26.236357590744095
-        },
-        iconSize: [40, 40],
-        icon: "./icons/icon_3d.png",
-        //link: "",
-        description:
-          "During its time as a concentration camp, this location was occupied by a building used as independent restrooms. \n\nClick here to view the 3D reconstruction of the building as it appeared during the camp period.",
-      },
-      geometry: { type: "Point", coordinates: [-2.465599, 41.761158] },
-    },
-    {
-      //Number 10
-      type: "Feature",
-      properties: {
-        message: "Building I",
-        model: "Santaclara_3D.glb",
-        altmodel: "Santaclara_dollshouse_3D.glb",
-        camPos: {
-          x: 214.39546272830992,
-          y: 8.54381476435565,
-          z: -50.40219918323752
-        },
-        lookAt: {
-          x: 213.52164362688902,
-          y: 3.5781473441394223,
-          z: -93.62458522446236
-        },
-        iconSize: [40, 40],
-        icon: "./icons/icon_3d.png",
-        //link: "" /* same image as H */,
-        description:
-          "During its time as a concentration camp, this location was occupied by a building referred to as Campana, possibly indicating the presence of a bell used for signaling within the camp. According to the plan drawing, the building was used for storing provisions and included space for the storekeeper. \n\nClick here to view the 3D reconstruction of the building as it appeared during the camp period.",
-      },
-      geometry: { type: "Point", coordinates: [-2.466385, 41.761833] },
-    },
-    {
-      //Number 11
-      type: "Feature",
-      properties: {
-        message: "Building J+K",
-        model: "Santaclara_3D.glb",
-        altmodel: "Santaclara_dollshouse_3D.glb",
-        camPos: {
-          x: 173.30940903299816,
-          y: 10.478980356320898,
-          z: -49.5125879408788
-        },
-        lookAt: {
-          x: 175.0907139717477,
-          y: 3.6121557768192507,
-          z: -93.92507966104074
-        },
-        iconSize: [40, 40],
-        icon: "./icons/icon_3d.png",
-        //link: "",
-        description:
-          "During its time as a concentration camp, this location was occupied by a wooden barrack. Although there is little documentation regarding its specific use, it may have served as a space for holding prisoners. \n\nClick here to view the 3D reconstruction of the building as it appeared during the camp period.",
-      },
-      geometry: { type: "Point", coordinates: [-2.466807, 41.761858] },
-    },
-    {
-      //Number 13
-      type: "Feature",
-      properties: {
         message: "Building L",
+        name: "The Infirmary",
         model: "Santaclara_3D.glb",
         altmodel: "Santaclara_dollshouse_3D.glb",
         camPos: {
-          x: 179.03119526877398,
-          y: 26.759671990170382,
-          z: -83.64829619239487
+          x: -30.390194600382557,
+          y: 22.08924365599658,
+          z: -23.91390077076026
         },
         lookAt: {
-          x: 136.74958866068303,
-          y: 3.9999999859347275,
-          z: -83.7018500928536
+          x: -105.85945856666959,
+          y: -4.728223817570154,
+          z: -20.31843208141113
         },
         iconSize: [40, 40],
         icon: "./icons/icon_3d.png",
-        //link: "",
         description:
-          "During its time as a concentration camp, this location was occupied by a building referred to as the infirmary. According to the plan drawing, it included spaces for beds and a dedicated operating room, indicating that it served as a medical facility for treating prisoners. \n\nClick here to view the 3D reconstruction of the building as it appeared during the camp period.",
+          "This building likely served as the camp’s modest infirmary — a space for basic medical attention in the face of widespread illness. Prisoners suffered from malnutrition, poor hygiene, and contagious diseases. <br><br>Though poorly equipped, this area provided first aid and managed less severe cases, while more serious conditions were referred to local hospitals. It was a necessary, if limited, response to the daily health crises within the camp.",
       },
       geometry: { type: "Point", coordinates: [-2.467393, 41.761838] },
     },
     {
-      //Number 14
+      //Number 8
       type: "Feature",
       properties: {
         message: "Building 2",
+        name: "The Guard Barracks",
         model: "Santaclara_3D.glb",
         altmodel: "Santaclara_dollshouse_3D.glb",
         camPos: {
-          x: 330.23898032602375,
-          y: 10.248538804298098,
-          z: -112.16758573088813
+          x: 92.23918967824065,
+          y: -1.2821563364276578,
+          z: -42.70600393258251
         },
         lookAt: {
-          x: 338.5073695565951,
-          y: 4.2372589471989635,
-          z: -91.65446254700441
+          x: 96.53103029316364,
+          y: -5.162820589097317,
+          z: -26.97294796328184
         },
         iconSize: [40, 40],
         icon: "./icons/icon_3d.png",
-        //link: "",
         description:
-          "During its time as a concentration camp, this location was occupied by a building known as the Guard Corps. While documentation on its specific functions is limited, the name suggests that it likely served as quarters for personnel responsible for surveillance, controlling prisoner movement, and enforcing discipline within the camp. \n\nClick here to view the 3D reconstruction of the building as it appeared during the camp period.",
+          "This building served as the guard post, where Civil Guard and military personnel kept watch over the camp. <br><br>From here, guards monitored prisoner movements, controlled access, and maintained order. It was a constant reminder of the camp’s strict surveillance and the authority that controlled every part of daily life inside.",
       },
       geometry: {
         type: "Point",
         coordinates: [-2.4649179557976293, 41.76170216235211],
       },
     },
+    {
+      //Number 9
+      type: "Feature",
+      properties: {
+        message: "Building 3",
+        name: "The Guard Quaters",
+        model: "Santaclara_3D.glb",
+        altmodel: "Santaclara_dollshouse_3D.glb",
+        camPos: {
+          x: 48.57545124674924,
+          y: 3.9532698245373448,
+          z: -3.2200988500828744
+        },
+        lookAt: {
+          x: 79.99827175123843,
+          y: -5.225693587469385,
+          z: 3.6093432025944736
+        },
+        iconSize: [40, 40],
+        icon: "./icons/icon_3d.png",
+        description:
+          "This building was likely the officer’s post — a space where the supervising officer coordinated guard duties and oversaw the camp’s daily operations.<br><br> Though not directly documented, this building played an important role in maintaining military order and control within the camp.",
+      },
+      geometry: {
+        type: "Point",
+        coordinates: [-2.465111, 41.761440],
+      },
+    },
 
     /* Forced labour locations */
     {
-      //Number 17
+      //Number 10
       type: "Feature",
       properties: {
         message: "Calle Caballeros",
         name: "Forced Labour - Calle Caballeros",
         model: "Calle_Cabelleros_360.glb",
         icon: "./icons/icon_360.1.png",
-        iconSize: [45, 45],
+        iconSize: [40, 40],
         //iconUrl: "",
         //link: "https://poly.cam/capture/96cd5869-a2a3-4703-8d34-db3af53c378d",
-        caption: "360 view of Calle Caballeros today",
+        caption: "360° view of Calle Caballeros today",
         description:
           "Calle Caballeros. Between 1938 and 1940, prisoners from the Santa Clara concentration camp were forced to work on several public projects in Soria — Calle Caballeros among them. <br><br>Historical records show that this street was one of the areas where Republican prisoners labored under military control, carrying out construction and maintenance as part of their punishment. <br><br>This labor, considered by researchers to be a form of slavery, was documented weekly in the city’s municipal archives.",
       },
       geometry: { type: "Point", coordinates: [-2.464947, 41.762092] },
     },
     {
-      //Number 18
+      //Number 11
       type: "Feature",
       properties: {
         message: "Government building",
         name: "Forced Labour - Oficina de Extranjería de Soria",
         model: "government_building_360.glb",
         icon: "./icons/icon_360.1.png",
-        iconSize: [45, 45],
+        iconSize: [40, 40],
         //iconUrl: "",
         link: "https://poly.cam/capture/407D0D5B-5115-48DC-A8D9-3A0AF544AB1B",
-        caption: "360 view of the Oficina de Extranjería de Soria today",
+        caption: "360° view of the Oficina de Extranjería de Soria today",
         description:
           "Located in an area of the city shaped by major urban projects during the Franco regime, the site of the current Oficina de Extranjería is within the historical zone where prisoners from the Santa Clara camp were deployed for forced labor. <br><br>Although specific building records are limited, evidence indicates that this zone, like others nearby, was developed in part by political prisoners working under coercive conditions.",
       },
@@ -269,7 +297,7 @@ export const campGeojson = {
       },
     },
     {
-      //Number 19
+      //Number 12
       type: "Feature",
       properties: {
         message: "Forced Labour",
@@ -292,7 +320,7 @@ export const campGeojson = {
     //Living conditions
 
     {
-      //Number 20
+      //Number 13
       type: "Feature",
       properties: {
         message: "Doctors letter",
@@ -314,7 +342,7 @@ export const campGeojson = {
     //Types of prisoners
 
     {
-      //Number 21
+      //Number 14
       type: "Feature",
       properties: {
         message: "Types of prisoners",
@@ -335,7 +363,7 @@ export const campGeojson = {
     //Living conditions
 
     {
-      //Number 22
+      //Number 15
       type: "Feature",
       properties: {
         message: "Living conditions",

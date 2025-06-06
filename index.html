@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Map with Info Panel</title>
+    <title>Santa Clara in 3D</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link
       rel="stylesheet"
       href="https://unpkg.com/maplibre-gl@5.3.0/dist/maplibre-gl.css"
     />
+    <link rel="stylesheet" href="styles.css" />
     <script src="https://unpkg.com/maplibre-gl@5.3.0/dist/maplibre-gl.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
@@ -19,604 +20,17 @@
         }
       }
     </script>
-
-    <style>
-      html,
-      body,
-      #map {
-        margin: 0;
-        padding: 0;
-        height: 100%;
-        width: 100%;
-      }
-
-      #threejs-container {
-        width: 100%;
-        height: 100%;
-      }
-      .marker {
-        display: block;
-        border: none;
-        border-radius: 0;
-        overflow: visible;
-        cursor: pointer;
-        padding: 0;
-        background-size: contain;
-        background-color: transparent;
-        background-repeat: no-repeat;
-        background-position: center;
-        box-sizing: border-box;
-      }
-
-      #overlay {
-        display: none;
-        grid-template-columns: 70% 30%;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 85%;
-        height: 70%;
-        background: white;
-        border-radius: 1rem;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        z-index: 1000;
-        overflow: hidden;
-        font-family: "Inter", sans-serif;
-      }
-
-      #overlay-left {
-        width: 100%;
-        height: 100%;
-        background-color: #f9fafb;
-        padding: 1rem;
-        box-sizing: border-box;
-        overflow: hidden;
-      }
-
-      #overlay-right {
-        width: 100%;
-        height: 100%;
-        padding: 1rem;
-        background-color: #ffffff;
-        overflow-y: auto;
-        border-left: 1px solid #e5e7eb;
-        box-sizing: border-box;
-      }
-
-      #overlay-right h3 {
-        font-size: 1.25rem;
-        font-weight: 600;
-        margin-bottom: 0.5rem;
-      }
-
-      #image-description {
-        font-size: 0.95rem;
-        color: #374151;
-        line-height: 1.5;
-      }
-
-      iframe {
-        width: 100%;
-        height: 80%;
-        max-height: 100%;
-        border: none;
-        border-radius: 0.5rem;
-        object-fit: cover;
-      }
-
-      #overlay-content {
-        height: 100%;
-      }
-
-      #overlay-content iframe {
-        height: 100%;
-        width: 100%;
-        border: none;
-        border-radius: 0.5rem;
-      }
-
-      #threejs-container-wrapper {
-        min-height: 400px;
-        background-color: #eee; /* optional for debugging */
-        width: 100%;
-        height: 100%;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .nav-button {
-        position: absolute;
-        background-color: #111827;
-        color: white;
-        border: none;
-        padding: 0.5rem 0.75rem;
-        cursor: pointer;
-        font-size: 1.25rem;
-        border-radius: 0.375rem;
-        z-index: 1010;
-        transition: background 0.2s;
-      }
-
-      .nav-button:hover {
-        background-color: #1f2937;
-      }
-
-      #closeBtn {
-        top: 10px;
-        right: 10px;
-      }
-
-      #prevBtn,
-      #nextBtn {
-        top: 50%;
-        transform: translateY(-50%);
-      }
-
-      #prevBtn {
-        left: 10px;
-      }
-
-      #nextBtn {
-        right: 10px;
-      }
-
-      /* Overlay styles for the camp view */
-
-      #camp-overlay {
-        display: none;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 85%;
-        height: 70%;
-        background: white;
-        border-radius: 1rem;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        z-index: 1000;
-        overflow: hidden;
-        font-family: "Inter", sans-serif;
-      }
-
-      #camp-overlay.show {
-        display: flex;
-        pointer-events: auto;
-      }
-
-      #camp-overlay-content {
-        display: flex;
-        height: 100%;
-      }
-
-      #camp-overlay-left {
-        width: 60%;
-        padding: 1rem;
-        background-color: #f9fafb;
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-
-      img.camp-image {
-        width: 100%;
-        max-height: 90%;
-        object-fit: contain;
-        display: block;
-        margin: 0 auto;
-      }
-
-      #camp-media-container {
-        width: 100%;
-        height: 90%;
-        display: flex;
-        flex-direction: column; /* ← Add this */
-        justify-content: center;
-        align-items: center;
-        overflow: hidden;
-        flex-grow: 1;
-        margin-bottom: 1rem;
-      }
-
-      #camp-iframe {
-        width: 90%;
-        height: 90%;
-        max-height: 100%;
-        object-fit: cover;
-        border-radius: 0.5rem;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-      }
-
-      #camp-overlay-right {
-        width: 40%;
-        padding: 1rem;
-        background-color: #ffffff;
-        border-left: 1px solid #e5e7eb;
-        box-sizing: border-box;
-        overflow-y: auto;
-      }
-
-      #camp-overlay-right h3 {
-        font-size: 1.25rem;
-        font-weight: 600;
-        margin-bottom: 0.5rem;
-      }
-
-      #camp-description {
-        font-size: 0.95rem;
-        color: #374151;
-        line-height: 1.5;
-        margin-right: 15%;
-      }
-
-      #camp-iframe {
-        width: 100%;
-        height: 100%;
-        border: none;
-        border-radius: 0.5rem;
-        object-fit: cover;
-      }
-
-      #camp-closeBtn {
-        top: 10px;
-        right: 10px;
-        position: absolute;
-        margin-top: 1rem;
-        background-color: #e5e7eb;
-        color: #374151;
-        border: none;
-        padding: 0.5rem 1rem;
-        border-radius: 0.375rem;
-        cursor: pointer;
-        transition: background 0.2s;
-      }
-
-      #camp-closeBtn:hover {
-        background-color: #d1d5db;
-      }
-
-      .model-toggle {
-        display: inline-flex;
-        align-items: center;
-        cursor: pointer;
-        user-select: none;
-        font-size: 16px;
-        gap: 10px;
-        position: relative;
-      }
-
-      /* Hide the native checkbox */
-      .model-toggle input[type="checkbox"] {
-        opacity: 0;
-        width: 0;
-        height: 0;
-        position: absolute;
-      }
-
-      /* The slider track */
-      .model-toggle .slider {
-        position: relative;
-        width: 40px;
-        height: 20px;
-        background-color: #ccc;
-        border-radius: 20px;
-        transition: background-color 0.3s;
-      }
-
-      /* The circle knob */
-      .model-toggle .slider::before {
-        content: "";
-        position: absolute;
-        width: 16px;
-        height: 16px;
-        left: 2px;
-        top: 2px;
-        background-color: white;
-        border-radius: 50%;
-        transition: transform 0.3s;
-      }
-
-      /* Checked state: track background */
-      .model-toggle input:checked + .slider {
-        background-color: #2196f3;
-      }
-
-      /* Checked state: move the knob */
-      .model-toggle input:checked + .slider::before {
-        transform: translateX(20px);
-      }
-
-      /* Overlay styles for the convent view */
-
-      #convent-overlay {
-        display: none;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 85%;
-        height: 70%;
-        background: white;
-        border-radius: 1rem;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        z-index: 1000;
-        overflow: hidden;
-        font-family: "Inter", sans-serif;
-      }
-
-      #convent-overlay.show {
-        display: flex;
-        pointer-events: auto;
-      }
-
-      #convent-overlay-content {
-        display: flex;
-        height: 100%;
-      }
-
-      #convent-overlay-left {
-        width: 50%;
-        padding: 1rem;
-        background-color: #f9fafb;
-        box-sizing: border-box;
-      }
-
-      #convent-overlay-right {
-        width: 40%;
-        padding: 1rem;
-        background-color: #ffffff;
-        border-left: 1px solid #e5e7eb;
-        box-sizing: border-box;
-      }
-
-      #convent-overlay-right h3 {
-        font-size: 1.25rem;
-        font-weight: 600;
-        margin-bottom: 0.5rem;
-      }
-
-      #convent-description {
-        font-size: 0.95rem;
-        color: #374151;
-        line-height: 1.5;
-        margin-right: 10%;
-      }
-
-      #convent-headline {
-        font-size: 36px; /* Adjust the font size */
-        color: #1a202c; /* Set the text color */
-        font-weight: bold; /* Make the text bold */
-        margin-top: 20px; /* Add some space above the headline */
-        text-align: center; /* Center-align the text */
-        line-height: 1.5; /* Adjust line height for better readability */
-      }
-
-      #convent-subtitle {
-        font-size: 18px; /* Adjust the font size */
-        color: #333333; /* Set the text color */
-        font-style: italic; /* Make the text italic */
-        margin-top: 5px; /* Add some space above the subtitle */
-        margin-bottom: 10px; /* Add some space below the subtitle */
-        text-align: center; /* Center the text */
-        font-weight: normal; /* Adjust the font weight (normal, bold, etc.) */
-        line-height: 1; /* Adjust line height for better readability */
-      }
-
-      #convent-iframe {
-        width: 100%;
-        height: 80%;
-        max-height: 100%;
-        border: none;
-        border-radius: 0.5rem;
-        object-fit: cover;
-      }
-
-      #convent-overlay-left {
-        width: 60%;
-        padding: 1rem;
-        background-color: #f9fafb;
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
-        justify-content: center; /* Vertically center image+caption */
-        align-items: center;
-      }
-
-      #convent-image {
-        width: 100%;
-        max-width: 600px;
-        height: auto;
-        object-fit: contain;
-        border-radius: 0.5rem;
-        margin-bottom: 0.5rem;
-      }
-
-      #convent-media-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center; /* Center contents vertically */
-        flex: 1; /* Let it expand inside parent */
-        padding: 1rem;
-        width: 100%;
-        box-sizing: border-box;
-      }
-
-      #convent-image,
-      #convent-media-container img {
-        width: 100%;
-        height: auto;
-        max-width: 600px; /* Optional: keep it from being too wide */
-        object-fit: contain; /* or cover if you want it cropped */
-        border-radius: 0.5rem;
-      }
-
-      .image-caption {
-        margin-top: 0.5rem;
-        font-size: 0.9em;
-        color: #555;
-        text-align: center;
-        font-style: italic;
-      }
-
-      #convent-closeBtn {
-        top: 10px;
-        right: 10px;
-        position: absolute;
-        margin-top: 1rem;
-        background-color: #e5e7eb;
-        color: #374151;
-        border: none;
-        padding: 0.5rem 1rem;
-        border-radius: 0.375rem;
-        cursor: pointer;
-        transition: background 0.2s;
-      }
-
-      #convent-closeBtn:hover {
-        background-color: #d1d5db;
-      }
-
-      .annotation {
-        position: absolute;
-        background: white;
-        padding: 5px;
-        border: 1px solid black;
-        cursor: pointer;
-        font-size: 0.85rem;
-        border-radius: 5px;
-        z-index: 1001;
-      }
-
-      /* Container bar */
-      .slider-background-bar {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 20%;
-        background-color: rgba(255, 255, 255, 0.85);
-        padding: 20px 0;
-        box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
-        z-index: 1000;
-      }
-
-      /* Main slider wrapper */
-      .timeline-slider {
-        position: relative;
-        width: 70%;
-        padding: 0 8px;
-        margin: 0 auto;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-
-      /* Range slider */
-      .timeline-slider input[type="range"] {
-        position: absolute;
-        margin: 0 12px;
-        padding: 0;
-        top: 40px;
-        width: 100%;
-        z-index: 1;
-        height: 6px;
-        background: linear-gradient(to right, #797777 0%, #797777 100%);
-        border-radius: 3px;
-        appearance: none;
-        outline: none;
-        cursor: pointer;
-      }
-
-      /* Hover effect */
-      .timeline-slider input[type="range"]:hover {
-        background: #b2abab;
-      }
-
-      /* WebKit thumb */
-      .timeline-slider input[type="range"]::-webkit-slider-thumb {
-        appearance: none;
-        width: 18px;
-        height: 18px;
-        border-radius: 50%;
-        margin-left: 0;
-        margin-right: 0;
-        background: #333;
-        cursor: pointer;
-        position: relative;
-        z-index: 3;
-        transition: background 0.3s ease;
-      }
-      .timeline-slider input[type="range"]::-webkit-slider-thumb:hover {
-        background: #555;
-      }
-
-      /* Firefox thumb */
-      .timeline-slider input[type="range"]::-moz-range-thumb {
-        width: 18px;
-        height: 18px;
-        border-radius: 50%;
-        background: #333;
-        cursor: pointer;
-        position: relative;
-        z-index: 3;
-        transition: background 0.3s ease;
-      }
-      .timeline-slider input[type="range"]::-moz-range-thumb:hover {
-        background: #555;
-      }
-
-      /* Tick container */
-      .timeline-ticks {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        position: relative;
-        z-index: 2;
-        pointer-events: none;
-      }
-      .tick-container {
-        flex: 0.1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        pointer-events: none;
-      }
-
-      .tick-container:first-of-type {
-        align-items: flex-start;
-      }
-      .tick-container:last-of-type {
-        align-items: flex-end;
-      }
-
-      /* Tick line that crosses the slider */
-      .tick-line {
-        width: 2px;
-        height: 40px;
-        background-color: black;
-        margin: 5px 0;
-      }
-
-      /* Labels */
-      .tick-label {
-        font-size: 14px;
-      }
-      .tick-label.top {
-        margin-bottom: 0px;
-        font-weight: italic;
-      }
-      .tick-label.bottom {
-        margin-top: 0px;
-        font-weight: bold;
-      }
-    </style>
   </head>
 
   <body class="relative">
     <div id="map"></div>
+
+    <!-- Overlay Info Box (applies globally across layers) -->
+    <div id="overlay-info-box" class="info-box">
+      <h2 id="overlay-info-title">Overlay Info</h2>
+      <h3 id="overlay-info-subtitle">Subtitle</h3>
+      <p id="overlay-info-description">Info about the current overlay will appear here.</p>
+    </div>
 
     <div class="slider-background-bar">
       <div class="timeline-slider">
@@ -658,7 +72,6 @@
 
       <div id="overlay-left">
         <div id="overlay-content"></div>
-        <!-- DO NOT add #threejs-container-wrapper here if you're creating it dynamically in JS -->
       </div>
 
       <div id="overlay-right">
@@ -669,20 +82,15 @@
 
     <!--Adding the camp layer-->
     <div id="camp-overlay" class="overlay">
-      <button class="nav-button" id="prevBtn">←</button>
-      <button class="nav-button" id="nextBtn">→</button>
-
       <div id="camp-overlay-left">
         <div id="camp-media-container">
-          <iframe
-            id="camp-iframe"
-            title="Camp Viewer"
-            style="width: 100%; height: 100%; border: none; display: none"
-          ></iframe>
-
-          <img id="camp-image" src="" alt="Camp Image" />
+          <div id="media-wrapper">
+            <iframe id="camp-iframe" title="Camp Viewer" style="display: none;"></iframe>
+            <img id="camp-image" src="" alt="Camp Image" />
+          </div>
           <p id="camp-caption" class="image-caption"></p>
         </div>
+        
       </div>
 
       <div id="camp-overlay-right">
@@ -693,7 +101,8 @@
           <span class="slider"></span>
           Show interior view
         </label>
-
+  
+        
         <p id="camp-description">This is the concentration camp from 1936...</p>
       </div>
 
@@ -735,7 +144,9 @@
       import { loadCustomLayer } from "./3D-model-layer.js";
       import { conventGeojson } from "./soria-convent.js";
       import { campGeojson } from "./soria-camp.js";
-      import { initThreejs, loadModel } from "./3D-model-viewer.js";
+      import { initThreejs, toggleModelVisibility, loadModel } from "./3D-model-viewer.js";
+      import { overlayInfo } from './overlay-info.js';
+
 
       // Load the GeoJSON data for the convent
       const marker = conventGeojson.features[0];
@@ -748,7 +159,7 @@
         style:
           "https://api.maptiler.com/maps/satellite/style.json?key=TdTwD7oIRpXkUvhlz3qX",
         center: [-2.4661792987112507, 41.76136750285904],
-        zoom: 18,
+        zoom: 17.7,
         pitch: 0,
       });
 
@@ -938,62 +349,97 @@
             const lookAt = marker.properties.lookAt;
             const icon = marker.properties.icon;
 
-            const mediaContainer = document.getElementById(
-              "camp-media-container"
-            );
-            mediaContainer.innerHTML = "";
+            const mediaContainer = document.getElementById("camp-media-container");
+            const existingCaption = document.getElementById("camp-caption");
 
-            const toggleLabel = document.querySelector(
-              "#camp-overlay-right .model-toggle"
-            );
-            const toggle = document.getElementById("modelToggle");
-
-            // Show toggle ONLY if icon === "./icons/icon_3d.png"
-            if (icon === "./icons/icon_3d.png") {
-              toggleLabel.style.display = "inline-flex"; // or "block" depending on your CSS
-              toggle.checked = false;
-
-              let currentModel = modelKey;
-
-              mediaContainer.innerHTML = `
-                  <div id="threejs-container-wrapper" style="position: relative; width: 100%; height: 100%;">
-                    <div id="threejs-container" style="width: 100%; height: 100%;"></div>
-                  </div>
-                `;
-
-              // initThreejs(currentModel);
-              initThreejs("threejs-container", currentModel, camPos, lookAt);
-
-              toggle.onchange = () => {
-                currentModel = toggle.checked ? altmodel || modelKey : modelKey;
-                loadModel(currentModel, camPos, lookAt);
-              };
-            } else {
-              // Hide toggle for all other markers
-              toggleLabel.style.display = "none";
-
-              // Load image or video content as usual
-              if (link) {
-                if (link.endsWith(".mp4")) {
-                  const video = document.createElement("video");
-                  video.src = link;
-                  video.controls = true;
-                  video.style = "width: 100%; height: 100%; object-fit: cover;";
-                  mediaContainer.appendChild(video);
-                } else {
-                  const img = document.createElement("img");
-                  img.src = link;
-                  img.alt = "Camp Image";
-                  img.classList.add("camp-image");
-                  mediaContainer.appendChild(img);
-                }
-              }
+            // Clear only dynamic content, not static structure like #camp-caption
+            if (mediaContainer && !icon.includes("icon_3d")) {
+              // Remove previously injected media (e.g. video or img only)
+              mediaContainer.querySelectorAll("img:not(#camp-image), video").forEach(el => el.remove());
+              if (existingCaption) existingCaption.textContent = "";
             }
 
-            document.getElementById("camp-overlay-headline").textContent =
-              name || "Camp Marker";
-            document.getElementById("camp-description").innerHTML =
-              description || "";
+
+            const toggleLabel = document.querySelector("#camp-overlay-right .model-toggle");
+            const toggle = document.getElementById("modelToggle");
+            toggleLabel.style.display = "none"; // ✅ Hide toggle unless explicitly needed
+
+            // Show toggle ONLY if icon === "./icons/icon_3d.png"
+            if (mediaContainer) {
+            // Clear old content
+            mediaContainer.innerHTML = "";
+
+            if (icon.includes("icon_3d") || icon.includes("icon_360")) {
+            // Load a 3D or 360° model
+            mediaContainer.innerHTML = `
+              <div id="threejs-container-wrapper" style="position: relative; width: 100%; height: 100%;">
+                <div id="threejs-container" style="width: 100%; height: 100%;"></div>
+              </div>
+            `;
+
+            setTimeout(() => {
+              initThreejs("threejs-container", modelKey, camPos, lookAt);
+              if (icon.includes("icon_3d") && altmodel && altmodel !== modelKey) {
+                loadModel(altmodel, camPos, lookAt, true);
+              }
+            }, 0);
+
+            // Show toggle ONLY for icon_3d markers
+            if (icon.includes("icon_3d") && altmodel && altmodel !== modelKey) {
+              toggleLabel.style.display = "inline-flex";
+              toggle.checked = false;
+              toggle.onchange = () => {
+                const visibleModel = toggle.checked ? altmodel : modelKey;
+                toggleModelVisibility(visibleModel);
+              };
+            }
+
+            if (caption) {
+              const captionElem = document.createElement("p");
+              captionElem.className = "image-caption";
+              captionElem.textContent = caption;
+              mediaContainer.appendChild(captionElem);
+  }
+
+            } else if (link) {
+              let mediaElement;
+              if (link.endsWith(".mp4")) {
+                mediaElement = document.createElement("video");
+                mediaElement.src = link;
+                mediaElement.controls = true;
+                mediaElement.style = "width: 100%; height: 100%; object-fit: cover;";
+              } else if (link.endsWith(".jpg") || link.endsWith(".png")) {
+                mediaElement = document.createElement("img");
+                mediaElement.src = link;
+                mediaElement.alt = caption || "Media content";
+                mediaElement.classList.add("camp-image");
+              }
+
+              if (mediaElement) {
+                mediaContainer.appendChild(mediaElement);
+                if (caption) {
+                  const captionElem = document.createElement("p");
+                  captionElem.className = "image-caption";
+                  captionElem.textContent = caption;
+                  mediaContainer.appendChild(captionElem);
+                }
+              }
+            } else {
+              console.warn("No valid model or media link found for marker.");
+            }
+          }
+
+
+
+            document.getElementById("camp-overlay-headline").textContent = name || "Camp Marker";
+            document.getElementById("camp-description").innerHTML = description || "";
+
+            const captionElem = document.getElementById("camp-caption");
+              if (captionElem) {
+                captionElem.textContent = caption || "";
+              }
+
+
 
             // Optional zoom for special markers
             if (marker.properties.name === "Forced Labour") {
@@ -1003,7 +449,9 @@
                 speed: 1.2,
                 curve: 1,
                 essential: true,
+
               });
+              
             }
           });
 
@@ -1122,9 +570,21 @@
           updateTimeline(value);
         });
 
-        // Initialize the timeline
+       // Assuming these IDs correspond to your overlays
+        const overlayIds = ['convent', 'camp', 'present'];
+
         function updateTimeline(value) {
           const valueNum = parseFloat(value);
+
+          // Determine active overlay ID based on timeline value
+          let activeOverlayId;
+          if (valueNum < 0.5) {
+            activeOverlayId = 'convent';
+          } else if (valueNum < 1.5) {
+            activeOverlayId = 'camp';
+          } else {
+            activeOverlayId = 'present';
+          }
 
           // Set opacity of the historic overlay
           let imageOpacity = 0;
@@ -1140,32 +600,34 @@
             modelOpacity = 2 - valueNum; // 1 → 0
           }
 
+          // Update the overlay info based on the current activeOverlayId
+          const info = overlayInfo.find((entry) => entry.id === activeOverlayId);
+          if (info) {
+            document.getElementById("overlay-info-title").textContent = info.title;
+            document.getElementById("overlay-info-subtitle").textContent = info.subtitle || "";
+            document.getElementById("overlay-info-description").innerHTML = info.description;
+          }
+
           // Update map layer opacity
           map.setPaintProperty("image-layer", "raster-opacity", imageOpacity);
-          map.setPaintProperty(
-            "camp-map-layer",
-            "raster-opacity",
-            modelOpacity
-          );
+          map.setPaintProperty("camp-map-layer", "raster-opacity", modelOpacity);
 
           // Control marker visibility cleanly
-          if (valueNum < 0.5) {
-            // Show convent markers only
+          if (activeOverlayId === 'convent') {
             setMarkersVisibility(conventMarkers, true);
             setMarkersVisibility(campMarkers, false);
             setMarkersVisibility(presentDayMarkers, false);
-          } else if (valueNum < 1.5) {
-            // Show camp markers only
+          } else if (activeOverlayId === 'camp') {
             setMarkersVisibility(conventMarkers, false);
             setMarkersVisibility(campMarkers, true);
             setMarkersVisibility(presentDayMarkers, false);
-          } else {
-            // Show present-day markers only
+          } else if (activeOverlayId === 'present') {
             setMarkersVisibility(conventMarkers, false);
             setMarkersVisibility(campMarkers, false);
             setMarkersVisibility(presentDayMarkers, true);
           }
         }
+
 
         updateTimeline(timelineRange.value);
       });

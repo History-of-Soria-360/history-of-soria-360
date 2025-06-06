@@ -36,7 +36,7 @@ export const conventGeojson = {
           icon: "./icons/icon_play.png",
           iconSize: [40, 40],
           link: "./video/StClaraCampLabour.mp4",  // Image link
-          description: "Carlos is an archaeologist involved in the research of the Santa Clara site in Soria. <br><br>In this video, he shares insights into the historical significance of the convent and its role in the local context. <br><br>Carlos speaks in Spanish, with an English translation provided by a member of the Recuerdo y Dignidad Association..",
+          description: "A local archaeologist involved in the research of the Santa Clara site in Soria shares his insights into the historical significance of the convent and its role in the local context. <br><br>The archaeologist speaks in Spanish, with an English translation provided by a member of the Recuerdo y Dignidad Association.",
           name: "Santa Clara Convent",
           caption: "Video explaining about the Santa Clara Convent",
         },
@@ -48,9 +48,10 @@ export const conventGeojson = {
           message: "Video",
           icon: "./icons/icon_play.png",
           iconSize: [40, 40],
-          link: "./video/StClaraCampLabour.mp4",  // Image link
-          description: "This church formed the heart of the Santa Clara convent built in 1286...",
-          name: "Santa Clara Convent"
+          link: "./video/Video_3.mp4",  // Image link
+          description: "A local archaeologist involved in the research of the Santa Clara site in Soria shares his insights into the historical significance of the Santa Clara Complex. <br><br>This video traces the story of the complex’s evolution—from its construction to its changing roles over time. More than just a convent or a concentration camp, it also served as a strategic military post, reflecting the many layers of its history.<br><br>The archaeologist speaks in Spanish, with an English translation provided by a member of the Recuerdo y Dignidad Association.",
+          name: "Development of the Santa Clara Complex",
+          caption: "Video of the constructional development of the Santa Clara Complex",
         },
         geometry: { type: "Point", coordinates: [-2.466385, 41.761833] },
       },
@@ -60,9 +61,10 @@ export const conventGeojson = {
           message: "Video",
           icon: "./icons/icon_play.png",
           iconSize: [40, 40],
-          link: "./video/StClaraCampLabour.mp4",  // Image link
-          description: "This church formed the heart of the Santa Clara convent built in 1286...",
-          name: "Santa Clara Convent"
+          link: "./video/Video_4.mp4",  // Image link
+          description: "A local archaeologist involved in the research of the Santa Clara site in Soria shares his insights into the historical significance of the Santa Clara Complex. <br><br>This video offers a brief glimpse into the lives of the prisoners and how they were held within the complex until the 1950s. <br><br>The archaeologist speaks in Spanish, with an English translation provided by a member of the Recuerdo y Dignidad Association.",
+          name: "Prisoners",
+          caption: "Video about the prisoners of the Santa Clara Complex",
         },
         geometry: { type: "Point", coordinates: [-2.465196, 41.761690] },
       },
@@ -72,11 +74,25 @@ export const conventGeojson = {
           message: "Video",
           icon: "./icons/icon_play.png",
           iconSize: [40, 40],
-          link: "./video/StClaraCampLabour.mp4",  // Image link
-          description: "This church formed the heart of the Santa Clara convent built in 1286...",
-          name: "Santa Clara Convent"
+          link: "./video/Video_2.mp4",  // Image link
+          description: "A local archaeologist involved in the research of the Santa Clara site in Soria shares his insights into the historical significance of the Santa Clara Complex. <br><br>This video provides an overview of the original wall structures and some of the buildings within the complex. It explains how certain buildings were likely used to hold prisoners and describes how the area was divided between military and prisoner sections. It offers a brief look at how the space was organized and used. <br><br>The archaeologist speaks in Spanish, with an English translation provided by a member of the Recuerdo y Dignidad Association.",
+          name: "Camp Structure and Use",
+          caption: "Video overview of the Santa Clara Complex",
         },
         geometry: { type: "Point", coordinates: [-2.465976, 41.761244, ] },
+      },
+      {
+        type: "Feature",
+        properties: {
+          message: "Video",
+          icon: "./icons/icon_play.png",
+          iconSize: [40, 40],
+          link: "./video/Video_5.mp4",  // Image link
+          description: "A local archaeologist involved in the research of the Santa Clara site in Soria shares his insights into the historical significance of the Santa Clara Complex. <br><br>This video explores the remnants of the original structures uncovered during excavations, shedding light on the hidden layers of the complex’s past. <br><br>The archaeologist speaks in Spanish, with an English translation provided by a member of the Recuerdo y Dignidad Association.",
+          name: "Remains of the Santa Clara Complex",
+          caption: "Video about remnants found in the Santa Clara Complex",
+        },
+        geometry: { type: "Point", coordinates: [-2.465307, 41.761204] },
       },
     ],
   };
