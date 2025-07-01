@@ -128,8 +128,8 @@ export function loadModel(model, camPos, lookAt, hidden = false) {
 
   if (!model.includes("/") && model.endsWith(".glb")) {
     path = model.includes("Santaclara")
-      ? `https://memorise.sdu.dk/History-of-Soria-360/3D_models/${model}`
-      : `https://memorise.sdu.dk/History-of-Soria-360/3D%20sketches/${model}`;
+      ? `https://corsproxy.io/?url=https://memorise.sdu.dk/History-of-Soria-360/3D_models/${model}`
+      : `https://corsproxy.io/?url=https://memorise.sdu.dk/History-of-Soria-360/3D%20sketches/${model}`;
   }
 
   console.log("TRYING to fetch", path);
