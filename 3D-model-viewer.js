@@ -7,7 +7,7 @@ let containerIDGlobal;
 
 let scene, camera, renderer, controls, loader, width, height;
 let models = ["building_BH.glb", "building_1-3.glb", "5_4_2025.glb"];
-let loadedModels = {}; 
+let loadedModels = {};
 
 let targetIsSet = false;
 
@@ -127,7 +127,9 @@ export function loadModel(model, camPos, lookAt, hidden = false) {
   let path = model;
 
   if (!model.includes("/") && model.endsWith(".glb")) {
-    path = model.includes("Santaclara") ? `3D_models/${model}` : `3D sketches/${model}`;
+    path = model.includes("Santaclara")
+      ? `https://memorise.sdu.dk/History-of-Soria-360/3D_models/${model}`
+      : `https://memorise.sdu.dk/History-of-Soria-360/3D%20sketches/${model}`;
   }
 
   loader.load(
@@ -150,7 +152,7 @@ export function loadModel(model, camPos, lookAt, hidden = false) {
               tex.colorSpace = THREE.SRGBColorSpace;
               tex.flipY = false;
               tex.needsUpdate = true;
-        
+
               // Try BOTH sides in case the dome is inverted
               child.material = new THREE.MeshBasicMaterial({
                 map: tex,
@@ -162,7 +164,6 @@ export function loadModel(model, camPos, lookAt, hidden = false) {
             }
           }
         });
-        
 
         camera.position.set(0, 0, 0.1);
         controls.target.set(0, 0, 0);
@@ -170,7 +171,6 @@ export function loadModel(model, camPos, lookAt, hidden = false) {
         controls.enablePan = false;
         controls.enableRotate = true;
         controls.update();
-        
       } else {
         // 🔧 Regular 3D model config
         scene.background = new THREE.Color(0xdddddd);
@@ -199,8 +199,6 @@ export function loadModel(model, camPos, lookAt, hidden = false) {
   );
 }
 
-
-
 /* ───────────────────────────────────────────────────────────── */
 
 function clearScene() {
@@ -214,12 +212,11 @@ function clearScene() {
 /* ───────────────────────────────────────────────────────────── */
 export function toggleModelVisibility(modelName) {
   for (const [name, obj] of Object.entries(loadedModels)) {
-    obj.visible = (name === modelName);
+    obj.visible = name === modelName;
   }
 
   innitAnnotations(modelName);
 }
-
 
 function animate() {
   // update annotation screen positions
