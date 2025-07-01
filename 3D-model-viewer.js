@@ -132,6 +132,8 @@ export function loadModel(model, camPos, lookAt, hidden = false) {
       : `https://memorise.sdu.dk/History-of-Soria-360/3D%20sketches/${model}`;
   }
 
+  console.log("TRYING to fetch", path);
+
   loader.load(
     path,
     (gltf) => {
