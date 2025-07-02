@@ -29,7 +29,9 @@
     <div id="overlay-info-box" class="info-box">
       <h2 id="overlay-info-title">Overlay Info</h2>
       <h3 id="overlay-info-subtitle">Subtitle</h3>
-      <p id="overlay-info-description">Info about the current overlay will appear here.</p>
+      <p id="overlay-info-description">
+        Info about the current overlay will appear here.
+      </p>
     </div>
 
     <div class="slider-background-bar">
@@ -85,12 +87,15 @@
       <div id="camp-overlay-left">
         <div id="camp-media-container">
           <div id="media-wrapper">
-            <iframe id="camp-iframe" title="Camp Viewer" style="display: none;"></iframe>
+            <iframe
+              id="camp-iframe"
+              title="Camp Viewer"
+              style="display: none"
+            ></iframe>
             <img id="camp-image" src="" alt="Camp Image" />
           </div>
           <p id="camp-caption" class="image-caption"></p>
         </div>
-        
       </div>
 
       <div id="camp-overlay-right">
@@ -101,8 +106,7 @@
           <span class="slider"></span>
           Show interior view
         </label>
-  
-        
+
         <p id="camp-description">This is the concentration camp from 1936...</p>
       </div>
 
@@ -144,9 +148,12 @@
       import { loadCustomLayer } from "./3D-model-layer.js";
       import { conventGeojson } from "./soria-convent.js";
       import { campGeojson } from "./soria-camp.js";
-      import { initThreejs, toggleModelVisibility, loadModel } from "./3D-model-viewer.js";
-      import { overlayInfo } from './overlay-info.js';
-
+      import {
+        initThreejs,
+        toggleModelVisibility,
+        loadModel,
+      } from "./3D-model-viewer.js";
+      import { overlayInfo } from "./overlay-info.js";
 
       // Load the GeoJSON data for the convent
       const marker = conventGeojson.features[0];
@@ -349,97 +356,108 @@
             const lookAt = marker.properties.lookAt;
             const icon = marker.properties.icon;
 
-            const mediaContainer = document.getElementById("camp-media-container");
+            const mediaContainer = document.getElementById(
+              "camp-media-container"
+            );
             const existingCaption = document.getElementById("camp-caption");
 
             // Clear only dynamic content, not static structure like #camp-caption
             if (mediaContainer && !icon.includes("icon_3d")) {
               // Remove previously injected media (e.g. video or img only)
-              mediaContainer.querySelectorAll("img:not(#camp-image), video").forEach(el => el.remove());
+              mediaContainer
+                .querySelectorAll("img:not(#camp-image), video")
+                .forEach((el) => el.remove());
               if (existingCaption) existingCaption.textContent = "";
             }
 
-
-            const toggleLabel = document.querySelector("#camp-overlay-right .model-toggle");
+            const toggleLabel = document.querySelector(
+              "#camp-overlay-right .model-toggle"
+            );
             const toggle = document.getElementById("modelToggle");
             toggleLabel.style.display = "none"; // ✅ Hide toggle unless explicitly needed
 
             // Show toggle ONLY if icon === "./icons/icon_3d.png"
             if (mediaContainer) {
-            // Clear old content
-            mediaContainer.innerHTML = "";
+              // Clear old content
+              mediaContainer.innerHTML = "";
 
-            if (icon.includes("icon_3d") || icon.includes("icon_360")) {
-            // Load a 3D or 360° model
-            mediaContainer.innerHTML = `
+              if (icon.includes("icon_3d") || icon.includes("icon_360")) {
+                // Load a 3D or 360° model
+                mediaContainer.innerHTML = `
               <div id="threejs-container-wrapper" style="position: relative; width: 100%; height: 100%;">
                 <div id="threejs-container" style="width: 100%; height: 100%;"></div>
               </div>
             `;
 
-            setTimeout(() => {
-              initThreejs("threejs-container", modelKey, camPos, lookAt);
-              if (icon.includes("icon_3d") && altmodel && altmodel !== modelKey) {
-                loadModel(altmodel, camPos, lookAt, true);
-              }
-            }, 0);
+                setTimeout(() => {
+                  initThreejs("threejs-container", modelKey, camPos, lookAt);
+                  if (
+                    icon.includes("icon_3d") &&
+                    altmodel &&
+                    altmodel !== modelKey
+                  ) {
+                    loadModel(altmodel, camPos, lookAt, true);
+                  }
+                }, 0);
 
-            // Show toggle ONLY for icon_3d markers
-            if (icon.includes("icon_3d") && altmodel && altmodel !== modelKey) {
-              toggleLabel.style.display = "inline-flex";
-              toggle.checked = false;
-              toggle.onchange = () => {
-                const visibleModel = toggle.checked ? altmodel : modelKey;
-                toggleModelVisibility(visibleModel);
-              };
-            }
+                // Show toggle ONLY for icon_3d markers
+                if (
+                  icon.includes("icon_3d") &&
+                  altmodel &&
+                  altmodel !== modelKey
+                ) {
+                  toggleLabel.style.display = "inline-flex";
+                  toggle.checked = false;
+                  toggle.onchange = () => {
+                    const visibleModel = toggle.checked ? altmodel : modelKey;
+                    toggleModelVisibility(visibleModel);
+                  };
+                }
 
-            if (caption) {
-              const captionElem = document.createElement("p");
-              captionElem.className = "image-caption";
-              captionElem.textContent = caption;
-              mediaContainer.appendChild(captionElem);
-  }
-
-            } else if (link) {
-              let mediaElement;
-              if (link.endsWith(".mp4")) {
-                mediaElement = document.createElement("video");
-                mediaElement.src = link;
-                mediaElement.controls = true;
-                mediaElement.style = "width: 100%; height: 100%; object-fit: cover;";
-              } else if (link.endsWith(".jpg") || link.endsWith(".png")) {
-                mediaElement = document.createElement("img");
-                mediaElement.src = link;
-                mediaElement.alt = caption || "Media content";
-                mediaElement.classList.add("camp-image");
-              }
-
-              if (mediaElement) {
-                mediaContainer.appendChild(mediaElement);
                 if (caption) {
                   const captionElem = document.createElement("p");
                   captionElem.className = "image-caption";
                   captionElem.textContent = caption;
                   mediaContainer.appendChild(captionElem);
                 }
+              } else if (link) {
+                let mediaElement;
+                if (link.endsWith(".mp4")) {
+                  mediaElement = document.createElement("video");
+                  mediaElement.src = link;
+                  mediaElement.controls = true;
+                  mediaElement.style =
+                    "width: 100%; height: 100%; object-fit: cover;";
+                } else if (link.endsWith(".jpg") || link.endsWith(".png")) {
+                  mediaElement = document.createElement("img");
+                  mediaElement.src = link;
+                  mediaElement.alt = caption || "Media content";
+                  mediaElement.classList.add("camp-image");
+                }
+
+                if (mediaElement) {
+                  mediaContainer.appendChild(mediaElement);
+                  if (caption) {
+                    const captionElem = document.createElement("p");
+                    captionElem.className = "image-caption";
+                    captionElem.textContent = caption;
+                    mediaContainer.appendChild(captionElem);
+                  }
+                }
+              } else {
+                console.warn("No valid model or media link found for marker.");
               }
-            } else {
-              console.warn("No valid model or media link found for marker.");
             }
-          }
 
-
-
-            document.getElementById("camp-overlay-headline").textContent = name || "Camp Marker";
-            document.getElementById("camp-description").innerHTML = description || "";
+            document.getElementById("camp-overlay-headline").textContent =
+              name || "Camp Marker";
+            document.getElementById("camp-description").innerHTML =
+              description || "";
 
             const captionElem = document.getElementById("camp-caption");
-              if (captionElem) {
-                captionElem.textContent = caption || "";
-              }
-
-
+            if (captionElem) {
+              captionElem.textContent = caption || "";
+            }
 
             // Optional zoom for special markers
             if (marker.properties.name === "Forced Labour") {
@@ -449,9 +467,7 @@
                 speed: 1.2,
                 curve: 1,
                 essential: true,
-
               });
-              
             }
           });
 
@@ -503,7 +519,10 @@
 
             if (marker.properties.link.endsWith(".mp4")) {
               const videoElement = document.createElement("video");
-              videoElement.src = marker.properties.link;
+              videoElement.src = marker.properties.link.replace(
+                "./video",
+                "https://memorise.sdu.dk/History-of-Soria-360/video"
+              );
               videoElement.controls = true;
               mediaContainer.appendChild(videoElement);
             } else {
@@ -570,8 +589,8 @@
           updateTimeline(value);
         });
 
-       // Assuming these IDs correspond to your overlays
-        const overlayIds = ['convent', 'camp', 'present'];
+        // Assuming these IDs correspond to your overlays
+        const overlayIds = ["convent", "camp", "present"];
 
         function updateTimeline(value) {
           const valueNum = parseFloat(value);
@@ -579,11 +598,11 @@
           // Determine active overlay ID based on timeline value
           let activeOverlayId;
           if (valueNum < 0.5) {
-            activeOverlayId = 'convent';
+            activeOverlayId = "convent";
           } else if (valueNum < 1.5) {
-            activeOverlayId = 'camp';
+            activeOverlayId = "camp";
           } else {
-            activeOverlayId = 'present';
+            activeOverlayId = "present";
           }
 
           // Set opacity of the historic overlay
@@ -601,33 +620,41 @@
           }
 
           // Update the overlay info based on the current activeOverlayId
-          const info = overlayInfo.find((entry) => entry.id === activeOverlayId);
+          const info = overlayInfo.find(
+            (entry) => entry.id === activeOverlayId
+          );
           if (info) {
-            document.getElementById("overlay-info-title").textContent = info.title;
-            document.getElementById("overlay-info-subtitle").textContent = info.subtitle || "";
-            document.getElementById("overlay-info-description").innerHTML = info.description;
+            document.getElementById("overlay-info-title").textContent =
+              info.title;
+            document.getElementById("overlay-info-subtitle").textContent =
+              info.subtitle || "";
+            document.getElementById("overlay-info-description").innerHTML =
+              info.description;
           }
 
           // Update map layer opacity
           map.setPaintProperty("image-layer", "raster-opacity", imageOpacity);
-          map.setPaintProperty("camp-map-layer", "raster-opacity", modelOpacity);
+          map.setPaintProperty(
+            "camp-map-layer",
+            "raster-opacity",
+            modelOpacity
+          );
 
           // Control marker visibility cleanly
-          if (activeOverlayId === 'convent') {
+          if (activeOverlayId === "convent") {
             setMarkersVisibility(conventMarkers, true);
             setMarkersVisibility(campMarkers, false);
             setMarkersVisibility(presentDayMarkers, false);
-          } else if (activeOverlayId === 'camp') {
+          } else if (activeOverlayId === "camp") {
             setMarkersVisibility(conventMarkers, false);
             setMarkersVisibility(campMarkers, true);
             setMarkersVisibility(presentDayMarkers, false);
-          } else if (activeOverlayId === 'present') {
+          } else if (activeOverlayId === "present") {
             setMarkersVisibility(conventMarkers, false);
             setMarkersVisibility(campMarkers, false);
             setMarkersVisibility(presentDayMarkers, true);
           }
         }
-
 
         updateTimeline(timelineRange.value);
       });
