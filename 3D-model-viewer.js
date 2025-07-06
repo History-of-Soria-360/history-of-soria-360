@@ -105,6 +105,7 @@ function innitAnnotations(model) {
     const ann = document.createElement("div");
     ann.className = "annotation";
     ann.textContent = a.title;
+    const title = a.title;
     ann.dataset.pos = JSON.stringify([a.lookAt.x, a.lookAt.y, a.lookAt.z]);
 
     ann.onclick = () => {
@@ -116,6 +117,13 @@ function innitAnnotations(model) {
       const descBox = document.getElementById("image-description");
       if (descBox) {
         descBox.innerHTML = a.description || a.title || ""; // fallback to title if no description
+      }
+
+      if (title != null) {
+        const overlayTitle = document.getElementById("overlay-title");
+        if (overlayTitle) {
+          overlayTitle.innerText = title;
+        }
       }
     };
     document.getElementById("threejs-container-wrapper")?.appendChild(ann);

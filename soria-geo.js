@@ -9,7 +9,7 @@ export const geojson = {
         model: "building_ABCD_360.glb",
         icon: "./icons/icon_360.1.png",
         iconSize: [40, 40],
-        title: "HEJ",
+        title: "The Central Courtyard",
         next: 1,
         prev: 6,
         description:
@@ -28,6 +28,7 @@ export const geojson = {
         iconSize: [40, 40],
         next: 2,
         prev: 0,
+        title: "The Military",
         description:
           "You are now looking at the outer section of what was once the Santa Clara concentration camp. While the inner courtyard housed dormitories and daily prisoner life, this area supported the broader military structure that kept the camp running.<br><br> Here, guards were stationed, detainees were processed, and logistical operations took place. Only one of these buildings has survived offering a glimpse into how the camp was organized and controlled. <br><br><i>Click the annotations to explore the history and function of each structure.</i>",
       },
@@ -43,8 +44,9 @@ export const geojson = {
         iconSize: [40, 40],
         next: 3,
         prev: 1,
+        title: "The Stables",
         description:
-          "This point focuses on the stables, which served a very specific but important role within the Santa Clara concentration camp. As part of the camp’s infrastructure, it supported military operations beyond the prisoner enclosures. <br><br><i>Click the annotation to explore the history and function of the structure.</i>",
+          "This point focuses on the stables, which served a very specific but important role within the Santa Clara concentration camp. As part of the camp's infrastructure, it supported military operations beyond the prisoner enclosures. <br><br><i>Click the annotation to explore the history and function of the structure.</i>",
       },
       geometry: { type: "Point", coordinates: [-2.465307, 41.761204] },
     },
@@ -58,6 +60,7 @@ export const geojson = {
         iconSize: [40, 40],
         next: 0,
         prev: 2,
+        title: "The Courtyard",
         description:
           "From this position, we are looking into the heart of the Santa Clara concentration camp. This area once held several key buildings arranged around an open courtyard. These structures served both practical and disciplinary functions, including dormitories, restrooms, workshops, and administrative spaces. <br><br><i>Click the annotations to explore the history and function of each structure.</i>",
       },
@@ -73,6 +76,7 @@ export const geojson = {
         iconSize: [40, 40],
         next: 1,
         prev: 5,
+        title: "The Barrack and Infirmary",
         description:
           "From this position, we can observe the area where two key camp structures once stood: a wooden barrack and the camp infirmary. These buildings reflect two very different aspects of daily life in the Santa Clara concentration camp — the overcrowded conditions of internment and the minimal provision of medical care. <br><br><i>Click the annotations to explore the history and function of each structure.</i>",
       },
@@ -88,6 +92,7 @@ export const geojson = {
         iconSize: [40, 40],
         next: 6,
         prev: 4,
+        title: "The Provision Depot and Wooden Barracks",
         description:
           "From this angle, we see the area once occupied by a provisions depot and two wooden barracks. These structures illustrate how the camp operated logistically and how space was organized to house a growing population of detainees under harsh conditions. <br><br><i>Click the annotations to explore the history and function of each structure.</i>",
       },
@@ -103,6 +108,7 @@ export const geojson = {
         iconSize: [40, 40],
         next: 0,
         prev: 5,
+        title: "Health and Sanitation",
         description:
           "From this vantage point, you can see two buildings that played very different roles during the time of the concentration camp. One of them survives today as part of a public health institution, while the other once served a more basic, but essential, function related to sanitation and daily life.<br><br><i>Click the annotations to explore the history and function of each structure.</i>",
       },

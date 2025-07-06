@@ -77,7 +77,7 @@
       </div>
 
       <div id="overlay-right">
-        <h3>360° view of the chosen site</h3>
+        <h3 id="overlay-title"></h3>
         <p class="whitespace-pre-wrap" id="image-description"></p>
       </div>
     </div>
@@ -178,6 +178,7 @@
         const feature = geojson.features[index];
         const modelKey = feature.properties.model;
         const description = feature.properties.description;
+        const title = feature.properties.title;
 
         console.log("Model:", modelKey);
         console.log("Description:", description);
@@ -194,6 +195,11 @@
 
         // ✅ Now the element exists – safe to call init
         initThreejs("threejs-container", modelKey);
+
+        if (title != null) {
+          const overlayTitle = document.getElementById("overlay-title");
+          overlayTitle.innerText = title;
+        }
 
         // ✅ Set description in the RIGHT panel
         const descBox = document.getElementById("image-description");
