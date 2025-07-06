@@ -67,7 +67,27 @@ export function initThreejs(containerID, model, camPos = null, lookAt = null) {
   /* ---------- bookkeeping ---------- */
   width = container.clientWidth;
   height = container.clientHeight;
-  loader = new GLTFLoader();
+
+  // Add a loading indicator (simple text)
+  const loadingIndicator = document.createElement("div");
+  loadingIndicator.style.position = "absolute";
+  loadingIndicator.style.top = "50%";
+  loadingIndicator.style.left = "50%";
+  loadingIndicator.style.transform = "translate(-50%, -50%)";
+  loadingIndicator.style.padding = "10px";
+  loadingIndicator.style.background = "rgba(0, 0, 0, 0.7)";
+  loadingIndicator.style.color = "white";
+  loadingIndicator.style.fontFamily = "sans-serif";
+  loadingIndicator.innerText = "Loading model...";
+  container.appendChild(loadingIndicator);
+
+  // Set up LoadingManager
+  const loadingManager = new THREE.LoadingManager();
+  loadingManager.onLoad = () => {
+    loadingIndicator.style.display = "none"; // Hide loading indicator
+  };
+
+  loader = new GLTFLoader(loadingManager);
   loader.setMeshoptDecoder(MeshoptDecoder);
 
   loadModel(model, camPos, lookAt);
