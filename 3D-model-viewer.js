@@ -1,8 +1,8 @@
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js";
 import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/loaders/GLTFLoader.js";
+import { MeshoptDecoder } from "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/libs/meshopt_decoder.module.js";
 import { OrbitControls } from "https://unpkg.com/three@0.169.0/examples/jsm/controls/OrbitControls.js";
 import { annotations } from "./annotations.js";
-
 let containerIDGlobal;
 
 let scene, camera, renderer, controls, loader, width, height;
@@ -68,6 +68,7 @@ export function initThreejs(containerID, model, camPos = null, lookAt = null) {
   width = container.clientWidth;
   height = container.clientHeight;
   loader = new GLTFLoader();
+  loader.setMeshoptDecoder(MeshoptDecoder);
 
   loadModel(model, camPos, lookAt);
   innitAnnotations(model);
@@ -129,14 +130,17 @@ export function loadModel(model, camPos, lookAt, hidden = false) {
   if (!model.includes("/") && model.endsWith(".glb")) {
     path = model.includes("Santaclara")
       ? `https://memorise.sdu.dk/History-of-Soria-360/3D_models/${model}`
-      : `https://memorise.sdu.dk/History-of-Soria-360/3D%20sketches/${model}`;
+      : `https://memorise.sdu.dk/History-of-Soria-360/3D%20sketches/${model.replace(
+          ".glb",
+          "_optimized.glb"
+        )}`;
   }
 
   loader.load(
     path,
     (gltf) => {
       const sceneObj = gltf.scene;
-      const is360 = model.toLowerCase().endsWith("_360.glb");
+      const is360 = model.toLowerCase().includes("_360");
 
       // 🔧 Apply 360° config
       if (is360) {

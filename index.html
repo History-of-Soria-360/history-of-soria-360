@@ -519,10 +519,12 @@
 
             if (marker.properties.link.endsWith(".mp4")) {
               const videoElement = document.createElement("video");
-              videoElement.src = marker.properties.link.replace(
-                "./video",
-                "https://memorise.sdu.dk/History-of-Soria-360/video"
-              );
+              videoElement.src = marker.properties.link
+                .replace(
+                  "./video",
+                  "https://memorise.sdu.dk/History-of-Soria-360/video"
+                )
+                .replace(".mp4", "_handbroken.mp4");
               videoElement.controls = true;
               mediaContainer.appendChild(videoElement);
             } else {

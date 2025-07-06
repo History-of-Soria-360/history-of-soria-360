@@ -12,17 +12,17 @@ export const campGeojson = {
         camPos: {
           x: 78.99720841003548,
           y: 2.0736083954307376,
-          z: -15.813774330004144
+          z: -15.813774330004144,
         },
         lookAt: {
           x: 72.83605069906073,
           y: -2.8552488514575884,
-          z: -32.27879294132563
+          z: -32.27879294132563,
         },
         iconSize: [40, 40],
         icon: "./icons/icon_3d.png",
         description:
-          "This building likely served as the camp’s administration hub. Here, guards and officials managed prisoner records, registrations, and classifications.<br><br> Although not much is documented, this was where the day-to-day control and organization of the camp took place—deciding who arrived, where they were sent, and how the camp was run behind the scenes.",
+          "This building likely served as the camp's administration hub. Here, guards and officials managed prisoner records, registrations, and classifications.<br><br> Although not much is documented, this was where the day-to-day control and organization of the camp took place—deciding who arrived, where they were sent, and how the camp was run behind the scenes.",
       },
       geometry: { type: "Point", coordinates: [-2.465207, 41.761834] },
     },
@@ -37,17 +37,17 @@ export const campGeojson = {
         camPos: {
           x: 26.393742204709476,
           y: 10.618252177806056,
-          z: 3.371232478433759
+          z: 3.371232478433759,
         },
         lookAt: {
           x: 31.605445501087,
           y: 0.078043434120465,
-          z: -25.83708629228389
+          z: -25.83708629228389,
         },
         iconSize: [40, 40],
         icon: "./icons/icon_3d.png",
         description:
-          "This building was the old convent church, turned into a space for both religious ceremonies and prisoner housing.<br><br> Early in the camp’s history, masses and other religious events were held here, used by the camp leaders to promote their ideology. <br><br>At the same time, many prisoners slept inside the convent, often in crowded and harsh conditions, with little warmth or comfort. This building stood at the center of life in the camp—where faith, control, and daily survival mixed together.",
+          "This building was the old convent church, turned into a space for both religious ceremonies and prisoner housing.<br><br> Early in the camp's history, masses and other religious events were held here, used by the camp leaders to promote their ideology. <br><br>At the same time, many prisoners slept inside the convent, often in crowded and harsh conditions, with little warmth or comfort. This building stood at the center of life in the camp—where faith, control, and daily survival mixed together.",
       },
       geometry: { type: "Point", coordinates: [-2.465703, 41.761837] },
     },
@@ -59,16 +59,16 @@ export const campGeojson = {
         name: "Small Nave",
         model: "Santaclara_3D.glb",
         altmodel: "Santaclara_dollshouse_3D.glb",
-          camPos: {
-            x: 39.64651934744953,
-            y: 4.058429022600889,
-            z: -11.796921911571669
-          },
-          lookAt: {
-            x: 12.308913423681938,
-            y: -3.401008614978755,
-            z: -12.031272496151251
-          },
+        camPos: {
+          x: 39.64651934744953,
+          y: 4.058429022600889,
+          z: -11.796921911571669,
+        },
+        lookAt: {
+          x: 12.308913423681938,
+          y: -3.401008614978755,
+          z: -12.031272496151251,
+        },
         iconSize: [40, 40],
         icon: "./icons/icon_3d.png",
         description:
@@ -84,20 +84,20 @@ export const campGeojson = {
         name: "Central Nave",
         model: "Santaclara_3D.glb",
         altmodel: "Santaclara_dollshouse_3D.glb",
-          camPos: {
-            x: 20.812245527365878,
-            y: 2.27103030937271,
-            z: 33.13057158242155
-          },
-          lookAt: {
-            x: 18.705451795110346,
-            y: -5.807503654741168,
-            z: 14.094253335999536
-          },
+        camPos: {
+          x: 20.812245527365878,
+          y: 2.27103030937271,
+          z: 33.13057158242155,
+        },
+        lookAt: {
+          x: 18.705451795110346,
+          y: -5.807503654741168,
+          z: 14.094253335999536,
+        },
         iconSize: [40, 40],
         icon: "./icons/icon_3d.png",
         description:
-          "This building likely served as the main dormitory for male prisoners in the Santa Clara concentration camp. Historical photographs confirm its use, showing detainees assembled along its north wall. <br><br>Based on period plans, the structure also included rooms used as offices, storage areas, and a barber shop. These varied functions suggest it was a central hub for both administrative and daily activities within the camp.",
+          "This building likely served as the main dormitory for male prisoners in the Santa Clara concentration camp. Historical photographs confirm its use, showing detainees assembled along its north wall. <br><br>Based on period plans, the structure also included rooms used as offices, storage areas, and a barbershop. These varied functions suggest it was a central hub for both administrative and daily activities within the camp.",
       },
       geometry: { type: "Point", coordinates: [-2.465854, 41.761428] },
     },
@@ -112,12 +112,12 @@ export const campGeojson = {
         camPos: {
           x: 34.85908073897662,
           y: 25.736983338367878,
-          z: -16.661556186284727
+          z: -16.661556186284727,
         },
         lookAt: {
           x: 43.6073872912264,
           y: -3.891509620067839,
-          z: 39.37399043401847
+          z: 39.37399043401847,
         },
         iconSize: [40, 40],
         icon: "./icons/icon_3d.png",
@@ -137,12 +137,12 @@ export const campGeojson = {
         camPos: {
           x: -28.329778635000224,
           y: -1.3256640401055533,
-          z: -12.322066616002306
+          z: -12.322066616002306,
         },
         lookAt: {
           x: -26.71146854115179,
           y: -5.50066459400135,
-          z: -26.897924688724117
+          z: -26.897924688724117,
         },
         iconSize: [40, 40],
         icon: "./icons/icon_3d.png",
@@ -162,12 +162,12 @@ export const campGeojson = {
         camPos: {
           x: -69.84003912281975,
           y: 5.023717492993253,
-          z: 5.629691743237153
+          z: 5.629691743237153,
         },
         lookAt: {
           x: -69.22005185864947,
           y: -5.259975092114013,
-          z: -28.239347993014896
+          z: -28.239347993014896,
         },
         iconSize: [40, 40],
         icon: "./icons/icon_3d.png",
@@ -187,12 +187,12 @@ export const campGeojson = {
         camPos: {
           x: -30.390194600382557,
           y: 22.08924365599658,
-          z: -23.91390077076026
+          z: -23.91390077076026,
         },
         lookAt: {
           x: -105.85945856666959,
           y: -4.728223817570154,
-          z: -20.31843208141113
+          z: -20.31843208141113,
         },
         iconSize: [40, 40],
         icon: "./icons/icon_3d.png",
@@ -212,12 +212,12 @@ export const campGeojson = {
         camPos: {
           x: 92.23918967824065,
           y: -1.2821563364276578,
-          z: -42.70600393258251
+          z: -42.70600393258251,
         },
         lookAt: {
           x: 96.53103029316364,
           y: -5.162820589097317,
-          z: -26.97294796328184
+          z: -26.97294796328184,
         },
         iconSize: [40, 40],
         icon: "./icons/icon_3d.png",
@@ -240,12 +240,12 @@ export const campGeojson = {
         camPos: {
           x: 48.57545124674924,
           y: 3.9532698245373448,
-          z: -3.2200988500828744
+          z: -3.2200988500828744,
         },
         lookAt: {
           x: 79.99827175123843,
           y: -5.225693587469385,
-          z: 3.6093432025944736
+          z: 3.6093432025944736,
         },
         iconSize: [40, 40],
         icon: "./icons/icon_3d.png",
@@ -254,7 +254,7 @@ export const campGeojson = {
       },
       geometry: {
         type: "Point",
-        coordinates: [-2.465111, 41.761440],
+        coordinates: [-2.465111, 41.76144],
       },
     },
 
@@ -309,7 +309,7 @@ export const campGeojson = {
         caption:
           "Two known locations of forced Labor During the Camp’s Operation",
         description:
-          "From 1937 onward, Santa Clara became part of the Nationalist forced labor system. <br>Prisoners were compelled to build roads , repair public buildings, and maintain city infrastructure. Even before official labor battalions were formed, inmates unloaded bombs, cleaned shelters, and prepared land for sports fields. <br><br>They were paid just 1.50 pesetas per day—far less than civilian workers—highlighting the exploitation. Logs recorded over 11,000 prisoner workdays from 1938 to 1940. These tasks were carried out under harsh supervision and in extremely poor conditions.<br><br>On the map, two key locations associated with forced labor outside of Santa Clara are marked: Calle Caballeros and the Oficina de Extranjería de Soria.",
+          "From 1937 onward, Santa Clara became part of the Nationalist forced labor system. <br>Prisoners were compelled to build roads, repair public buildings, and maintain city infrastructure. Even before official labor battalions were formed, inmates unloaded bombs, cleaned shelters, and prepared land for sports fields. <br><br>They were paid just 1.50 pesetas per day—far less than civilian workers—highlighting the exploitation. Logs recorded over 11,000 prisoner workdays from 1938 to 1940. These tasks were carried out under harsh supervision and in extremely poor conditions.<br><br>On the map, two key locations associated with forced labor outside of Santa Clara are marked: Calle Caballeros and the Oficina de Extranjería de Soria.",
       },
       geometry: {
         type: "Point",
@@ -331,7 +331,7 @@ export const campGeojson = {
         caption:
           "A doctors report by Lt. Carmelo Vara García (1939) revealing severe malnutrition, overcrowding, and unsanitary conditions at Santa Clara concentration camp.",
         description:
-          'A report by military doctor Lt. Carmelo Vara García reveals the extreme neglect at Santa Clara. On November 26, 1939, he observed an “excessive number of sick prisoners," largely suffering from deficiency diseases caused by malnutrition. Over three days, he inspected meals and found they consisted mostly of watery pasta soup with minimal ingredients: <br><br>Pasta: 90.99 g<br>Bacon: 8.69 g<br>Ham bone: 5.21 g<br><br>Dinner was usually boiled potatoes with a small amount of fatback and 20 kg of whiting—equating to one piece of fish or bacon for every 20–25 prisoners. These rations were "clearly insufficient for the minimum nutrition of a normal individual."<br><br>Living conditions were equally dire. Barracks meant for 100 men were packed with 240, locked in overnight without toilets, creating dangerously unhygienic conditions.The doctor appealed for intervention, calling his report both a professional obligation and a humanitarian act "aligned with the doctrines of our Caudillo and our Cause."',
+          'A report by military doctor Lt. Carmelo Vara García reveals the extreme neglect at Santa Clara. On November 26, 1939, he observed an “excessive number of sick prisoners," largely suffering from deficiency diseases caused by malnutrition. Over three days, he inspected meals and found they consisted mostly of watery pasta soup with minimal ingredients: <br><br>Pasta: 90.99 g<br>Bacon: 8.69 g<br>Ham bone: 5.21 g<br><br>Dinner was usually boiled potatoes with a small amount of fatback and 20 kg of whiting—equating to one piece of fish or bacon for every 20–25 prisoners. These rations were "clearly insufficient for the minimum nutrition of a normal individual."<br><br>Living conditions were equally dire. Barracks meant for 100 men were packed with 240, locked in overnight without toilets, creating dangerously unhygienic conditions. The doctor appealed for intervention, calling his report both a professional obligation and a humanitarian act "aligned with the doctrines of our Caudillo and our Cause."',
       },
       geometry: {
         type: "Point",

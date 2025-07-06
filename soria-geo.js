@@ -29,9 +29,9 @@ export const geojson = {
         next: 2,
         prev: 0,
         description:
-          "You are now looking at the outer section of what was once the Santa Clara concentration camp. While the inner courtyard housed dormitories and daily prisoner life, this area supported the broader military structure that kept the camp running.<br><br> Here, guards were stationed, detainees were processed, and logistical operations took place. Only one of these buildings have survived offering a glimpse into how the camp was organized and controlled. <br><br><i>Click the annotations to explore the history and function of each structure.</i>",
+          "You are now looking at the outer section of what was once the Santa Clara concentration camp. While the inner courtyard housed dormitories and daily prisoner life, this area supported the broader military structure that kept the camp running.<br><br> Here, guards were stationed, detainees were processed, and logistical operations took place. Only one of these buildings has survived offering a glimpse into how the camp was organized and controlled. <br><br><i>Click the annotations to explore the history and function of each structure.</i>",
       },
-      geometry: { type: "Point", coordinates: [-2.465188, 41.761610] },
+      geometry: { type: "Point", coordinates: [-2.465188, 41.76161] },
     },
     {
       //Marker 2
@@ -44,7 +44,7 @@ export const geojson = {
         next: 3,
         prev: 1,
         description:
-          "This point focuses on the stables, which served a very specific but important role within the Santa Clara concentration camp. As part of the camp’s infrastructure, it supported the military operations beyond the prisoner enclosures. <br><br><i>Click the annotation to explore the history and function of the structure.</i>",
+          "This point focuses on the stables, which served a very specific but important role within the Santa Clara concentration camp. As part of the camp’s infrastructure, it supported military operations beyond the prisoner enclosures. <br><br><i>Click the annotation to explore the history and function of the structure.</i>",
       },
       geometry: { type: "Point", coordinates: [-2.465307, 41.761204] },
     },
@@ -110,4 +110,3 @@ export const geojson = {
     },
   ],
 };
-
