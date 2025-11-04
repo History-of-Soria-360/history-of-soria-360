@@ -1,9 +1,10 @@
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js';
-import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/loaders/GLTFLoader.js';
+import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js";
+import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/loaders/GLTFLoader.js";
+import { MeshoptDecoder } from "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/libs/meshopt_decoder.module.js";
 
-const modelOrigin = [-2.4666984434050687, 41.76158807698969];
+const modelOrigin = [-2.466109539137746, 41.76154732338942];
 const modelAltitude = 0;
-const modelRotate = [Math.PI / 2, 0, 0];
+const modelRotate = [Math.PI / 2, -0.1, 0];
 
 const modelAsMercatorCoordinate = maplibregl.MercatorCoordinate.fromLngLat(
   modelOrigin,
@@ -25,7 +26,6 @@ export function loadCustomLayer(callback) {
     id: "3d-model",
     type: "custom",
     renderingMode: "3d",
-
     onAdd(map, gl) {
       this.camera = new THREE.Camera();
       this.scene = new THREE.Scene();
@@ -39,11 +39,13 @@ export function loadCustomLayer(callback) {
       this.scene.add(light2);
 
       const loader = new GLTFLoader();
+      loader.setMeshoptDecoder(MeshoptDecoder);
+
       loader.load(
-        "https://maplibre.org/maplibre-gl-js/docs/assets/34M_17/34M_17.gltf",
+        "./3D_models/Santaclara_3D_optimized copy.glb",
         (gltf) => {
           this.scene.add(gltf.scene);
-          callback(customLayer); // ✅ Add layer only when model is loaded
+          // callback(customLayer); // ✅ Add layer only when model is loaded
         },
         undefined,
         (error) => {

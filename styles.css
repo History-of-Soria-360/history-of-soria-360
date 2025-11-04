@@ -26,23 +26,6 @@ body,
   box-sizing: border-box;
 }
 
-#overlay {
-  display: none;
-  grid-template-columns: 65% 35%;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 85%;
-  height: 70%;
-  background: white;
-  border-radius: 1rem;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-  z-index: 1000;
-  overflow: hidden;
-  font-family: "Inter", sans-serif;
-}
-
 #overlay-left {
   width: 100%;
   height: 100%;
@@ -63,16 +46,16 @@ body,
 }
 
 #overlay-right h3 {
-  font-size: 1.25rem;
+  /* font-size: 1.25rem; */
   font-weight: 600;
   margin-bottom: 0.5rem;
 }
 
 #image-description {
-  font-size: 0.95rem;
+  /* font-size: 0.95rem; */
   color: #374151;
-  line-height: 1.5;
-  margin-right: 10%;
+  /* line-height: 1.5; */
+  margin-right: 40px;
 }
 
 iframe {
@@ -127,7 +110,6 @@ iframe {
 
 #prevBtn,
 #nextBtn {
-  top: 50%;
   transform: translateY(-50%);
 }
 
@@ -151,34 +133,17 @@ margin-bottom: 0.5em;
 
 /* Overlay styles for the camp view */
 
-#camp-overlay {
-  display: none;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 85%;
-  height: 70%;
-  background: white;
-  border-radius: 1rem;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-  z-index: 1000;
-  overflow: hidden;
-  font-family: "Inter", sans-serif;
-}
-
 #camp-overlay.show {
-  display: flex;
+  display: grid;
   pointer-events: auto;
 }
 
 #camp-overlay-content {
-  display: flex;
-  height: 100%;
+  /* height: 100%; */
 }
 
 #camp-overlay-left {
-  width: 65%;
+  /* width: 65%; */
   padding: 1rem;
   background-color: #f9fafb;
   box-sizing: border-box;
@@ -230,7 +195,7 @@ img.camp-image {
 
 #camp-caption {
   margin-top: 0.5rem;
-  font-size: 0.9rem;
+  /* font-size: 0.9rem; */
   text-align: center;
   color: #4b5563;
   padding: 0 1rem;
@@ -241,7 +206,7 @@ img.camp-image {
 
 
 #camp-overlay-right {
-  width: 35%;
+  /* width: 35%; */
   padding: 1rem;
   background-color: #ffffff;
   border-left: 1px solid #e5e7eb;
@@ -250,13 +215,13 @@ img.camp-image {
 }
 
 #camp-overlay-right h3 {
-  font-size: 1.25rem;
+  /* font-size: 1.25rem; */
   font-weight: 600;
   margin-bottom: 0.5rem;
 }
 
 #camp-overlay-headline {
-  font-size: 36px; 
+  /* font-size: 36px;  */
   color: #1a202c; 
   font-weight: bold; 
   margin-top: 20px; 
@@ -265,7 +230,7 @@ img.camp-image {
 }
 
 #camp-description {
-  font-size: 0.95rem;
+  /* font-size: 0.95rem; */
   color: #374151;
   line-height: 1.5;
   margin-right: 15%;
@@ -356,34 +321,17 @@ img.camp-image {
 
 /* Overlay styles for the convent view */
 
-#convent-overlay {
-  display: none;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 85%;
-  height: 70%;
-  background: white;
-  border-radius: 1rem;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-  z-index: 1000;
-  overflow: hidden;
-  font-family: "Inter", sans-serif;
-}
-
 #convent-overlay.show {
-  display: flex;
   pointer-events: auto;
+  display: grid;
 }
 
 #convent-overlay-content {
-  display: flex;
   height: 100%;
 }
 
 #convent-overlay-left {
-  width: 60%;
+  /* width: 60%; */
   padding: 1rem;
   background-color: #f9fafb;
   box-sizing: border-box;
@@ -394,11 +342,13 @@ img.camp-image {
 }
 
 #convent-overlay-right {
-  width: 40%;
+  /* width: 40%; */
   padding: 1rem;
   background-color: #ffffff;
   border-left: 1px solid #e5e7eb;
   box-sizing: border-box;
+  overflow: hidden;
+  overflow-y: scroll;
 }
 
 #convent-overlay-right h3 {
@@ -408,7 +358,6 @@ img.camp-image {
 }
 
 #convent-description {
-  font-size: 0.95rem;
   color: #374151;
   line-height: 1.5;
   margin-right: 10%;
@@ -416,7 +365,6 @@ img.camp-image {
 }
 
 #convent-headline {
-  font-size: 36px; 
   color: #1a202c; 
   font-weight: bold;
   margin-top: 20px; 
@@ -517,30 +465,40 @@ img.camp-image {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 20%;
-  background-color: rgba(255, 255, 255, 0.85);
-  padding: 20px 0;
+  height: min-content;
+  background-color: rgba(255, 255, 255, 0.75);
+  padding: 5px 0;
   box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
   z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Main slider wrapper */
 .timeline-slider {
   position: relative;
-  width: 70%;
+  width: 80%;
   padding: 0 8px;
-  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto 25px auto;
+  align-items: center;
+  justify-items: center;
+  /* margin: 0 auto;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center; */
 }
 
 /* Range slider */
 .timeline-slider input[type="range"] {
-  position: absolute;
+  grid-row-start: 2;
+  grid-column: 1 / span 3;
+  /* position: absolute; */
   margin: 0 12px;
   padding: 0;
-  top: 40px;
+  /* top: 25px; */
   width: 100%;
   z-index: 1;
   height: 6px;
@@ -593,13 +551,17 @@ img.camp-image {
   z-index: 2;
   pointer-events: none;
 }
+
 .tick-container {
-  flex: 0.1;
+  display: grid;
+  grid-template-columns: 1;
+  grid-template-rows: [auto 30px auto];
+  text-align: center;
+  align-items: center;
+  /* flex: 0.1;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  pointer-events: none;
+  pointer-events: none; */
 }
 
 .tick-container:first-of-type {
@@ -612,18 +574,16 @@ img.camp-image {
 /* Tick line that crosses the slider */
 .tick-line {
   width: 2px;
-  height: 40px;
-  background-color: black;
-  margin: 5px 0;
+  height: 25px
+  /* background-color: black; */
+  /* margin: 5px 0; */
 }
 
 /* Labels */
-.tick-label {
-  font-size: 14px;
-}
 .tick-label.top {
   margin-bottom: 0px;
   font-weight: italic;
+  text-wrap-mode: nowrap;
 }
 .tick-label.bottom {
   margin-top: 0px;
@@ -631,30 +591,69 @@ img.camp-image {
 }
 
 #overlay-info-box {
-    position: absolute;
-    top: 3%;
-    left: 10px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 1rem;
-    max-width: 300px;
-    z-index: 1000;
-    background-color: rgba(255, 255, 255, 0.85);
-    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  #overlay-info-title {
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 0.2em; 
-  }
+  position: absolute;
+  top: 3%;
+  left: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 1rem;
+  max-width: 300px;
+  z-index: 1000;
+  height: auto;
+  max-height: 7000px;
+  background-color: rgba(255, 255, 255, 0.75);
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+  transition: max-height 0.4s ease;
+}
 
-  #overlay-info-subtitle {
-    font-weight: normal;
-    text-align: center;
-    font-style: italic; /* optional to differentiate subtitle */
-    margin-top: 0;
-    margin-bottom: 0.6em;
-    color: #555; /* a subtle color for subtitle */
+#overlay-info-box.close {
+  max-height: 7em;
+}
+
+#overlay-info-title {
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 0.2em; 
+}
+
+#overlay-info-subtitle {
+  font-weight: normal;
+  text-align: center;
+  font-style: italic; /* optional to differentiate subtitle */
+  margin-top: 0;
+  margin-bottom: 0.6em;
+  color: #555; /* a subtle color for subtitle */
+}
+
+.maplibregl-ctrl-bottom-right {
+  z-index: 9000;
+}
+
+.overlay {
+  display: grid;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 85%;
+  height: 70%;
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  font-family: "Inter", sans-serif;
+  grid-template-rows: 65% 35%;
+  grid-template-columns: 1fr;
+  transition: none !important;
+}
+
+@media (min-width: 1024px) {
+  .overlay {
+    grid-template-rows: 1fr;
+    grid-template-columns: 65% 35%;
   }
-  
+}
+
+.hide {
+  display: none;
+}

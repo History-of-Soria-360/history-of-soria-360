@@ -164,6 +164,8 @@ export function loadModel(model, camPos, lookAt, hidden = false) {
         )}`;
   }
 
+  console.log("path", path);
+
   loader.load(
     path,
     (gltf) => {

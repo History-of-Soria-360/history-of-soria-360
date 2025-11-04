@@ -8,8 +8,9 @@
       rel="stylesheet"
       href="https://unpkg.com/maplibre-gl@5.3.0/dist/maplibre-gl.css"
     />
-    <link rel="stylesheet" href="styles.css" />
     <script src="https://unpkg.com/maplibre-gl@5.3.0/dist/maplibre-gl.js"></script>
+    <script src="./utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
     <script type="importmap">
@@ -20,39 +21,67 @@
         }
       }
     </script>
+    <link rel="stylesheet" href="styles.css" />
   </head>
 
   <body class="relative">
     <div id="map"></div>
 
     <!-- Overlay Info Box (applies globally across layers) -->
-    <div id="overlay-info-box" class="info-box">
-      <h2 id="overlay-info-title">Overlay Info</h2>
+    <div
+      id="overlay-info-box"
+      class="info-box text-xs lg:text-base overflow-hidden text-ellipsis"
+    >
+      <h2 id="overlay-info-title" class="text-sm lg:text-lg">Overlay Info</h2>
       <h3 id="overlay-info-subtitle">Subtitle</h3>
       <p id="overlay-info-description">
         Info about the current overlay will appear here.
       </p>
     </div>
 
-    <div class="slider-background-bar">
+    <div id="timeline-slider-wrapper" class="slider-background-bar">
       <div class="timeline-slider">
-        <div class="timeline-ticks">
-          <div class="tick-container">
-            <div class="tick-label top">1835</div>
-            <div class="tick-line"></div>
-            <div class="tick-label bottom">Convent</div>
-          </div>
-          <div class="tick-container">
-            <div class="tick-label top">1936</div>
-            <div class="tick-line"></div>
-            <div class="tick-label bottom">Concentration Camp</div>
-          </div>
-          <div class="tick-container">
-            <div class="tick-label top">Present day</div>
-            <div class="tick-line"></div>
-            <div class="tick-label bottom">Civic Park</div>
-          </div>
+        <!-- <div class="timeline-ticks"> -->
+        <!-- <div class="tick-container"> -->
+        <div
+          class="tick-label top text-xs lg:text-base col-start-1 row-start-1 justify-self-start"
+        >
+          1835
         </div>
+        <!-- <div class="tick-line"></div> -->
+        <div
+          class="tick-label bottom text-xs lg:text-base col-start-1 row-start-3 justify-self-start"
+        >
+          Convent
+        </div>
+        <!-- </div> -->
+        <!-- <div class="tick-container"> -->
+        <div
+          class="tick-label top text-xs lg:text-base col-start-2 row-start-1 justify-self-center text-center"
+        >
+          1936
+        </div>
+        <!-- <div class="tick-line"></div> -->
+        <div
+          class="tick-label bottom text-xs lg:text-base col-start-2 row-start-3 justify-self-center text-center"
+        >
+          Concentration Camp
+        </div>
+        <!-- </div> -->
+        <!-- <div class="tick-container"> -->
+        <div
+          class="tick-label top text-xs lg:text-base col-start-3 row-start-1 justify-self-end"
+        >
+          Present day
+        </div>
+        <!-- <div class="tick-line"></div> -->
+        <div
+          class="tick-label bottom text-xs lg:text-base col-start-3 row-start-3 justify-self-end"
+        >
+          Civic Park
+        </div>
+        <!-- </div> -->
+        <!-- </div> -->
 
         <input
           type="range"
@@ -67,23 +96,29 @@
     </div>
 
     <!-- Adding the overlay for the present day -->
-    <div id="overlay">
+    <div id="overlay" class="overlay hide">
       <button class="nav-button" id="closeBtn">✖</button>
-      <button class="nav-button" id="prevBtn">←</button>
-      <button class="nav-button" id="nextBtn">→</button>
+      <button class="nav-button top-[62%] lg:top-[50%]" id="prevBtn">←</button>
+      <button class="nav-button top-[62%] lg:top-[50%]" id="nextBtn">→</button>
 
       <div id="overlay-left">
         <div id="overlay-content"></div>
       </div>
 
       <div id="overlay-right">
-        <h3 id="overlay-title"></h3>
-        <p class="whitespace-pre-wrap" id="image-description"></p>
+        <div
+          id="overlay-title"
+          class="text-sm lg:text-base font-bold mr-[40px]"
+        ></div>
+        <p
+          class="whitespace-pre-wrap text-xs lg:text-sm"
+          id="image-description"
+        ></p>
       </div>
     </div>
 
     <!--Adding the camp layer-->
-    <div id="camp-overlay" class="overlay">
+    <div id="camp-overlay" class="overlay hide">
       <div id="camp-overlay-left">
         <div id="camp-media-container">
           <div id="media-wrapper">
@@ -99,7 +134,9 @@
       </div>
 
       <div id="camp-overlay-right">
-        <h3 id="camp-overlay-headline">Santa Clara Convent History</h3>
+        <h3 id="camp-overlay-headline" class="text-sm lg:text-base font-bold">
+          Santa Clara Convent History
+        </h3>
 
         <label class="model-toggle">
           <input type="checkbox" id="modelToggle" />
@@ -107,14 +144,16 @@
           Show interior view
         </label>
 
-        <p id="camp-description">This is the concentration camp from 1936...</p>
+        <p id="camp-description" class="text-xs lg:text-sm">
+          This is the concentration camp from 1936...
+        </p>
       </div>
 
       <button class="nav-button" id="camp-closeBtn">✖</button>
     </div>
 
     <!--Adding the convent layer-->
-    <div id="convent-overlay" class="overlay">
+    <div id="convent-overlay" class="overlay hide">
       <div id="convent-overlay-left">
         <!-- <h2 id="convent-overlay-headline">Convent View</h2> -->
         <div id="convent-media-container">
@@ -128,9 +167,14 @@
       </div>
 
       <div id="convent-overlay-right">
-        <h3 id="convent-headline">Santa Clara Convent History</h3>
-        <p id="convent-subtitle"></p>
-        <p id="convent-description"></p>
+        <h3
+          id="convent-headline"
+          class="text-sm lg:text-base font-bold mr-[40px]"
+        >
+          Santa Clara Convent History
+        </h3>
+        <p id="convent-subtitle" class="text-xs lg:text-sm"></p>
+        <p id="convent-description" class="text-xs lg:text-sm"></p>
       </div>
 
       <button class="nav-button" id="convent-closeBtn">✖</button>
@@ -142,6 +186,7 @@
       const presentDayMarkers = [];
       const conventMarkers = [];
       const campMarkers = [];
+      let customLayer = null;
 
       /* Bulding markers */
       import { geojson } from "./soria-geo.js";
@@ -166,9 +211,9 @@
         style:
           "https://api.maptiler.com/maps/satellite/style.json?key=TdTwD7oIRpXkUvhlz3qX",
         center: [-2.4661792987112507, 41.76136750285904],
-        zoom: 17.7,
+        zoom: 14,
         pitch: 0,
-      });
+      }); /*  */
 
       // Add navigation controls
       let currentIndex = null;
@@ -180,11 +225,8 @@
         const description = feature.properties.description;
         const title = feature.properties.title;
 
-        console.log("Model:", modelKey);
-        console.log("Description:", description);
-
         // Show overlay
-        document.getElementById("overlay").style.display = "grid";
+        document.getElementById("overlay").classList.remove("hide");
 
         // Set the LEFT panel content
         document.getElementById(
@@ -211,14 +253,6 @@
 
         currentIndex = index;
       }
-
-      // This event listener is for the close button
-      document.getElementById("closeBtn").addEventListener("click", () => {
-        document.getElementById("overlay").style.display = "none";
-        document.getElementById("overlay-content").innerHTML = "";
-        document.getElementById("image-description").textContent = "";
-        currentIndex = null;
-      });
 
       document.getElementById("prevBtn").addEventListener("click", () => {
         if (currentIndex === null) return;
@@ -285,11 +319,6 @@
           firstSymbolId
         ); // places the raster below markers/labels
 
-        // Add the 3D model layer
-        loadCustomLayer((customLayer) => {
-          map.addLayer(customLayer);
-        });
-
         // Add the camp layer
         map.addLayer(
           {
@@ -334,6 +363,10 @@
 
         setMarkersVisibility(presentDayMarkers, false);
 
+        // Add the 3D model layer
+        customLayer = loadCustomLayer((customLayer) => {});
+        map.addLayer(customLayer);
+
         // Add camp markers
         campGeojson.features.forEach((marker) => {
           const el = document.createElement("div");
@@ -350,7 +383,7 @@
 
           el.addEventListener("click", () => {
             const overlay = document.getElementById("camp-overlay");
-            overlay.classList.add("show");
+            overlay.classList.remove("hide");
 
             const modelKey = marker.properties.model;
             const altmodel = marker.properties.altmodel;
@@ -486,18 +519,6 @@
 
         setMarkersVisibility(campMarkers, false);
 
-        // Close button for the camp overlay
-        document
-          .getElementById("camp-closeBtn")
-          .addEventListener("click", () => {
-            const overlay = document.getElementById("camp-overlay");
-            overlay.classList.remove("show");
-
-            //document.getElementById("camp-iframe").src = "";
-            document.getElementById("camp-overlay-headline").textContent = "";
-            document.getElementById("camp-description").textContent = "";
-          });
-
         // Add convent markers with a separate overlay design
         conventGeojson.features.forEach((marker) => {
           const el = document.createElement("div");
@@ -514,8 +535,7 @@
 
           el.addEventListener("click", () => {
             const overlay = document.getElementById("convent-overlay");
-            overlay.classList.add("show");
-
+            overlay.classList.remove("hide");
             const mediaContainer = document.getElementById(
               "convent-media-container"
             );
@@ -562,7 +582,7 @@
             }
 
             const captionElement = document.getElementById("convent-caption");
-            captionElement.textContent = marker.properties.caption || "";
+            // captionElement.textContent = marker.properties.caption || "";
           });
 
           const mapMarker = new maplibregl.Marker({ element: el })
@@ -574,18 +594,6 @@
 
         setMarkersVisibility(conventMarkers, false);
 
-        // Close button for the convent overlay
-        document
-          .getElementById("convent-closeBtn")
-          .addEventListener("click", () => {
-            const overlay = document.getElementById("convent-overlay");
-            overlay.classList.remove("show");
-
-            // document.getElementById("convent-iframe").src = "";
-            // document.getElementById("convent-overlay-headline").textContent = "";
-            // document.getElementById("convent-description").textContent = "";
-          });
-
         // Timeline slider functionality
         const timelineRange = document.getElementById("timelineRange");
         const timelineSteps = document.querySelectorAll(
@@ -594,6 +602,7 @@
 
         timelineRange.addEventListener("input", (e) => {
           const value = e.target.value;
+          document.getElementById("overlay-info-box").classList.remove("close");
           updateTimeline(value);
         });
 
@@ -653,19 +662,70 @@
             setMarkersVisibility(conventMarkers, true);
             setMarkersVisibility(campMarkers, false);
             setMarkersVisibility(presentDayMarkers, false);
+            map.setLayoutProperty("3d-model", "visibility", "none");
           } else if (activeOverlayId === "camp") {
             setMarkersVisibility(conventMarkers, false);
             setMarkersVisibility(campMarkers, true);
             setMarkersVisibility(presentDayMarkers, false);
+            map.setLayoutProperty("3d-model", "visibility", "true");
           } else if (activeOverlayId === "present") {
             setMarkersVisibility(conventMarkers, false);
             setMarkersVisibility(campMarkers, false);
             setMarkersVisibility(presentDayMarkers, true);
+            map.setLayoutProperty("3d-model", "visibility", "none");
           }
         }
 
         updateTimeline(timelineRange.value);
       });
+
+      // Get the bounds of the markers but filter out the outlier!
+      const bounds = getBoundsForPoints(
+        campGeojson.features.filter(
+          (e) =>
+            e.properties.name !==
+            "Forced Labour - Oficina de Extranjería de Soria"
+        )
+      );
+
+      // Fit the bounds of the maps to the markers
+      map.fitBounds(bounds, { padding: { right: 50, left: 50 } });
+
+      document.getElementById("overlay-info-box").onclick = () => {
+        document.getElementById("overlay-info-box").classList.remove("close");
+      };
+
+      document.getElementById("map").onclick = () => {
+        document.getElementById("overlay-info-box").classList.add("close");
+      };
+
+      // document.getElementById("timeline-slider-wrapper").onclick = () => {
+      //   document.getElementById("overlay-info-box").classList.add("close");
+      // };
+
+      // document.getElementById("timeline-slider").onclick = () => {
+      //   document.getElementById("overlay-info-box").classList.add("close");
+      // };
+
+      const test = document.getElementsByClassName("maplibregl-ctrl-attrib");
+      for (const e of test) {
+        e.classList.remove("maplibregl-compact-show");
+      }
+
+      document.getElementById("closeBtn").onclick = () => {
+        document.getElementById("overlay").classList.add("hide");
+        currentIndex = null;
+      };
+
+      document.getElementById("camp-closeBtn").onclick = () => {
+        document.getElementById("camp-overlay").classList.add("hide");
+        currentIndex = null;
+      };
+
+      document.getElementById("convent-closeBtn").onclick = () => {
+        document.getElementById("convent-overlay").classList.add("hide");
+        currentIndex = null;
+      };
     </script>
   </body>
 </html>
