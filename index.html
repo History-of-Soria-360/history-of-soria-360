@@ -40,49 +40,7 @@
     </div>
 
     <div id="timeline-slider-wrapper" class="slider-background-bar">
-      <div class="timeline-slider">
-        <!-- <div class="timeline-ticks"> -->
-        <!-- <div class="tick-container"> -->
-        <div
-          class="tick-label top text-xs lg:text-base col-start-1 row-start-1 justify-self-start"
-        >
-          1835
-        </div>
-        <!-- <div class="tick-line"></div> -->
-        <div
-          class="tick-label bottom text-xs lg:text-base col-start-1 row-start-3 justify-self-start"
-        >
-          Convent
-        </div>
-        <!-- </div> -->
-        <!-- <div class="tick-container"> -->
-        <div
-          class="tick-label top text-xs lg:text-base col-start-2 row-start-1 justify-self-center text-center"
-        >
-          1936
-        </div>
-        <!-- <div class="tick-line"></div> -->
-        <div
-          class="tick-label bottom text-xs lg:text-base col-start-2 row-start-3 justify-self-center text-center"
-        >
-          Concentration Camp
-        </div>
-        <!-- </div> -->
-        <!-- <div class="tick-container"> -->
-        <div
-          class="tick-label top text-xs lg:text-base col-start-3 row-start-1 justify-self-end"
-        >
-          Present day
-        </div>
-        <!-- <div class="tick-line"></div> -->
-        <div
-          class="tick-label bottom text-xs lg:text-base col-start-3 row-start-3 justify-self-end"
-        >
-          Civic Park
-        </div>
-        <!-- </div> -->
-        <!-- </div> -->
-
+      <div id="timeline-slider" class="timeline-slider">
         <input
           type="range"
           min="0"
@@ -210,8 +168,8 @@
         container: "map",
         style:
           "https://api.maptiler.com/maps/satellite/style.json?key=TdTwD7oIRpXkUvhlz3qX",
-        center: [-2.4661792987112507, 41.76136750285904],
-        zoom: 14,
+        // center: [41.76136750285904, -2.4661792987112507],
+        // zoom: 14,
         pitch: 0,
       }); /*  */
 
@@ -318,20 +276,6 @@
           },
           firstSymbolId
         ); // places the raster below markers/labels
-
-        // Add the camp layer
-        map.addLayer(
-          {
-            id: "camp-map-layer",
-            type: "raster",
-            source: "camp-map",
-            paint: {
-              "raster-fade-duration": 0,
-              "raster-opacity": 0, // start hidden, reveal using slider
-            },
-          },
-          firstSymbolId
-        );
 
         // Add markers to the map
         geojson.features.forEach((marker, index) => {
@@ -677,19 +621,49 @@
         }
 
         updateTimeline(timelineRange.value);
+
+        /* const testPoints = [
+          {
+            type: "Feature",
+            properties: {},
+            geometry: {
+              coordinates: [-2.471141507186843, 41.77545604066435],
+              type: "Point",
+            },
+          },
+          {
+            type: "Feature",
+            properties: {},
+            geometry: {
+              coordinates: [24.109682170018544, 56.948490631419304],
+              type: "Point",
+            },
+          },
+        ]; */
+
+        const bounds = [
+          [-2.471141507186843, 41.77545604066435],
+          [24.109682170018544, 56.948490631419304],
+        ];
+
+        console.log("new bounds", bounds);
+
+        map.fitBounds(bounds, {
+          padding: { top: 100, bottom: 100, left: 100, right: 100 },
+        });
       });
 
       // Get the bounds of the markers but filter out the outlier!
-      const bounds = getBoundsForPoints(
-        campGeojson.features.filter(
-          (e) =>
-            e.properties.name !==
-            "Forced Labour - Oficina de Extranjería de Soria"
-        )
-      );
+      // const bounds = getBoundsorPoints(
+      //   campGeojson.features.filter(
+      //     (e) =>
+      //       e.properties.name !==
+      //       "Forced Labour - Oficina de Extranjería de Soria"
+      //   )
+      // );
+      // console.log("old bounds", bounds);
 
       // Fit the bounds of the maps to the markers
-      map.fitBounds(bounds, { padding: { right: 50, left: 50 } });
 
       document.getElementById("overlay-info-box").onclick = () => {
         document.getElementById("overlay-info-box").classList.remove("close");
@@ -726,6 +700,39 @@
         document.getElementById("convent-overlay").classList.add("hide");
         currentIndex = null;
       };
+
+      function fillTimeline(dates) {
+        for (const date of dates) {
+          let dateTime = document.createElement("div");
+          dateTime.classList.add("tick-label");
+          dateTime.innerHTML = date.time;
+
+          let dateLabel = document.createElement("div");
+          dateLabel.classList.add("tick-label");
+          dateLabel.innerHTML = date.label;
+
+          let tickWrapper = document.createElement("div");
+          tickWrapper.className = "flex gap-3 flex-col";
+          tickWrapper.append(dateTime);
+          tickWrapper.append(dateLabel);
+
+          document.getElementById("timeline-slider").append(tickWrapper);
+        }
+      }
+
+      fillTimeline([
+        { label: "Convent", time: "1500" },
+        { label: "Test", time: "1600" },
+        { label: "Test", time: "1600" },
+        { label: "Test", time: "1600" },
+        { label: "Test", time: "1600" },
+        { label: "Test", time: "1600" },
+        { label: "Test", time: "1600" },
+        { label: "Test", time: "1600" },
+        { label: "Test", time: "1600" },
+        { label: "Test", time: "1600" },
+      ]);
+      console.log(document.getElementById("timeline-slider"));
     </script>
   </body>
 </html>
