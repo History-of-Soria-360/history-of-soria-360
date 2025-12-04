@@ -30,6 +30,7 @@ export const conventGeojson = {
         caption: "Arial view of the Santa Clara Convent in 1932",
       },
       geometry: { type: "Point", coordinates: [-2.466027, 41.761672] },
+      media: ["./images/Kaiserwald plans.jpg"],
     },
     {
       type: "Feature",

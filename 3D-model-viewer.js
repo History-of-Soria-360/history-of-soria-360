@@ -118,8 +118,12 @@ function setCamPosAndLookAt(camPos, lookAt) {
 
 /* ───────────────────────────────────────────────────────────── */
 function innitAnnotations(model) {
+  console.log(`InitAnnotations for model ${model}`);
+
   document.querySelectorAll(".annotation").forEach((el) => el.remove());
   if (!annotations[model]) return;
+
+  console.log(annotations[model]);
 
   for (const a of annotations[model]) {
     const ann = document.createElement("div");
@@ -155,13 +159,16 @@ function innitAnnotations(model) {
 export function loadModel(model, camPos, lookAt, hidden = false) {
   let path = model;
 
+  // Check if the model name looks like a local file (not a URL)
   if (!model.includes("/") && model.endsWith(".glb")) {
-    path = model.includes("Santaclara")
-      ? `https://memorise.sdu.dk/History-of-Soria-360/3D_models/${model}`
-      : `https://memorise.sdu.dk/History-of-Soria-360/3D%20sketches/${model.replace(
-          ".glb",
-          "_optimized.glb"
-        )}`;
+    // Build the full local URL depending on the model name
+    // path = model.includes("Santaclara")
+    //   ? `http://localhost:8000/Archive/3D_models/${model}`
+    //   : `http://localhost:8000/Archive/3D%20sketches/${model.replace(
+    //       ".glb",
+    //       "_optimized.glb"
+    //     )}`;
+    path = `http://localhost:8000/Archive/3D_models/${model}`;
   }
 
   console.log("path", path);

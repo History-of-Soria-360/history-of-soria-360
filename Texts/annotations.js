@@ -320,8 +320,8 @@ export const annotations = {
     },
   ],
 
-  // Camp points for Santaclara_3D.glb
-  /*"Santaclara_3D.glb": [
+  // Camp points for built-floor-plan-24_nov.glb
+  /*"built-floor-plan-24_nov.glb": [
  {
  title: "Convent",
  description: "Test",

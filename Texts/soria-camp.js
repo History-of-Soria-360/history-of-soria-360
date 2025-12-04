@@ -7,8 +7,8 @@ export const campGeojson = {
       properties: {
         message: "Building 1",
         name: "Office Building",
-        model: "Santaclara_3D.glb",
-        altmodel: "Santaclara_dollshouse_3D.glb",
+        model: "built-floor-plan-24_nov.glb",
+        altmodel: "built-floor-plan-24_nov.glb",
         camPos: {
           x: 78.99720841003548,
           y: 2.0736083954307376,
@@ -31,8 +31,8 @@ export const campGeojson = {
       type: "Feature",
       properties: {
         message: "Building A",
-        model: "Santaclara_3D.glb",
-        altmodel: "Santaclara_dollshouse_3D.glb",
+        model: "built-floor-plan-24_nov.glb",
+        altmodel: "built-floor-plan-24_nov.glb",
         name: "The Convent",
         camPos: {
           x: 26.393742204709476,
@@ -57,8 +57,8 @@ export const campGeojson = {
       properties: {
         message: "Building B",
         name: "Small Nave",
-        model: "Santaclara_3D.glb",
-        altmodel: "Santaclara_dollshouse_3D.glb",
+        model: "built-floor-plan-24_nov.glb",
+        altmodel: "built-floor-plan-24_nov.glb",
         camPos: {
           x: 39.64651934744953,
           y: 4.058429022600889,
@@ -82,8 +82,8 @@ export const campGeojson = {
       properties: {
         message: "Building C",
         name: "Central Nave",
-        model: "Santaclara_3D.glb",
-        altmodel: "Santaclara_dollshouse_3D.glb",
+        model: "built-floor-plan-24_nov.glb",
+        altmodel: "built-floor-plan-24_nov.glb",
         camPos: {
           x: 20.812245527365878,
           y: 2.27103030937271,
@@ -107,8 +107,8 @@ export const campGeojson = {
       properties: {
         message: "Building F",
         name: "Restrooms",
-        model: "Santaclara_3D.glb",
-        altmodel: "Santaclara_dollshouse_3D.glb",
+        model: "built-floor-plan-24_nov.glb",
+        altmodel: "built-floor-plan-24_nov.glb",
         camPos: {
           x: 34.85908073897662,
           y: 25.736983338367878,
@@ -132,8 +132,8 @@ export const campGeojson = {
       properties: {
         message: "Building I",
         name: "Storage Building",
-        model: "Santaclara_3D.glb",
-        altmodel: "Santaclara_dollshouse_3D.glb",
+        model: "built-floor-plan-24_nov.glb",
+        altmodel: "built-floor-plan-24_nov.glb",
         camPos: {
           x: -28.329778635000224,
           y: -1.3256640401055533,
@@ -157,8 +157,8 @@ export const campGeojson = {
       properties: {
         message: "Building J+K",
         name: "The Barracks",
-        model: "Santaclara_3D.glb",
-        altmodel: "Santaclara_dollshouse_3D.glb",
+        model: "built-floor-plan-24_nov.glb",
+        altmodel: "built-floor-plan-24_nov.glb",
         camPos: {
           x: -69.84003912281975,
           y: 5.023717492993253,
@@ -182,8 +182,8 @@ export const campGeojson = {
       properties: {
         message: "Building L",
         name: "The Infirmary",
-        model: "Santaclara_3D.glb",
-        altmodel: "Santaclara_dollshouse_3D.glb",
+        model: "built-floor-plan-24_nov.glb",
+        altmodel: "built-floor-plan-24_nov.glb",
         camPos: {
           x: -30.390194600382557,
           y: 22.08924365599658,
@@ -207,8 +207,8 @@ export const campGeojson = {
       properties: {
         message: "Building 2",
         name: "The Guard Barracks",
-        model: "Santaclara_3D.glb",
-        altmodel: "Santaclara_dollshouse_3D.glb",
+        model: "built-floor-plan-24_nov.glb",
+        altmodel: "built-floor-plan-24_nov.glb",
         camPos: {
           x: 92.23918967824065,
           y: -1.2821563364276578,
@@ -235,8 +235,8 @@ export const campGeojson = {
       properties: {
         message: "Building 3",
         name: "The Guard Quaters",
-        model: "Santaclara_3D.glb",
-        altmodel: "Santaclara_dollshouse_3D.glb",
+        model: "built-floor-plan-24_nov.glb",
+        altmodel: "built-floor-plan-24_nov.glb",
         camPos: {
           x: 48.57545124674924,
           y: 3.9532698245373448,

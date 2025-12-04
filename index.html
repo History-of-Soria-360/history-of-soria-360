@@ -75,6 +75,12 @@
       </div>
     </div>
 
+    <div
+      id="coordinates-overlay"
+      class="absolute top-5 right-5 p-2"
+      style="background-color: rgba(255, 255, 255, 0.75)"
+    ></div>
+
     <!--Adding the camp layer-->
     <div id="camp-overlay" class="overlay hide">
       <div id="camp-overlay-left">
@@ -133,6 +139,10 @@
         </h3>
         <p id="convent-subtitle" class="text-xs lg:text-sm"></p>
         <p id="convent-description" class="text-xs lg:text-sm"></p>
+        <div
+          id="convent-image-wrapper"
+          class="text-xs lg:text-sm w-full flex flex-col gap-2 pt-4 items-center justify-center"
+        ></div>
       </div>
 
       <button class="nav-button" id="convent-closeBtn">✖</button>
@@ -235,16 +245,16 @@
         });
       }
 
-      // Add the convent map to the page
+      // Add the Kaiserwald map to the page
       map.on("load", () => {
         map.addSource("conventPlanImage", {
           type: "image",
-          url: "./images/Convent_image.png",
+          url: "./images/k-plans-halftransp.png",
           coordinates: [
-            [-2.468178, 41.762657], // top-left
-            [-2.4641416118235915, 41.76240767386252], // top-right
-            [-2.4643543374292496, 41.760334321527054], // bottom-right
-            [-2.468326, 41.760577], // bottom-left
+            [24.1291005, 56.9992669], // top-left
+            [24.1338355, 56.999332], // top-right
+            [24.1334955, 56.99551612], // bottom-right
+            [24.1287595, 56.99553184], // bottom-left
           ],
         });
 
@@ -489,17 +499,24 @@
 
             if (marker.properties.link.endsWith(".mp4")) {
               const videoElement = document.createElement("video");
+
+              // Replace "./video" with your local server path
               videoElement.src = marker.properties.link
-                .replace(
-                  "./video",
-                  "https://memorise.sdu.dk/History-of-Soria-360/video"
-                )
+                .replace("./video", "http://localhost:8000/Archive/video")
                 .replace(".mp4", "_handbroken.mp4");
+
               videoElement.controls = true;
               mediaContainer.appendChild(videoElement);
             } else {
               const imageElement = document.createElement("img");
-              imageElement.src = marker.properties.link;
+
+              // For images, assume marker.properties.link points to a relative file path
+              // Example: "./images/example.jpg" → "http://localhost:8000/Archive/images/example.jpg"
+              imageElement.src = marker.properties.link.replace(
+                "./",
+                "http://localhost:8000/Archive/"
+              );
+
               imageElement.alt = "Convent Image";
               mediaContainer.appendChild(imageElement);
             }
@@ -515,6 +532,12 @@
             // Update text content
             document.getElementById("convent-description").innerHTML =
               marker.properties.description;
+            if (marker.media != null) {
+              document.getElementById("convent-image-wrapper").innerHTML =
+                marker.media.map(
+                  (e) => `<img class="max-h-80 w-fit" src="${e}" />`
+                );
+            }
             document.getElementById("convent-headline").innerText =
               marker.properties.name;
 
@@ -585,6 +608,8 @@
             (entry) => entry.id === activeOverlayId
           );
           if (info) {
+            console.log("Info", info);
+
             document.getElementById("overlay-info-title").textContent =
               info.title;
             document.getElementById("overlay-info-subtitle").textContent =
@@ -620,6 +645,12 @@
           }
         }
 
+        map.on("click", (e) => {
+          document.getElementById(
+            "coordinates-overlay"
+          ).innerHTML = `[${e.lngLat.lng}, ${e.lngLat.lat}]`;
+        });
+
         updateTimeline(timelineRange.value);
 
         /* const testPoints = [
@@ -640,28 +671,18 @@
             },
           },
         ]; */
-
-        const bounds = [
-          [-2.471141507186843, 41.77545604066435],
-          [24.109682170018544, 56.948490631419304],
-        ];
-
-        console.log("new bounds", bounds);
-
+        // Get the bounds of the markers but filter out the outlier!
+        const bounds = getBoundsForPoints(
+          campGeojson.features.filter(
+            (e) =>
+              e.properties.name !==
+              "Forced Labour - Oficina de Extranjería de Soria"
+          )
+        );
         map.fitBounds(bounds, {
-          padding: { top: 100, bottom: 100, left: 100, right: 100 },
+          padding: { top: 10, bottom: 10, left: 10, right: 10 },
         });
       });
-
-      // Get the bounds of the markers but filter out the outlier!
-      // const bounds = getBoundsorPoints(
-      //   campGeojson.features.filter(
-      //     (e) =>
-      //       e.properties.name !==
-      //       "Forced Labour - Oficina de Extranjería de Soria"
-      //   )
-      // );
-      // console.log("old bounds", bounds);
 
       // Fit the bounds of the maps to the markers
 
@@ -723,14 +744,7 @@
       fillTimeline([
         { label: "Convent", time: "1500" },
         { label: "Test", time: "1600" },
-        { label: "Test", time: "1600" },
-        { label: "Test", time: "1600" },
-        { label: "Test", time: "1600" },
-        { label: "Test", time: "1600" },
-        { label: "Test", time: "1600" },
-        { label: "Test", time: "1600" },
-        { label: "Test", time: "1600" },
-        { label: "Test", time: "1600" },
+        { label: "Test 2", time: "1700" },
       ]);
       console.log(document.getElementById("timeline-slider"));
     </script>
